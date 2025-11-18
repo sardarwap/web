@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Odia OCR Tool: Extract Odia Text from Images & PDF - Free | EduOdia</title>
+    <meta name="description" content="Free Odia OCR Tool powered by Tesseract.js. Instantly convert scanned Odia text or PDF pages into editable, searchable text. Supports Odia and English!">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://eduodia.in/ocr-tool.html"> 
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src='https://unpkg.com/tesseract.js@5/dist/tesseract.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+    <script src="https://unpkg.com/docx@8/build/docx.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+        /* === CORE & THEME === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column;}
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #0ea5e9;
+        }
+        .bg-gradient { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); color: white; }
+        
+        /* === HEADER === */
+        header { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 70px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; text-decoration: none; }
+        .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        
+        /* === OCR CARD LAYOUT === */
+        .ocr-card {
+            background: white; border-radius: 16px; border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+            padding: 30px; max-width: 800px; margin: 40px auto; flex-grow: 1;
+        }
+        .file-upload-wrapper {
+            border: 2px dashed #cbd5e1; border-radius: 12px;
+            background: #f8fafc; text-align: center; padding: 40px 20px;
+            transition: all 0.3s ease; cursor: pointer; position: relative;
+        }
+        .file-upload-wrapper:hover { border-color: #10b981; background: #ecfdf5; }
+        .file-upload-wrapper input {
+            position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+        }
+        
+        /* Textarea and Buttons */
+        textarea {
+            width: 100%; height: 300px; border: 1px solid #cbd5e1; border-radius: 10px;
+            padding: 15px; font-size: 1rem; margin-top: 20px; resize: vertical;
+            background: #fff; color: #1e293b; font-family: inherit;
+        }
+        .btn-main { width: 100%; padding: 15px; border-radius: 10px; font-weight: 700; font-size: 1.1rem; margin-top: 20px; border: none; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3); }
+        .btn-main:hover { transform: translateY(-2px); }
+        
+        .toolbar { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        .btn-tool { padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; border: 1px solid #e2e8f0; background: white; color: #475569; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+        .btn-tool.download { background: #ecfdf5; color: #059669; border-color: #d1fae5; }
+        .btn-tool.download:hover { background: #10b981; color: white; }
+        
+        /* Status */
+        .spinner { border: 3px solid #f3f3f3; border-top: 3px solid #10b981; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #statusText { font-weight: 600; color: #64748b; }
+        
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo">
+                <span>Edu<span class="text-gradient">Odia</span></span>
+            </a>
+            <a href="index.html" style="font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 8px; text-decoration: none;">
+                <i class="fas fa-arrow-left"></i> Back Home
+            </a>
+        </div>
+    </header>
+
+    <div style="flex: 1;">
+        <div class="ocr-card">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h1 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 10px;">
+                    Odia OCR <span class="text-gradient">Tool</span>
+                </h1>
+                <p style="color: #64748b;">Convert Images and PDFs containing Odia text into editable format.</p>
+            </div>
+
+            <div class="file-upload-wrapper">
+                <input type="file" id="imageInput" accept="image/*,application/pdf">
+                <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #334155; margin-bottom: 5px;">
+                    <span id="fileNameDisplay">Click or Drag file here</span>
+                </h3>
+                <p style="color: #94a3b8; font-size: 0.9rem;">Supports JPG, PNG & PDF. Or simply paste from clipboard (Ctrl+V).</p>
+            </div>
+
+            <button id="runButton" class="btn-main bg-gradient">
+                <i class="fas fa-magic"></i> Extract Text
+            </button>
+
+            <div id="status" style="margin-top: 15px;">
+                <div class="spinner" id="loadingSpinner"></div>
+                <span id="statusText">Ready to process.</span>
+            </div>
+
+            <textarea id="output" placeholder="Extracted Odia text will appear here..."></textarea>
+
+            <div id="downloadContainer" class="toolbar hidden">
+                <button id="copyBtn" class="btn-tool"><i class="far fa-copy"></i> Copy Text</button>
+                <button id="downloadTxt" class="btn-tool download"><i class="fas fa-file-alt"></i> Save as .TXT</button>
+                <button id="downloadDocx" class="btn-tool download"><i class="fas fa-file-word"></i> Save as .DOCX</button>
+                <button id="clearBtn" class="btn-tool" style="margin-left: auto; color: #ef4444;"><i class="fas fa-trash"></i> Clear</button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Edu<span style="color: #10b981;">Odia</span></h2>
+            <p style="font-size: 0.9rem; color: #94a3b8;">&copy; 2025 EduOdia.in. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // References (Tailwind classes were replaced with standard CSS classes)
+        const imageInput = document.getElementById('imageInput');
+        const runButton = document.getElementById('runButton');
+        const statusText = document.getElementById('statusText');
+        const spinner = document.getElementById('loadingSpinner');
+        const outputEl = document.getElementById('output');
+        const downloadContainer = document.getElementById('downloadContainer');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        
+        const downloadTxt = document.getElementById('downloadTxt');
+        const downloadDocx = document.getElementById('downloadDocx');
+        const copyBtn = document.getElementById('copyBtn');
+        const clearBtn = document.getElementById('clearBtn');
+
+        // PDF Worker Setting (Needed for PDF.js to run)
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';
+
+        // 1. File Selection UI Update
+        imageInput.addEventListener('change', () => {
+            if (imageInput.files.length > 0) {
+                fileNameDisplay.innerText = imageInput.files[0].name;
+                fileNameDisplay.style.color = "#10b981";
+            } else {
+                fileNameDisplay.innerText = 'Click or Drag file here';
+                fileNameDisplay.style.color = "#334155";
+            }
+        });
+
+        // 2. Helper: Download File
+        function downloadFile(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // 3. TXT Download
+        downloadTxt.addEventListener('click', () => {
+            if(!outputEl.value) return;
+            const blob = new Blob([outputEl.value], { type: 'text/plain;charset=utf-8' });
+            downloadFile(blob, 'EduOdia-OCR.txt');
+        });
+
+        // 4. DOCX Download
+        downloadDocx.addEventListener('click', () => {
+            if(!outputEl.value) return;
+            const { Document, Packer, Paragraph } = window.docx;
+            const lines = outputEl.value.split('\n').map(line => new Paragraph({ text: line }));
+            const doc = new Document({ sections: [{ children: lines }] });
+            Packer.toBlob(doc).then(blob => {
+                downloadFile(blob, 'EduOdia-OCR.docx');
+            });
+        });
+
+        // 5. Copy & Clear
+        copyBtn.addEventListener('click', () => {
+            outputEl.select();
+            navigator.clipboard.writeText(outputEl.value);
+            const originalText = copyBtn.innerHTML;
+            copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => copyBtn.innerHTML = originalText, 2000);
+        });
+
+        clearBtn.addEventListener('click', () => {
+            imageInput.value = null;
+            fileNameDisplay.innerText = 'Click or Drag file here';
+            fileNameDisplay.style.color = "#334155";
+            outputEl.value = '';
+            statusText.innerText = 'Ready to process.';
+            downloadContainer.classList.add('hidden');
+        });
+
+        // 6. MAIN OCR LOGIC
+        runButton.addEventListener('click', async () => {
+            const file = imageInput.files[0];
+            if (!file) { alert("Please upload an image or PDF first."); return; }
+
+            // UI Reset
+            outputEl.value = '';
+            statusText.innerText = 'Initializing Engine...';
+            spinner.style.display = 'inline-block';
+            downloadContainer.classList.add('hidden');
+            runButton.disabled = true;
+            runButton.style.opacity = "0.7";
+
+            let worker = null;
+
+            try {
+                // Initialize Tesseract with Odia + English
+                worker = await Tesseract.createWorker('ori+eng');
+
+                if (file.type === "application/pdf") {
+                    // === PDF PROCESSING ===
+                    statusText.innerText = 'Reading PDF pages...';
+                    const fileReader = new FileReader();
+                    
+                    fileReader.onload = async function() {
+                        try {
+                            const pdfData = new Uint8Array(this.result);
+                            const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+                            let fullText = '';
+
+                            for (let i = 1; i <= pdf.numPages; i++) {
+                                statusText.innerText = `Scanning Page ${i} of ${pdf.numPages}...`;
+                                const page = await pdf.getPage(i);
+                                const viewport = page.getViewport({ scale: 2.0 }); 
+                                const canvas = document.createElement('canvas');
+                                const context = canvas.getContext('2d');
+                                canvas.width = viewport.width;
+                                canvas.height = viewport.height;
+                                
+                                await page.render({ canvasContext: context, viewport: viewport }).promise;
+                                
+                                const { data: { text } } = await worker.recognize(canvas.toDataURL('image/png'));
+                                fullText += `--- Page ${i} ---\n${text}\n\n`;
+                            }
+
+                            outputEl.value = fullText;
+                            finishSuccess();
+
+                        } catch (err) {
+                            handleError(err);
+                        } finally {
+                            await worker.terminate();
+                        }
+                    };
+                    fileReader.readAsArrayBuffer(file);
+
+                } else {
+                    // === IMAGE PROCESSING ===
+                    statusText.innerText = 'Scanning Image...';
+                    const { data: { text } } = await worker.recognize(file);
+                    outputEl.value = text;
+                    await worker.terminate();
+                    finishSuccess();
+                }
+
+            } catch (err) {
+                handleError(err);
+            }
+        });
+
+        function finishSuccess() {
+            statusText.innerText = 'Extraction Complete!';
+            statusText.style.color = '#10b981';
+            spinner.style.display = 'none';
+            runButton.disabled = false;
+            runButton.style.opacity = "1";
+            downloadContainer.classList.remove('hidden');
+        }
+
+        function handleError(err) {
+            console.error(err);
+            statusText.innerText = 'Error: ' + err.message;
+            statusText.style.color = '#ef4444';
+            spinner.style.display = 'none';
+            runButton.disabled = false;
+            runButton.style.opacity = "1";
+        }
+
+        // Paste Support
+        window.addEventListener('paste', (e) => {
+            const item = e.clipboardData.items[0];
+            if (item.kind === 'file' && item.type.includes('image')) {
+                imageInput.files = e.clipboardData.files;
+                imageInput.dispatchEvent(new Event('change'));
+            }
+        });
+
+    </script>
+
+</body>
+</html>
