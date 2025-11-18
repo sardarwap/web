@@ -51,21 +51,21 @@
         .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
         .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
         
-        .desktop-menu { display: none; gap: 30px; align-items: center; }
-        .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
+        .desktop-menu { display: none; gap: 25px; align-items: center; }
+        .desktop-menu a { font-weight: 500; color: #64748b; font-size: 0.95rem; transition: color 0.2s; }
         .desktop-menu a:hover { color: #10b981; }
         
-        /* Primary Button (Gradient) */
+        /* Primary Button */
         .btn-browse {
             padding: 10px 24px; border-radius: 50px; font-weight: bold; font-size: 0.9rem;
             box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
-            transition: transform 0.2s;
+            transition: transform 0.2s; color: white !important;
         }
         .btn-browse:hover { transform: translateY(-2px); }
 
-        /* Secondary Button (White) - For OCR Tool */
+        /* Secondary Button (White) */
         .btn-secondary {
-            padding: 10px 24px; border-radius: 50px; font-weight: bold; font-size: 0.9rem;
+            padding: 10px 20px; border-radius: 50px; font-weight: bold; font-size: 0.9rem;
             background: white; color: #334155; border: 2px solid #e2e8f0;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
             display: inline-flex; align-items: center; gap: 8px;
@@ -79,7 +79,10 @@
         .hero { background: white; padding: 80px 0; text-align: center; }
         .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 20px; color: #0f172a; }
         .hero p { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto 40px auto; }
-        .hero-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+        
+        .hero-buttons { 
+            display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; 
+        }
 
         /* === 5. GRID SYSTEM === */
         .grid-section { padding: 60px 0; background: #f8fafc; }
@@ -95,6 +98,7 @@
             gap: 20px;
             max-width: 1200px; margin: 0 auto; padding: 0 20px;
         }
+        .chse-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 900px; }
 
         /* === CARD DESIGN === */
         .card {
@@ -158,8 +162,6 @@
             .mobile-btn { display: none; }
             .desktop-menu { display: flex; }
             .hero h1 { font-size: 3.5rem; }
-            /* CHSE Grid */
-            .chse-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 900px; } 
         }
         #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
         #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
@@ -173,19 +175,22 @@
                 <img src="logo.png" alt="Logo">
                 <span>Edu<span class="text-gradient">Odia</span></span>
             </a>
+            
             <nav class="desktop-menu">
                 <a href="index.html">Home</a>
                 <a href="blog/index.html">Blog</a>
                 <a href="ocr-tool.html">OCR Tool</a>
-                <a href="#classes" class="btn-browse bg-gradient">Browse Books</a>
+                <a href="image-tool.html">Resizer</a> <a href="#classes" class="btn-browse bg-gradient">Browse Books</a>
             </nav>
+            
             <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
         </div>
+        
         <div id="mobile-menu" class="hidden">
             <a href="index.html">Home</a>
             <a href="blog/index.html">Blog</a>
             <a href="ocr-tool.html">OCR Tool</a>
-            <a href="#classes" style="color: #10b981;">Browse Books</a>
+            <a href="image-tool.html">Image Resizer</a> <a href="#classes" style="color: #10b981;">Browse Books</a>
         </div>
     </header>
 
@@ -195,12 +200,16 @@
             <p>Free PDF textbooks for Class 1 to 12. Designed for the students of Odisha. Fast, free, and available for everyone.</p>
             
             <div class="hero-buttons">
-                <a href="#classes" class="btn-browse bg-gradient" style="display: inline-block; padding: 15px 40px; font-size: 1.1rem;">
+                <a href="#classes" class="btn-browse bg-gradient" style="display: inline-block; padding: 15px 30px; font-size: 1.1rem;">
                     Start Reading
                 </a>
                 
-                <a href="ocr-tool.html" class="btn-secondary" style="padding: 15px 30px; font-size: 1.1rem;">
-                    <i class="fas fa-camera"></i> OCR Tool
+                <a href="ocr-tool.html" class="btn-secondary" style="padding: 15px 20px; font-size: 1.1rem;">
+                    <i class="fas fa-camera"></i> OCR
+                </a>
+
+                <a href="image-tool.html" class="btn-secondary" style="padding: 15px 20px; font-size: 1.1rem;">
+                    <i class="fas fa-compress-arrows-alt"></i> Resizer
                 </a>
             </div>
         </div>
@@ -214,7 +223,6 @@
             </div>
 
             <div class="grid">
-                
                 <a href="class-1.html" class="card border-green">
                     <div class="icon-circle bg-green">1</div>
                     <div><h3>Class 1</h3><p>Primary</p></div>
@@ -275,37 +283,18 @@
             </div>
 
             <div class="grid chse-grid" style="justify-content: center;">
-                
                 <a href="chse-arts.html" class="card border-rose">
-                    <div class="icon-circle bg-rose">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <div>
-                        <h3>Arts</h3>
-                        <p>Political Sc, History</p>
-                    </div>
+                    <div class="icon-circle bg-rose"><i class="fas fa-palette"></i></div>
+                    <div><h3>Arts</h3><p>Pol Sc, History</p></div>
                 </a>
-
                 <a href="chse-science.html" class="card border-teal">
-                    <div class="icon-circle bg-teal">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <div>
-                        <h3>Science</h3>
-                        <p>Physics, Chem, Bio</p>
-                    </div>
+                    <div class="icon-circle bg-teal"><i class="fas fa-flask"></i></div>
+                    <div><h3>Science</h3><p>Physics, Chem</p></div>
                 </a>
-
                 <a href="chse-commerce.html" class="card border-blue">
-                    <div class="icon-circle bg-blue">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div>
-                        <h3>Commerce</h3>
-                        <p>Accountancy, BST</p>
-                    </div>
+                    <div class="icon-circle bg-blue"><i class="fas fa-chart-line"></i></div>
+                    <div><h3>Commerce</h3><p>Accounting, BST</p></div>
                 </a>
-
             </div>
         </div>
     </section>
