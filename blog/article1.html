@@ -2,142 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Study Effectively - EduOdia</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Article | EduOdia</title>
+    <link rel="icon" type="image/png" href="../logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
     <style>
-        /* Professional Typography Settings */
-        body { font-family: 'Inter', sans-serif; background-color: #ffffff; color: #1f2937; }
+        /* === CORE === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fff; color: #334155; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+        img { max-width: 100%; display: block; border-radius: 10px; }
+
+        /* === HEADER === */
+        header { background: white; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 1000; }
+        .nav-container { max-width: 900px; margin: 0 auto; padding: 0 20px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { font-weight: 800; color: #1e293b; }
+        .back-link { color: #64748b; font-size: 0.9rem; display: flex; align-items: center; gap: 5px; }
         
-        /* The 'Prose' class handles the article text flow */
-        .prose p { 
-            margin-bottom: 1.8rem; 
-            line-height: 1.8; 
-            font-size: 1.125rem; /* 18px for better readability */
-            color: #374151; 
-            font-family: 'Merriweather', serif; /* Serif font for reading body text is very pro */
-        }
-        .prose h2 { 
-            font-family: 'Inter', sans-serif;
-            font-size: 1.75rem; 
-            font-weight: 700; 
-            color: #111827; 
-            margin-top: 3rem; 
-            margin-bottom: 1rem; 
-            letter-spacing: -0.025em;
-        }
-        .prose ul { 
-            margin-bottom: 1.8rem; 
-            list-style-type: disc; 
-            padding-left: 1.5rem; 
-            font-family: 'Merriweather', serif;
-            color: #374151;
-        }
-        .prose li { margin-bottom: 0.75rem; }
+        /* === ARTICLE CONTENT === */
+        .article-container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        
+        /* Typography for Reading */
+        .article-header { margin-bottom: 30px; text-align: center; }
+        .tag { background: #ecfdf5; color: #10b981; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        h1 { font-size: 2.2rem; margin-top: 15px; margin-bottom: 15px; color: #0f172a; line-height: 1.3; }
+        .meta { color: #94a3b8; font-size: 0.9rem; }
+        
+        .main-image { width: 100%; height: auto; margin-bottom: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        
+        /* The Article Body Text */
+        .content { font-size: 1.15rem; line-height: 1.8; color: #334155; }
+        .content p { margin-bottom: 1.5rem; }
+        .content h2 { font-size: 1.8rem; margin-top: 2.5rem; margin-bottom: 1rem; color: #0f172a; }
+        .content ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.5rem; }
+        
+        /* Callout Box */
+        .callout { background: #f0f9ff; border-left: 4px solid #0ea5e9; padding: 20px; margin: 30px 0; border-radius: 0 8px 8px 0; }
+        
+        /* Footer */
+        .article-footer { margin-top: 50px; padding-top: 30px; border-top: 1px solid #e2e8f0; text-align: center; }
+        .btn { background: #10b981; color: white; padding: 10px 25px; border-radius: 50px; font-weight: bold; display: inline-block; margin-top: 10px; }
+
+        @media (max-width: 768px) { h1 { font-size: 1.8rem; } .content { font-size: 1rem; } }
     </style>
 </head>
 <body>
 
-    <nav class="border-b border-gray-100 sticky top-0 bg-white/95 backdrop-blur z-50">
-        <div class="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-            <a href="index.html" class="text-gray-500 hover:text-blue-600 font-medium text-sm transition flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> All Articles
-            </a>
-            <a href="../index.html" class="font-bold text-lg tracking-tight">Edu<span class="text-blue-600">Odia</span></a>
-            <button class="text-gray-400 hover:text-blue-600"><i class="fas fa-share-alt"></i></button>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+            <span class="logo">EduOdia</span>
         </div>
-    </nav>
+    </header>
 
-    <article class="max-w-3xl mx-auto px-4 py-12">
-        
-        <header class="mb-10 text-center md:text-left">
-            <span class="text-blue-600 font-bold tracking-wide uppercase text-xs bg-blue-50 px-3 py-1 rounded-full">Study Strategy</span>
-            
-            <h1 class="mt-5 text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">
-                The Science of Studying: How to Retain 90% of What You Read
-            </h1>
-            
-            <div class="mt-6 flex items-center justify-center md:justify-start space-x-4">
-                <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
-                    <i class="fas fa-user"></i>
-                </div>
-                <div class="text-sm">
-                    <p class="font-bold text-gray-900">EduOdia Team</p>
-                    <p class="text-gray-500">Nov 18, 2025 &bull; 5 min read</p>
-                </div>
-            </div>
-        </header>
-
-        <figure class="mb-12">
-            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80" 
-                 alt="Student studying at desk" 
-                 class="w-full h-auto rounded-2xl shadow-lg">
-            <figcaption class="mt-3 text-center text-sm text-gray-400 italic">
-                Effective studying requires a distraction-free environment.
-            </figcaption>
-        </figure>
-
-        <div class="bg-blue-50 border-l-4 border-blue-600 p-6 rounded-r-lg mb-10">
-            <h3 class="text-blue-900 font-bold uppercase text-xs tracking-wider mb-2">In this Article</h3>
-            <ul class="text-blue-900/80 text-sm space-y-1 font-medium">
-                <li>&bull; Why passive reading doesn't work</li>
-                <li>&bull; The Pomodoro Technique explained</li>
-                <li>&bull; How to use Active Recall for exams</li>
-            </ul>
+    <article class="article-container">
+        <div class="article-header">
+            <span class="tag">Study Tips</span>
+            <h1>How to Score 90% in Board Exams</h1>
+            <div class="meta">By EduOdia Team • Nov 18, 2025</div>
         </div>
 
-        <div class="prose">
-            
-            <p>
-                Have you ever spent three hours reading a textbook, only to realize you can’t remember a single thing you just read? You are not alone. Most students in Odisha fall into the trap of "Passive Studying"—simply moving their eyes over the text without engaging their brain. To score high marks in your Board exams, you need to shift your strategy from working hard to working smart.
-            </p>
+        <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=80" class="main-image">
+
+        <div class="content">
+            <p>Have you ever spent three hours reading a textbook, only to realize you can’t remember a single thing? You are not alone. Most students fall into the trap of "Passive Studying". To score high marks, you need to work smart.</p>
 
             <h2>1. The Illusion of Competence</h2>
-            <p>
-                When we highlight lines in a book or re-read notes, our brain recognizes the text and tells us, "I know this." This is a lie. Recognizing text is not the same as being able to recall it. Real learning happens when you close the book and try to explain the concept to yourself. If you can't explain it simply, you don't understand it well enough.
-            </p>
+            <p>When we highlight lines in a book, our brain tells us, "I know this." This is a lie. Real learning happens when you close the book and try to explain the concept to yourself.</p>
 
-            <div class="border-l-4 border-gray-900 pl-6 py-2 my-10 italic text-xl text-gray-800 font-serif">
-                "Stop treating your brain like a hard drive to store data. Treat it like a muscle that needs to be exercised through testing."
+            <div class="callout">
+                <strong>Pro Tip:</strong> Don't just read. Test yourself. If you can't explain it simply, you don't understand it well enough.
             </div>
 
-            <h2>2. The Power of Active Recall</h2>
-            <p>
-                Active Recall is the single most effective study technique proven by science. Instead of reading a chapter four times, read it once, then close the book and write down everything you remember. This struggle to "retrieve" information strengthens the neural pathways in your brain. It feels difficult and tiring, but that is exactly why it works.
-            </p>
+            <h2>2. Active Recall</h2>
+            <p>Active Recall is the single most effective study technique. Instead of reading a chapter four times, read it once, then close the book and write down everything you remember.</p>
 
-            <h2>3. Use the Pomodoro Technique</h2>
-            <p>
-                Our focus works like a battery; it drains over time. The Pomodoro Technique suggests studying in focused bursts. Set a timer for 25 minutes of intense focus, followed by a 5-minute break. After four cycles, take a longer break. This prevents burnout and keeps your mind fresh, allowing you to study for longer periods without getting exhausted.
-            </p>
-
-            <h2>4. Creating the Right Environment</h2>
-            <p>
-                Your environment dictates your focus. If your phone is on your desk, your IQ drops by 10 points because part of your brain is constantly waiting for a notification. Put your phone in another room. Keep your desk clean. When you sit down, your brain should know it is time to work. Small changes in your physical space can lead to massive improvements in your marks.
-            </p>
+            <h2>3. The Pomodoro Technique</h2>
+            <p>Study in focused bursts. Set a timer for 25 minutes of intense work, followed by a 5-minute break. This keeps your brain fresh.</p>
         </div>
 
-        <div class="mt-12 pt-8 border-t border-gray-200">
-            <h3 class="font-bold text-gray-900 mb-4">Was this helpful?</h3>
-            <div class="flex space-x-4">
-                <a href="../index.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">
-                    Browse Class 1-12 Books
-                </a>
-                <a href="index.html" class="bg-gray-100 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition">
-                    Read More Articles
-                </a>
-            </div>
+        <div class="article-footer">
+            <h3>Found this helpful?</h3>
+            <a href="../index.html" class="btn">Check out our Class 1-10 Books</a>
         </div>
-
     </article>
-
-    <footer class="bg-gray-50 py-12 mt-12 border-t">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <p class="text-gray-400 text-sm">&copy; 2025 EduOdia.in. All rights reserved.</p>
-        </div>
-    </footer>
 
 </body>
 </html>
