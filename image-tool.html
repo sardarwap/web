@@ -8,7 +8,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>Live Image Resizer | EduOdia</title>
+    <title>Ultimate Photo Tool | EduOdia</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
     
@@ -19,79 +19,97 @@
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; line-height: 1.6; display: flex; flex-direction: column; min-height: 100vh; }
         a { text-decoration: none; color: inherit; }
         
+        /* Theme Colors */
         .text-gradient { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #0ea5e9; }
         .bg-gradient { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); color: white; }
         
+        /* Header */
         header { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #e2e8f0; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 70px; display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
         .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
         
-        .tool-container { max-width: 800px; margin: 30px auto; padding: 0 15px; flex: 1; width: 100%; }
-        .card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        /* Tool Container */
+        .tool-container { max-width: 900px; margin: 40px auto; padding: 0 20px; flex: 1; width: 100%; }
+        
+        .card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         
         /* Upload Box */
-        .upload-box { border: 2px dashed #cbd5e1; border-radius: 12px; background: #f1f5f9; text-align: center; padding: 40px 20px; cursor: pointer; transition: 0.3s; position: relative; }
+        .upload-box {
+            border: 2px dashed #cbd5e1; border-radius: 12px; background: #f1f5f9;
+            text-align: center; padding: 40px 20px; cursor: pointer; transition: 0.3s; position: relative;
+        }
         .upload-box:hover { border-color: #10b981; background: #ecfdf5; }
         .upload-box input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
         
-        /* === PREVIEW SECTION (MOVED UP) === */
-        .preview-section { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; 
-            background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;
-        }
-        .preview-box { text-align: center; display: flex; flex-direction: column; align-items: center; }
-        
-        /* Image Container */
-        .img-wrapper {
-            width: 100%; height: 200px; /* Fixed height for mobile stability */
-            display: flex; align-items: center; justify-content: center;
-            background: #e2e8f0; border-radius: 8px; overflow: hidden; margin-bottom: 10px;
-            border: 1px solid #cbd5e1;
-        }
-        .img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        
-        .label { font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 5px; }
-        .size-badge { 
-            background: #1e293b; color: white; padding: 4px 12px; border-radius: 20px; 
-            font-size: 0.85rem; font-weight: 700; display: inline-block;
-        }
-        .size-badge.green { background: #10b981; box-shadow: 0 2px 5px rgba(16, 185, 129, 0.3); }
-
-        /* === CONTROLS === */
-        .controls { display: none; } /* Hidden initially */
-        
-        .control-group { margin-bottom: 20px; }
-        .group-header { font-size: 0.85rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        /* Controls Section */
+        .controls { margin-top: 25px; display: none; }
         
         /* Mode Tabs */
-        .tabs { display: flex; background: #f1f5f9; padding: 4px; border-radius: 8px; margin-bottom: 15px; }
-        .tab { flex: 1; text-align: center; padding: 8px; font-size: 0.9rem; font-weight: 600; color: #64748b; cursor: pointer; border-radius: 6px; transition: 0.2s; }
-        .tab.active { background: white; color: #10b981; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .mode-switch { display: flex; gap: 10px; margin-bottom: 20px; background: #f1f5f9; padding: 5px; border-radius: 8px; }
+        .mode-btn { flex: 1; padding: 10px; text-align: center; cursor: pointer; border-radius: 6px; font-weight: 600; font-size: 0.9rem; transition: 0.2s; }
+        .mode-btn.active { background: white; color: #10b981; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        /* Input Groups */
+        .control-section { margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #f1f5f9; }
+        .section-label { font-size: 0.85rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; display: flex; justify-content: space-between; }
 
-        /* Inputs */
-        .input-row { display: flex; gap: 10px; }
-        .input-styled, select { width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; font-weight: bold; color: #1e293b; background: white; }
-        .input-styled:focus { outline: none; border-color: #10b981; }
+        .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        .input-styled, select {
+            width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px;
+            font-size: 1rem; font-weight: bold; color: #1e293b; transition: 0.2s; background: white;
+        }
+        .input-styled:focus, select:focus { border-color: #10b981; outline: none; }
+
+        /* Buttons */
+        .icon-btn-group { display: flex; gap: 10px; }
+        .icon-btn { 
+            flex: 1; padding: 8px; border: 1px solid #cbd5e1; background: white; border-radius: 6px;
+            cursor: pointer; color: #475569; transition: 0.2s; font-size: 0.9rem;
+        }
+        .icon-btn:hover { background: #f1f5f9; color: #0f172a; }
+        .icon-btn.active { background: #0f172a; color: white; border-color: #0f172a; }
 
         /* Sliders */
         input[type=range] { width: 100%; height: 6px; background: #e2e8f0; border-radius: 5px; outline: none; cursor: pointer; accent-color: #10b981; }
-
-        /* Quick Chips */
+        
+        /* Chips */
         .chips { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
         .chip { background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
         .chip:hover { background: #0369a1; color: white; }
 
-        /* Buttons */
-        .btn-action { width: 100%; padding: 14px; border-radius: 10px; border: none; font-weight: 700; font-size: 1.1rem; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .btn-download { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); color: white; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); margin-top: 20px; }
-        .btn-download:hover { transform: translateY(-2px); }
+        /* Preview */
+        .preview-panel { text-align: center; position: sticky; top: 90px; }
+        .img-container { 
+            background: #1e293b; border-radius: 12px; padding: 10px; 
+            min-height: 300px; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .img-container img { max-width: 100%; max-height: 400px; object-fit: contain; }
         
-        .btn-tool { background: white; border: 1px solid #cbd5e1; padding: 8px 12px; border-radius: 8px; cursor: pointer; color: #475569; font-weight: 600; font-size: 0.9rem; }
-        .btn-tool:hover { border-color: #10b981; color: #10b981; background: #ecfdf5; }
+        .stats-bar { 
+            display: flex; justify-content: space-between; margin-top: 15px; 
+            background: #ecfdf5; padding: 10px 15px; border-radius: 8px; border: 1px solid #10b981; color: #065f46; font-weight: 600;
+        }
+
+        .btn-download {
+            width: 100%; padding: 15px; border-radius: 10px; border: none;
+            font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: 0.2s;
+        }
+        .btn-download:hover { transform: translateY(-2px); }
+
+        /* Edit Tools */
+        .tool-btn {
+            background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 12px; border-radius: 8px;
+            cursor: pointer; font-size: 0.9rem; color: #475569; display: flex; align-items: center; gap: 5px; transition: 0.2s;
+        }
+        .tool-btn:hover { background: #e2e8f0; color: #0f172a; }
+        .tool-btn.active { background: #0f172a; color: white; border-color: #0f172a; }
 
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
-        @media (max-width: 600px) { .preview-section { grid-template-columns: 1fr 1fr; gap: 10px; } .img-wrapper { height: 140px; } }
+        @media (max-width: 768px) { .editor-layout { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -118,89 +136,97 @@
                 <p style="font-size: 0.85rem; color: #94a3b8;">Supports JPG, PNG, WEBP</p>
             </div>
 
-            <div class="controls" id="controlsArea">
+            <div class="editor-layout" id="editorArea" style="display:none; margin-top:30px; display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
                 
-                <div class="preview-section">
-                    <div class="preview-box">
-                        <div class="label">Original</div>
-                        <div class="img-wrapper">
-                            <img id="originalImg">
+                <div class="control-panel" style="display:flex; flex-direction:column; gap:20px;">
+                    
+                    <div class="control-group" style="background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #e2e8f0;">
+                        <div class="group-label">1. Compression</div>
+                        
+                        <div class="mode-switch">
+                            <div class="mode-btn active" id="modeManual">Manual Quality</div>
+                            <div class="mode-btn" id="modeTarget">Target Size (Auto)</div>
                         </div>
-                        <div class="size-badge" id="originalSize">...</div>
+
+                        <div id="qualityControl">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 0.9rem;">
+                                <span>Quality</span>
+                                <span id="qVal" style="color:#10b981;">80%</span>
+                            </div>
+                            <input type="range" id="qualityRange" min="1" max="100" value="80" style="width:100%;">
+                        </div>
+                        
+                        <div id="kbControl" style="display: none;">
+                            <div class="input-row">
+                                <input type="number" id="targetKB" value="50" class="input-styled" placeholder="Max KB">
+                                <span style="align-self: center; font-size: 0.8rem; color: #64748b;">KB</span>
+                            </div>
+                            <div class="chips">
+                                <span class="chip" onclick="setKB(20)">20KB (Sign)</span>
+                                <span class="chip" onclick="setKB(50)">50KB (Photo)</span>
+                                <span class="chip" onclick="setKB(100)">100KB</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #e2e8f0;">
+                        <div class="group-label">2. Resize (Pixels)</div>
+                        <div class="input-row">
+                            <input type="number" id="widthInput" placeholder="Width" class="input-styled">
+                            <input type="number" id="heightInput" placeholder="Height" class="input-styled">
+                        </div>
+                        <div class="chips">
+                             <span class="chip" onclick="setDim(350, 450)">Passport</span>
+                             <span class="chip" onclick="setDim(280, 120)">Sign</span>
+                        </div>
+                        <div style="margin-top: 10px; font-size: 0.85rem;">
+                            <input type="checkbox" id="aspectRatio" checked> <label for="aspectRatio">Maintain Aspect Ratio</label>
+                        </div>
+                    </div>
+
+                    <div class="control-group" style="background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #e2e8f0;">
+                        <div class="group-label">3. Edit Image</div>
+                        <div class="edit-tools" style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:15px;">
+                            <button class="tool-btn" onclick="rotateImg(-90)"><i class="fas fa-undo"></i> Left</button>
+                            <button class="tool-btn" onclick="rotateImg(90)"><i class="fas fa-redo"></i> Right</button>
+                            <button class="tool-btn" id="btnGrayscale" onclick="toggleGrayscale()"><i class="fas fa-adjust"></i> B&W</button>
+                        </div>
+                        
+                        <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 5px;">Brightness</div>
+                        <input type="range" id="brightnessRange" min="50" max="150" value="100">
+                        
+                        <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 5px; margin-top: 10px;">Contrast</div>
+                        <input type="range" id="contrastRange" min="50" max="150" value="100">
+                    </div>
+
+                    <div class="control-group" style="background:#f8fafc; padding:15px; border-radius:12px; border:1px solid #e2e8f0;">
+                        <div class="group-label">4. Output Format</div>
+                        <select id="formatSelect">
+                            <option value="image/jpeg">JPG (Best for Forms)</option>
+                            <option value="image/png">PNG (High Quality)</option>
+                            <option value="image/webp">WEBP (Modern Web)</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="preview-panel">
+                    <div class="img-container">
+                        <img id="previewImg" src="">
                     </div>
                     
-                    <div class="preview-box">
-                        <div class="label" style="color: #10b981;">Result</div>
-                        <div class="img-wrapper" style="border-color: #10b981; background: #f0fdf4;">
-                            <img id="compressedImg">
-                        </div>
-                        <div class="size-badge green" id="compressedSize">Processing...</div>
+                    <div class="stats-bar">
+                        <span>Size: <span id="finalSize">...</span></span>
+                        <span id="statusMsg"><i class="fas fa-bolt"></i> Live Preview</span>
                     </div>
-                </div>
 
-                <hr style="margin: 25px 0; border-top: 1px solid #e2e8f0;">
-
-                <div class="tabs">
-                    <div class="tab active" id="tabAuto">Auto Size (KB)</div>
-                    <div class="tab" id="tabManual">Manual Quality</div>
-                </div>
-
-                <div id="groupAuto" class="control-group">
-                    <div class="group-header">Target File Size (KB)</div>
-                    <div class="input-row">
-                        <input type="number" id="targetKB" value="50" class="input-styled" placeholder="Max KB">
-                    </div>
-                    <div class="chips">
-                        <span class="chip" onclick="setKB(20)">20KB (Sign)</span>
-                        <span class="chip" onclick="setKB(50)">50KB (Photo)</span>
-                        <span class="chip" onclick="setKB(100)">100KB</span>
-                    </div>
-                </div>
-
-                <div id="groupManual" class="control-group" style="display:none;">
-                    <div class="group-header">
-                        <span>Image Quality</span>
-                        <span id="qVal" style="color:#10b981;">80%</span>
-                    </div>
-                    <input type="range" id="qualityRange" min="1" max="100" value="80">
-                </div>
-
-                <div class="control-group">
-                    <div class="group-header">Dimensions (Pixels)</div>
-                    <div class="input-row">
-                        <input type="number" id="widthInput" placeholder="W" class="input-styled">
-                        <input type="number" id="heightInput" placeholder="H" class="input-styled">
-                    </div>
-                    <div class="chips">
-                        <span class="chip" onclick="setDim(350, 450)">Passport</span>
-                        <span class="chip" onclick="setDim(280, 120)">Sign</span>
-                    </div>
-                    <label style="font-size:0.8rem; color:#64748b; display:block; margin-top:10px;">
-                        <input type="checkbox" id="aspectRatio" checked> Maintain Aspect Ratio
-                    </label>
-                </div>
-
-                <div class="control-group">
-                    <div class="group-header">Edit & Enhance</div>
-                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                        <button class="btn-tool" onclick="rotateImg(-90)"><i class="fas fa-undo"></i> Left</button>
-                        <button class="btn-tool" onclick="rotateImg(90)"><i class="fas fa-redo"></i> Right</button>
-                        <button class="btn-tool" id="btnGray" onclick="toggleGrayscale()">B&W Mode</button>
-                    </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-                        <select id="formatSelect">
-                            <option value="image/jpeg">JPG (Form Best)</option>
-                            <option value="image/png">PNG (High Q)</option>
-                            <option value="image/webp">WEBP</option>
-                        </select>
-                        
-                        <button id="downloadBtn" class="btn-action btn-download" style="margin-top:0; padding:8px;">
-                            <i class="fas fa-download"></i> Download
-                        </button>
-                    </div>
+                    <button id="downloadBtn" class="btn-download bg-gradient">
+                        <i class="fas fa-download"></i> Download Image
+                    </button>
                 </div>
 
             </div>
+
         </div>
     </div>
 
@@ -214,23 +240,23 @@
     </footer>
 
     <script>
+        // Elements
         const fileInput = document.getElementById('fileInput');
-        const controlsArea = document.getElementById('controlsArea');
-        const originalImg = document.getElementById('originalImg');
-        const compressedImg = document.getElementById('compressedImg');
-        const targetKBInput = document.getElementById('targetKB');
+        const editorArea = document.getElementById('editorArea');
+        const previewImg = document.getElementById('previewImg');
         const widthInput = document.getElementById('widthInput');
         const heightInput = document.getElementById('heightInput');
         const qualityRange = document.getElementById('qualityRange');
+        const targetKBInput = document.getElementById('targetKB');
         const downloadBtn = document.getElementById('downloadBtn');
         const formatSelect = document.getElementById('formatSelect');
-        
+
         // State
-        let sourceImage = new Image();
+        let originalImg = new Image();
         let originalFile = null;
         let currentRotation = 0;
         let isGrayscale = false;
-        let isAutoMode = true;
+        let isTargetMode = false; // CHANGED: Start in Manual Mode
         let debounceTimer;
         let originalAspectRatio = 1;
 
@@ -238,22 +264,15 @@
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 originalFile = e.target.files[0];
-                document.getElementById('originalSize').innerText = formatBytes(originalFile.size);
-                
                 const reader = new FileReader();
                 reader.onload = (ev) => {
-                    sourceImage.src = ev.target.result;
-                    sourceImage.onload = () => {
-                        originalImg.src = sourceImage.src;
-                        originalAspectRatio = sourceImage.width / sourceImage.height;
-                        
-                        // Set initial dimensions
-                        widthInput.value = sourceImage.width;
-                        heightInput.value = sourceImage.height;
-                        
-                        // Show Editor
-                        document.getElementById('dropZone').style.display = 'none';
-                        controlsArea.style.display = 'block';
+                    originalImg.src = ev.target.result;
+                    originalImg.onload = () => {
+                        originalAspectRatio = originalImg.width / originalImg.height;
+                        widthInput.value = originalImg.width;
+                        heightInput.value = originalImg.height;
+                        editorArea.style.display = 'grid';
+                        document.getElementById('dropZone').style.display = 'none'; 
                         processImage();
                     }
                 };
@@ -261,88 +280,76 @@
             }
         });
 
-        // 2. Processing Logic
+        // 2. Core Processor
         function processImage() {
-            document.getElementById('compressedSize').innerText = "...";
+            document.getElementById('statusMsg').innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             
-            setTimeout(() => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
 
-                let w = parseInt(widthInput.value) || sourceImage.width;
-                let h = parseInt(heightInput.value) || sourceImage.height;
+            let w = parseInt(widthInput.value) || originalImg.width;
+            let h = parseInt(heightInput.value) || originalImg.height;
 
-                // Rotation Logic
-                if (Math.abs(currentRotation) === 90 || Math.abs(currentRotation) === 270) {
-                    canvas.width = h; canvas.height = w;
-                } else {
-                    canvas.width = w; canvas.height = h;
-                }
+            if (Math.abs(currentRotation) === 90 || Math.abs(currentRotation) === 270) {
+                canvas.width = h; canvas.height = w;
+            } else {
+                canvas.width = w; canvas.height = h;
+            }
 
-                // Apply Filters
-                if (isGrayscale) ctx.filter = 'grayscale(100%)';
+            let filterStr = `brightness(${document.getElementById('brightnessRange').value}%) contrast(${document.getElementById('contrastRange').value}%)`;
+            if (isGrayscale) filterStr += ' grayscale(100%)';
+            ctx.filter = filterStr;
 
-                // Draw
-                ctx.translate(canvas.width/2, canvas.height/2);
-                ctx.rotate(currentRotation * Math.PI / 180);
-                ctx.drawImage(sourceImage, -w/2, -h/2, w, h);
+            ctx.translate(canvas.width/2, canvas.height/2);
+            ctx.rotate(currentRotation * Math.PI / 180);
+            ctx.drawImage(originalImg, -w/2, -h/2, w, h);
 
-                // Compress
-                const format = formatSelect.value;
-                let dataUrl;
-                
-                if (isAutoMode && format !== 'image/png') {
-                    // Auto KB Loop
-                    const targetBytes = parseInt(targetKBInput.value) * 1024;
-                    let quality = 0.95;
-                    let attempt = 0;
-                    do {
-                        dataUrl = canvas.toDataURL(format, quality);
-                        let size = Math.round((dataUrl.length - 22) * 0.75);
-                        if (size <= targetBytes || quality <= 0.05) break;
-                        quality -= 0.05;
-                        attempt++;
-                    } while (attempt < 15);
-                } else {
-                    // Manual
-                    let q = parseInt(qualityRange.value) / 100;
-                    dataUrl = canvas.toDataURL(format, q);
-                }
+            const format = formatSelect.value;
+            let quality = isTargetMode ? 0.95 : parseInt(qualityRange.value) / 100;
+            let dataUrl;
 
-                // Update UI
-                compressedImg.src = dataUrl;
-                let finalSize = Math.round((dataUrl.length - 22) * 0.75);
-                document.getElementById('compressedSize').innerText = formatBytes(finalSize);
+            if (isTargetMode && format !== 'image/png') {
+                const targetBytes = parseInt(targetKBInput.value) * 1024;
+                let attempt = 0;
+                do {
+                    dataUrl = canvas.toDataURL(format, quality);
+                    let size = Math.round((dataUrl.length - 22) * 0.75);
+                    if (size <= targetBytes || quality <= 0.05) break;
+                    quality -= 0.05;
+                    attempt++;
+                } while (attempt < 15);
+            } else {
+                dataUrl = canvas.toDataURL(format, quality);
+            }
 
-                // Download
-                downloadBtn.onclick = () => {
-                    const link = document.createElement('a');
-                    link.download = `EduOdia-Edited.${format.split('/')[1]}`;
-                    link.href = dataUrl;
-                    link.click();
-                }
+            previewImg.src = dataUrl;
+            let finalSize = Math.round((dataUrl.length - 22) * 0.75);
+            document.getElementById('finalSize').innerText = formatBytes(finalSize);
+            document.getElementById('statusMsg').innerHTML = '<i class="fas fa-check"></i> Ready';
 
-            }, 50); // Small delay for UI responsiveness
+            downloadBtn.onclick = () => {
+                const link = document.createElement('a');
+                link.download = `EduOdia-Edited.${format.split('/')[1]}`;
+                link.href = dataUrl;
+                link.click();
+            }
         }
 
         // 3. Listeners
         function trigger() { clearTimeout(debounceTimer); debounceTimer = setTimeout(processImage, 150); }
         
-        [widthInput, heightInput, targetKBInput, qualityRange, formatSelect].forEach(el => {
-            el.addEventListener('input', trigger);
-        });
+        [widthInput, heightInput, targetKBInput, qualityRange, formatSelect, document.getElementById('brightnessRange'), document.getElementById('contrastRange')]
+            .forEach(el => el.addEventListener('input', trigger));
 
-        // Aspect Ratio Lock
         widthInput.addEventListener('input', () => {
-             if(document.getElementById('aspectRatio').checked) heightInput.value = Math.round(widthInput.value / originalAspectRatio);
+            if(document.getElementById('aspectRatio').checked) heightInput.value = Math.round(widthInput.value / originalAspectRatio);
         });
 
         // Tools
         window.rotateImg = (deg) => { currentRotation = (currentRotation + deg) % 360; trigger(); };
         window.toggleGrayscale = () => { 
             isGrayscale = !isGrayscale; 
-            document.getElementById('btnGray').style.borderColor = isGrayscale ? '#10b981' : '#cbd5e1';
-            document.getElementById('btnGray').style.color = isGrayscale ? '#10b981' : '#475569';
+            document.getElementById('btnGrayscale').classList.toggle('active'); 
             trigger(); 
         };
         window.setKB = (kb) => { targetKBInput.value = kb; trigger(); };
@@ -357,21 +364,20 @@
         const modeManual = document.getElementById('modeManual');
         
         modeManual.onclick = () => {
-            isAutoMode = false;
+            isTargetMode = false;
             modeManual.classList.add('active'); modeTarget.classList.remove('active');
             document.getElementById('qualityControl').style.display = 'block';
-            document.getElementById('groupAuto').style.display = 'none';
+            document.getElementById('kbControl').style.display = 'none';
             trigger();
         };
         modeTarget.onclick = () => {
-            isAutoMode = true;
+            isTargetMode = true;
             modeTarget.classList.add('active'); modeManual.classList.remove('active');
-            document.getElementById('groupAuto').style.display = 'block';
+            document.getElementById('kbControl').style.display = 'block';
             document.getElementById('qualityControl').style.display = 'none';
             trigger();
         };
 
-        // Update Quality Text
         qualityRange.addEventListener('input', (e) => document.getElementById('qVal').innerText = e.target.value + '%');
 
         function formatBytes(bytes) {
