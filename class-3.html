@@ -2,173 +2,247 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 3 Textbooks | EduOdia</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Class 3 Books | EduOdia</title>
     <link rel="icon" type="image/png" href="logo.png">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        /* === CORE STYLES === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f8fafc; 
+            color: #334155; 
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
         
-        /* THEME COLORS */
-        .edu-gradient { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); }
+        /* Gradients */
         .text-gradient {
             background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            color: #0ea5e9;
         }
         
-        /* HOVER EFFECTS */
+        /* === HEADER === */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 70px;
+        }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        
+        .desktop-menu { display: none; gap: 30px; align-items: center; }
+        .desktop-menu a { font-weight: 500; color: #64748b; }
+        .desktop-menu a:hover { color: #10b981; }
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+
+        /* === PAGE TITLE === */
+        .page-header {
+            background: white; padding: 40px 0 60px 0; border-bottom: 1px solid #f1f5f9; text-align: center;
+        }
+        .breadcrumb {
+            display: inline-flex; align-items: center; gap: 5px;
+            color: #64748b; font-size: 0.9rem; margin-bottom: 30px; font-weight: 500;
+        }
+        .breadcrumb:hover { color: #10b981; }
+
+        .class-badge {
+            display: inline-flex; justify-content: center; align-items: center;
+            /* Class 3 Theme: Cyan/Teal Gradient */
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            color: white; width: 80px; height: 80px; border-radius: 24px;
+            font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;
+            box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4);
+        }
+        .page-header h1 { font-size: 2rem; color: #0f172a; margin-bottom: 5px; }
+        .page-header p { color: #64748b; font-size: 1rem; }
+
+        /* === BOOK GRID === */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: -30px;
+            padding-bottom: 60px;
+        }
+
         .book-card {
-            transition: all 0.3s ease;
-            border: 1px solid #f1f5f9;
+            background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+            padding: 25px; transition: all 0.3s ease; 
+            display: flex; flex-direction: column; justify-content: space-between;
+            border-left: 5px solid #06b6d4; /* Default Accent */
         }
         .book-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.15);
-            border-color: #10b981;
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
         }
+        
+        .book-top { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
+        .book-icon {
+            background: #ecfdf5; color: #10b981; width: 50px; height: 50px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; flex-shrink: 0;
+        }
+        .book-info h3 { font-size: 1.25rem; color: #1e293b; margin-bottom: 5px; line-height: 1.3; }
+        .book-info p { font-size: 0.85rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .download-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: #f1f5f9; color: #334155; font-weight: 700;
+            padding: 12px; border-radius: 50px; width: 100%;
+            transition: all 0.2s; 
+        }
+        .download-btn:hover {
+            background: #06b6d4; color: white;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Footer */
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .mobile-btn { display: none; }
+            .desktop-menu { display: flex; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+        }
+        /* Mobile Dropdown */
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
     </style>
 </head>
 <body>
 
-    <nav class="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="flex items-center">
-                        <img src="logo.png" alt="EduOdia" class="h-10 w-10 mr-3 rounded-full shadow-sm border border-gray-100">
-                        <span class="font-extrabold text-xl tracking-tight text-gray-800">Edu<span class="text-gradient">Odia</span></span>
-                    </a>
-                </div>
-                <div class="flex items-center">
-                    <a href="index.html" class="text-gray-500 hover:text-emerald-600 font-medium text-sm flex items-center transition">
-                        <i class="fas fa-arrow-left mr-2"></i> Back to Classes
-                    </a>
-                </div>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo">
+                <span>Edu<span class="text-gradient">Odia</span></span>
+            </a>
+            <nav class="desktop-menu">
+                <a href="index.html">Home</a>
+                <a href="blog/index.html">Blog</a>
+            </nav>
+            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden">
+            <a href="index.html">Home</a>
+            <a href="blog/index.html">Blog</a>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <a href="index.html" class="breadcrumb">
+                <i class="fas fa-arrow-left"></i> Back to Library
+            </a>
+            
+            <div style="display: block; margin-top: 10px;">
+                <div class="class-badge">3</div>
+                <h1>Class 3 Textbooks</h1>
+                <p>Odia Medium • BSE Odisha Board</p>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <div class="bg-white border-b border-gray-100">
-        <div class="max-w-6xl mx-auto px-4 py-10">
-            <div class="flex items-center space-x-4">
-                <div class="h-16 w-16 rounded-2xl bg-gradient-to-r from-teal-400 to-cyan-500 flex items-center justify-center text-white text-3xl font-bold shadow-lg shadow-cyan-100">
-                    3
-                </div>
-                <div>
-                    <h1 class="text-3xl font-extrabold text-gray-900">Class 3 Textbooks</h1>
-                    <p class="text-gray-500 text-sm mt-1">Odia Medium • BSE Odisha Board</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="container">
+        <div class="grid">
 
-    <div class="max-w-6xl mx-auto px-4 py-12">
-        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-
-            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group">
-                <div class="flex items-start justify-between">
-                    <div class="flex-1">
-                        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-wide">Mathematics</span>
-                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-blue-600 transition">Ganita Maza</h3>
-                        <p class="text-sm text-gray-500 mt-2">Math Textbook</p>
-                    </div>
-                    <div class="h-16 w-12 bg-blue-50 rounded shadow-inner flex items-center justify-center text-blue-300">
-                        <i class="fas fa-calculator text-2xl"></i>
+            <div class="book-card" style="border-left-color: #3b82f6;">
+                <div class="book-top">
+                    <div class="book-icon" style="background: #eff6ff; color: #3b82f6;"><i class="fas fa-calculator"></i></div>
+                    <div class="book-info">
+                        <h3>Ganita Maza</h3>
+                        <p>Mathematics</p>
                     </div>
                 </div>
-                <div class="mt-8">
-                    <a href="https://drive.google.com/file/d/1BvKFdOP1ACJzvpDukHV_D_VcsTVGdWsm/view?usp=sharing" target="_blank" class="w-full block text-center bg-gray-50 hover:bg-blue-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
-                        <i class="fas fa-download mr-2"></i> Download PDF
-                    </a>
-                </div>
+                <a href="https://drive.google.com/file/d/1BvKFdOP1ACJzvpDukHV_D_VcsTVGdWsm/view?usp=sharing" target="_blank" class="download-btn">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
             </div>
 
-            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group">
-                <div class="flex items-start justify-between">
-                    <div class="flex-1">
-                        <span class="text-xs font-bold text-pink-600 bg-pink-50 px-2 py-1 rounded uppercase tracking-wide">Literature</span>
-                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-pink-600 transition">Ama Bhasha Ama Sahitya</h3>
-                        <p class="text-sm text-gray-500 mt-2">Odia Textbook</p>
-                    </div>
-                    <div class="h-16 w-12 bg-pink-50 rounded shadow-inner flex items-center justify-center text-pink-300">
-                        <i class="fas fa-book-open text-2xl"></i>
+            <div class="book-card" style="border-left-color: #ec4899;">
+                <div class="book-top">
+                    <div class="book-icon" style="background: #fdf2f8; color: #ec4899;"><i class="fas fa-book-open"></i></div>
+                    <div class="book-info">
+                        <h3>Ama Bhasha Ama Sahitya</h3>
+                        <p>Literature</p>
                     </div>
                 </div>
-                <div class="mt-8">
-                    <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="w-full block text-center bg-gray-50 hover:bg-pink-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
-                        <i class="fas fa-download mr-2"></i> Download PDF
-                    </a>
-                </div>
+                <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="download-btn" style="hover: background: #ec4899;">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
             </div>
 
-            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group">
-                <div class="flex items-start justify-between">
-                    <div class="flex-1">
-                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded uppercase tracking-wide">Science</span>
-                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-emerald-600 transition">Jana Ajana</h3>
-                        <p class="text-sm text-gray-500 mt-2">Environmental Studies</p>
-                    </div>
-                    <div class="h-16 w-12 bg-emerald-50 rounded shadow-inner flex items-center justify-center text-emerald-300">
-                        <i class="fas fa-leaf text-2xl"></i>
+            <div class="book-card" style="border-left-color: #10b981;">
+                <div class="book-top">
+                    <div class="book-icon" style="background: #ecfdf5; color: #10b981;"><i class="fas fa-leaf"></i></div>
+                    <div class="book-info">
+                        <h3>Jana Ajana</h3>
+                        <p>Environmental Studies</p>
                     </div>
                 </div>
-                <div class="mt-8">
-                    <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="w-full block text-center bg-gray-50 hover:bg-emerald-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
-                        <i class="fas fa-download mr-2"></i> Download PDF
-                    </a>
-                </div>
+                <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="download-btn">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
             </div>
 
-            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group">
-                <div class="flex items-start justify-between">
-                    <div class="flex-1">
-                        <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded uppercase tracking-wide">English</span>
-                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-purple-600 transition">My English Book</h3>
-                        <p class="text-sm text-gray-500 mt-2">Language Textbook</p>
-                    </div>
-                    <div class="h-16 w-12 bg-purple-50 rounded shadow-inner flex items-center justify-center text-purple-300">
-                        <i class="fas fa-language text-2xl"></i>
+            <div class="book-card" style="border-left-color: #8b5cf6;">
+                <div class="book-top">
+                    <div class="book-icon" style="background: #f5f3ff; color: #8b5cf6;"><i class="fas fa-language"></i></div>
+                    <div class="book-info">
+                        <h3>My English Book</h3>
+                        <p>English</p>
                     </div>
                 </div>
-                <div class="mt-8">
-                    <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="w-full block text-center bg-gray-50 hover:bg-purple-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
-                        <i class="fas fa-download mr-2"></i> Download PDF
-                    </a>
-                </div>
+                <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="download-btn">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
             </div>
 
-            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group border-orange-100">
-                <div class="flex items-start justify-between">
-                    <div class="flex-1">
-                        <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded uppercase tracking-wide">Workbook</span>
-                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-orange-600 transition">Math Workbook</h3>
-                        <p class="text-sm text-gray-500 mt-2">Practice Book</p>
-                    </div>
-                    <div class="h-16 w-12 bg-orange-100 rounded shadow-inner flex items-center justify-center text-orange-300">
-                        <i class="fas fa-pencil-alt text-2xl"></i>
+            <div class="book-card" style="border-left-color: #f97316;">
+                <div class="book-top">
+                    <div class="book-icon" style="background: #fff7ed; color: #f97316;"><i class="fas fa-pencil-alt"></i></div>
+                    <div class="book-info">
+                        <h3>Math Workbook</h3>
+                        <p>Practice</p>
                     </div>
                 </div>
-                <div class="mt-8">
-                    <a href="https://drive.google.com/file/d/1BvWv5MPDINI0Hg0ZBjhwZEtw_JSI77D_/view?usp=sharing" target="_blank" class="w-full block text-center bg-gray-50 hover:bg-orange-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
-                        <i class="fas fa-download mr-2"></i> Download PDF
-                    </a>
-                </div>
+                <a href="https://drive.google.com/file/d/1BvWv5MPDINI0Hg0ZBjhwZEtw_JSI77D_/view?usp=sharing" target="_blank" class="download-btn">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
             </div>
 
         </div>
     </div>
 
-    <footer class="bg-gray-900 text-white pt-12 pb-8 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="text-gray-500 text-sm">&copy; 2025 EduOdia.in</p>
+    <footer>
+        <div class="container">
+            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Edu<span style="color: #10b981;">Odia</span></h2>
+            <p style="font-size: 0.9rem; color: #94a3b8;">&copy; 2025 EduOdia.in. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
 
 </body>
 </html>
