@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Contact Us | EduOdia</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
+    <style>
+        /* === CORE STYLES === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8fafc; color: #334155; line-height: 1.6; }
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+
+        /* Colors */
+        .text-gradient { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .bg-gradient { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); color: white; }
+
+        /* Header & Nav (Same as Index) */
+        header { background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #e2e8f0; backdrop-filter: blur(10px); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 70px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        .desktop-menu { display: none; gap: 30px; font-weight: 500; color: #64748b; }
+        .desktop-menu a:hover { color: #10b981; }
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; }
+
+        /* Contact Layout */
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        .hero { text-align: center; margin-bottom: 50px; }
+        .hero h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 10px; }
+
+        .contact-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        
+        /* Info Card */
+        .info-card { background: #1e293b; color: white; padding: 40px; border-radius: 16px; }
+        .info-item { display: flex; align-items: flex-start; margin-bottom: 30px; }
+        .info-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 15px; font-size: 1.2rem; color: #10b981; }
+        .info-text h3 { font-size: 1.1rem; margin-bottom: 5px; }
+        .info-text p { color: #94a3b8; font-size: 0.95rem; }
+
+        /* Form Card */
+        .form-card { background: white; padding: 40px; border-radius: 16px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #475569; }
+        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus { outline: 2px solid #10b981; border-color: transparent; }
+        .btn-submit { width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1rem; transition: opacity 0.2s; }
+        .btn-submit:hover { opacity: 0.9; }
+
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
+        
+        @media (min-width: 768px) {
+            .contact-grid { grid-template-columns: 1fr 1.5fr; }
+            .mobile-btn { display: none; }
+            .desktop-menu { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="logo.png" alt="Logo">EduOdia</a>
+            <nav class="desktop-menu">
+                <a href="index.html">Home</a>
+                <a href="blog/index.html">Blog</a>
+                <a href="ocr-tool.html">OCR</a>
+            </nav>
+            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden">
+            <a href="index.html">Home</a>
+            <a href="blog/index.html">Blog</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1>Get in <span class="text-gradient">Touch</span></h1>
+            <p>Have questions about books or tools? We are here to help.</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="info-card">
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="info-text">
+                        <h3>Email Us</h3>
+                        <p>contact@eduodia.in</p>
+                        <p>support@eduodia.in</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="info-text">
+                        <h3>Location</h3>
+                        <p>Bhubaneswar, Odisha</p>
+                        <p>India - 751001</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fab fa-whatsapp"></i></div>
+                    <div class="info-text">
+                        <h3>Social</h3>
+                        <p>Follow us for updates on new books.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-card">
+                <form action="mailto:contact@eduodia.in" method="post" enctype="text/plain">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" name="name" placeholder="Enter your name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" name="email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea name="message" rows="5" placeholder="How can we help you?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit bg-gradient">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="padding:0;">
+            <p>&copy; 2025 EduOdia.in</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>
