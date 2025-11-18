@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <title>EduOdia | Odisha's Digital Library</title>
     <link rel="icon" type="image/png" href="logo.png">
 
@@ -73,7 +78,7 @@
             max-width: 1200px; margin: 0 auto; padding: 0 20px;
         }
 
-        /* === CARD DESIGN (The "Class 10 Style" applied to all) === */
+        /* === CARD DESIGN === */
         .card {
             background: white;
             border: 1px solid #e2e8f0;
@@ -86,10 +91,10 @@
             overflow: hidden;
             border-bottom-width: 4px; 
             border-bottom-style: solid;
-            display: flex; /* Flexbox for alignment */
+            display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Push content apart */
-            min-height: 180px; /* Ensure consistent height */
+            justify-content: space-between;
+            min-height: 180px;
         }
         .card:hover {
             transform: translateY(-5px);
@@ -100,30 +105,18 @@
             width: 60px; height: 60px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 15px auto; font-size: 1.5rem; font-weight: bold; color: white;
-            flex-shrink: 0; /* Prevent icon from shrinking */
+            flex-shrink: 0;
         }
         .card h3 { font-size: 1.2rem; margin-bottom: 5px; color: #1e293b; font-weight: 700; }
         .card p { font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
 
-        /* === CUSTOM TAGS (New Feature) === */
+        /* Custom Tags for Class 9 & 10 */
         .class-tag {
-            display: inline-block; 
-            margin-top: 8px; /* Added spacing */
-            padding: 2px 8px; 
-            border-radius: 4px; 
-            font-size: 0.7rem; 
-            font-weight: bold;
-            text-transform: uppercase;
-            line-height: 1.5; /* Ensure text fits */
+            display: inline-block; margin-top: 8px; padding: 2px 8px; border-radius: 4px; 
+            font-size: 0.7rem; font-weight: bold; text-transform: uppercase;
         }
-
-        /* Tag Colors - Customize as needed */
         .tag-red { background: #fef2f2; color: #ef4444; }
-        .tag-green { background: #ecfdf5; color: #10b981; }
-        .tag-blue { background: #e0f2fe; color: #3b82f6; }
         .tag-orange { background: #fff7ed; color: #f97316; }
-        .tag-purple { background: #f5f3ff; color: #8b5cf6; }
-
 
         /* === COLORS === */
         .border-green { border-bottom-color: #10b981; } .bg-green { background: #10b981; }
@@ -193,66 +186,42 @@
                 
                 <a href="class-1.html" class="card border-green">
                     <div class="icon-circle bg-green">1</div>
-                    <div>
-                        <h3>Class 1</h3>
-                        <p>Primary</p>
-                        </div>
+                    <div><h3>Class 1</h3><p>Primary</p></div>
                 </a>
 
                 <a href="class-2.html" class="card border-teal">
                     <div class="icon-circle bg-teal">2</div>
-                    <div>
-                        <h3>Class 2</h3>
-                        <p>Primary</p>
-                    </div>
+                    <div><h3>Class 2</h3><p>Primary</p></div>
                 </a>
 
                 <a href="class-3.html" class="card border-cyan">
                     <div class="icon-circle bg-cyan">3</div>
-                    <div>
-                        <h3>Class 3</h3>
-                        <p>Primary</p>
-                    </div>
+                    <div><h3>Class 3</h3><p>Primary</p></div>
                 </a>
 
                 <a href="class-4.html" class="card border-blue">
                     <div class="icon-circle bg-blue">4</div>
-                    <div>
-                        <h3>Class 4</h3>
-                        <p>Primary</p>
-                    </div>
+                    <div><h3>Class 4</h3><p>Primary</p></div>
                 </a>
 
                 <a href="class-5.html" class="card border-indigo">
                     <div class="icon-circle bg-indigo">5</div>
-                    <div>
-                        <h3>Class 5</h3>
-                        <p>Primary</p>
-                    </div>
+                    <div><h3>Class 5</h3><p>Primary</p></div>
                 </a>
 
                 <a href="class-6.html" class="card border-violet">
                     <div class="icon-circle bg-violet">6</div>
-                    <div>
-                        <h3>Class 6</h3>
-                        <p>Middle</p>
-                        <span class="class-tag tag-purple">Important</span> </div>
+                    <div><h3>Class 6</h3><p>Middle</p></div>
                 </a>
 
                 <a href="class-7.html" class="card border-purple">
                     <div class="icon-circle bg-purple">7</div>
-                    <div>
-                        <h3>Class 7</h3>
-                        <p>Middle</p>
-                    </div>
+                    <div><h3>Class 7</h3><p>Middle</p></div>
                 </a>
 
                 <a href="class-8.html" class="card border-pink">
                     <div class="icon-circle bg-pink">8</div>
-                    <div>
-                        <h3>Class 8</h3>
-                        <p>Middle</p>
-                        <span class="class-tag tag-pink">New Syllabus</span> </div>
+                    <div><h3>Class 8</h3><p>Middle</p></div>
                 </a>
 
                 <a href="class-9.html" class="card border-rose">
@@ -260,7 +229,8 @@
                     <div>
                         <h3>Class 9</h3>
                         <p>High School</p>
-                        <span class="class-tag tag-orange">Exam Prep</span> </div>
+                        <span class="class-tag tag-orange">High School</span>
+                    </div>
                 </a>
 
                 <a href="class-10.html" class="card border-red">
