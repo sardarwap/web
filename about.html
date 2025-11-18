@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>About Us | EduOdia</title>
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
+    <style>
+        /* === CORE SETTINGS === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f8fafc; 
+            color: #334155; 
+            line-height: 1.7;
+        }
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+        
+        /* === THEME COLORS === */
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #0ea5e9;
+        }
+        .bg-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            color: white;
+        }
+
+        /* === HEADER === */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 70px;
+        }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        
+        .desktop-menu { display: none; gap: 30px; align-items: center; }
+        .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
+        .desktop-menu a:hover { color: #10b981; }
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
+
+        /* === ABOUT SECTIONS === */
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+
+        /* Hero */
+        .about-hero { text-align: center; margin-bottom: 60px; }
+        .about-hero h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 15px; }
+        .about-hero p { font-size: 1.2rem; color: #64748b; max-width: 700px; margin: 0 auto; }
+
+        /* Content Card */
+        .content-card {
+            background: white; border-radius: 16px; border: 1px solid #e2e8f0;
+            padding: 40px; margin-bottom: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        
+        h2 { font-size: 1.8rem; color: #1e293b; margin-bottom: 20px; border-left: 5px solid #10b981; padding-left: 15px; }
+        p { margin-bottom: 20px; color: #475569; }
+
+        /* Features Grid */
+        .feature-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;
+        }
+        .feature-box {
+            background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 25px;
+            text-align: center; transition: transform 0.2s;
+        }
+        .feature-box:hover { transform: translateY(-5px); border-color: #10b981; }
+        .icon-box {
+            width: 60px; height: 60px; border-radius: 50%; background: #ecfdf5; color: #10b981;
+            display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 15px auto;
+        }
+        .feature-box h3 { margin-bottom: 10px; color: #1e293b; }
+
+        /* Contact Section */
+        .contact-box {
+            background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 30px; text-align: center;
+        }
+        .contact-btn {
+            display: inline-block; background: #3b82f6; color: white; padding: 10px 25px;
+            border-radius: 50px; font-weight: bold; margin-top: 10px;
+        }
+        .contact-btn:hover { background: #2563eb; }
+
+        /* Footer */
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .mobile-btn { display: none; }
+            .desktop-menu { display: flex; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo">
+                <span>Edu<span class="text-gradient">Odia</span></span>
+            </a>
+            <nav class="desktop-menu">
+                <a href="index.html">Home</a>
+                <a href="blog/index.html">Blog</a>
+                <a href="ocr-tool.html">OCR Tool</a>
+                <a href="image-tool.html">Resizer</a>
+            </nav>
+            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden">
+            <a href="index.html">Home</a>
+            <a href="blog/index.html">Blog</a>
+            <a href="ocr-tool.html">OCR Tool</a>
+            <a href="image-tool.html">Resizer</a>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="about-hero">
+            <h1>Empowering Education in <span class="text-gradient">Odisha</span></h1>
+            <p>Making quality educational resources accessible to every student, everywhere, for free.</p>
+        </div>
+
+        <div class="content-card">
+            <h2>About EduOdia</h2>
+            <p>
+                Welcome to <strong>EduOdia.in</strong>, Odisha's leading educational portal dedicated to students, teachers, and parents. 
+                We understand the challenges students face in finding organized, high-quality study materials. Our mission is to bridge this gap by providing a comprehensive digital library.
+            </p>
+            <p>
+                Whether you are a student of Class 1 or preparing for your CHSE +2 Board Exams, EduOdia is your one-stop destination for Textbooks, Syllabus updates, Exam Guides, and Educational News.
+            </p>
+        </div>
+
+        <div class="content-card">
+            <h2>What We Provide</h2>
+            <div class="feature-grid">
+                <div class="feature-box">
+                    <div class="icon-box"><i class="fas fa-book"></i></div>
+                    <h3>Textbooks</h3>
+                    <p>Complete PDF collection of BSE Odisha & CHSE books from Class 1 to 12.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="icon-box"><i class="fas fa-file-alt"></i></div>
+                    <h3>Exam Resources</h3>
+                    <p>Previous year question papers, model papers, and syllabus updates.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="icon-box"><i class="fas fa-tools"></i></div>
+                    <h3>Smart Tools</h3>
+                    <p>Free utilities like Image Resizer and Odia OCR to help with online forms.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-box">
+            <h2 style="border:none; padding:0; margin-bottom:10px;">Get in Touch</h2>
+            <p>Have a suggestion or found a broken link? We'd love to hear from you.</p>
+            <a href="mailto:contact@eduodia.in" class="contact-btn">
+                <i class="fas fa-envelope"></i> contact@eduodia.in
+            </a>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="container" style="padding:0;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Edu<span style="color: #10b981;">Odia</span></h2>
+            <p style="font-size: 0.9rem; color: #94a3b8;">&copy; 2025 EduOdia.in. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>
