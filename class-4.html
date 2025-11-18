@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 4 Textbooks | EduOdia</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        
+        /* THEME COLORS */
+        .edu-gradient { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); }
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        /* HOVER EFFECTS */
+        .book-card {
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.15);
+            border-color: #10b981;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="logo.png" alt="EduOdia" class="h-10 w-10 mr-3 rounded-full shadow-sm border border-gray-100">
+                        <span class="font-extrabold text-xl tracking-tight text-gray-800">Edu<span class="text-gradient">Odia</span></span>
+                    </a>
+                </div>
+                <div class="flex items-center">
+                    <a href="index.html" class="text-gray-500 hover:text-emerald-600 font-medium text-sm flex items-center transition">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Classes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="bg-white border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 py-10">
+            <div class="flex items-center space-x-4">
+                <div class="h-16 w-16 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg shadow-blue-100">
+                    4
+                </div>
+                <div>
+                    <h1 class="text-3xl font-extrabold text-gray-900">Class 4 Textbooks</h1>
+                    <p class="text-gray-500 text-sm mt-1">Odia Medium • BSE Odisha Board</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-4 py-12">
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+
+            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <span class="text-xs font-bold text-pink-600 bg-pink-50 px-2 py-1 rounded uppercase tracking-wide">Literature</span>
+                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-pink-600 transition">Sahitya Kalika</h3>
+                        <p class="text-sm text-gray-500 mt-2">Odia Textbook</p>
+                    </div>
+                    <div class="h-16 w-12 bg-pink-50 rounded shadow-inner flex items-center justify-center text-pink-300">
+                        <i class="fas fa-book-open text-2xl"></i>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <a href="PASTE_LINK_HERE" class="w-full block text-center bg-gray-50 hover:bg-pink-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
+                        <i class="fas fa-download mr-2"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded uppercase tracking-wide">Mathematics</span>
+                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-blue-600 transition">Ganita Kuha</h3>
+                        <p class="text-sm text-gray-500 mt-2">Math Textbook</p>
+                    </div>
+                    <div class="h-16 w-12 bg-blue-50 rounded shadow-inner flex items-center justify-center text-blue-300">
+                        <i class="fas fa-calculator text-2xl"></i>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <a href="PASTE_LINK_HERE" class="w-full block text-center bg-gray-50 hover:bg-blue-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
+                        <i class="fas fa-download mr-2"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded uppercase tracking-wide">EVS</span>
+                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-emerald-600 transition">Ama Paribesha</h3>
+                        <p class="text-sm text-gray-500 mt-2">Environmental Studies</p>
+                    </div>
+                    <div class="h-16 w-12 bg-emerald-50 rounded shadow-inner flex items-center justify-center text-emerald-300">
+                        <i class="fas fa-leaf text-2xl"></i>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <a href="PASTE_LINK_HERE" class="w-full block text-center bg-gray-50 hover:bg-emerald-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
+                        <i class="fas fa-download mr-2"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+            <div class="book-card bg-white rounded-xl p-6 relative overflow-hidden group">
+                <div class="flex items-start justify-between">
+                    <div class="flex-1">
+                        <span class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded uppercase tracking-wide">English</span>
+                        <h3 class="mt-4 text-xl font-bold text-gray-900 group-hover:text-purple-600 transition">My English Book</h3>
+                        <p class="text-sm text-gray-500 mt-2">Language Textbook</p>
+                    </div>
+                    <div class="h-16 w-12 bg-purple-50 rounded shadow-inner flex items-center justify-center text-purple-300">
+                        <i class="fas fa-language text-2xl"></i>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <a href="PASTE_LINK_HERE" class="w-full block text-center bg-gray-50 hover:bg-purple-500 hover:text-white text-gray-700 font-semibold py-3 rounded-lg transition duration-300">
+                        <i class="fas fa-download mr-2"></i> Download PDF
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="bg-gray-900 text-white pt-12 pb-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-gray-500 text-sm">&copy; 2025 EduOdia.in</p>
+        </div>
+    </footer>
+
+</body>
+</html>
