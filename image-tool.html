@@ -8,7 +8,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>Live Image Resizer | EduOdia</title>
+    <title>Smart Image Tool | EduOdia</title>
     <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
     
@@ -30,37 +30,21 @@
         .tool-container { max-width: 800px; margin: 30px auto; padding: 0 15px; flex: 1; width: 100%; }
         .card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         
-        /* Upload Box */
         .upload-box { border: 2px dashed #cbd5e1; border-radius: 12px; background: #f1f5f9; text-align: center; padding: 40px 20px; cursor: pointer; transition: 0.3s; position: relative; }
         .upload-box:hover { border-color: #10b981; background: #ecfdf5; }
         .upload-box input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
         
-        /* === PREVIEW SECTION (MOVED UP) === */
-        .preview-section { 
-            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; 
-            background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;
-        }
+        /* PREVIEW SECTION */
+        .preview-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; background: #f8fafc; padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; }
         .preview-box { text-align: center; display: flex; flex-direction: column; align-items: center; }
-        
-        /* Image Container */
-        .img-wrapper {
-            width: 100%; height: 200px; /* Fixed height for mobile stability */
-            display: flex; align-items: center; justify-content: center;
-            background: #e2e8f0; border-radius: 8px; overflow: hidden; margin-bottom: 10px;
-            border: 1px solid #cbd5e1;
-        }
+        .img-wrapper { width: 100%; height: 200px; display: flex; align-items: center; justify-content: center; background: #e2e8f0; border-radius: 8px; overflow: hidden; margin-bottom: 10px; border: 1px solid #cbd5e1; }
         .img-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        
         .label { font-size: 0.8rem; font-weight: 700; color: #64748b; text-transform: uppercase; margin-bottom: 5px; }
-        .size-badge { 
-            background: #1e293b; color: white; padding: 4px 12px; border-radius: 20px; 
-            font-size: 0.85rem; font-weight: 700; display: inline-block;
-        }
+        .size-badge { background: #1e293b; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; display: inline-block; }
         .size-badge.green { background: #10b981; box-shadow: 0 2px 5px rgba(16, 185, 129, 0.3); }
 
-        /* === CONTROLS === */
-        .controls { display: none; } /* Hidden initially */
-        
+        /* CONTROLS */
+        .controls { display: none; }
         .control-group { margin-bottom: 20px; }
         .group-header { font-size: 0.85rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         
@@ -74,10 +58,8 @@
         .input-styled, select { width: 100%; padding: 10px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; font-weight: bold; color: #1e293b; background: white; }
         .input-styled:focus { outline: none; border-color: #10b981; }
 
-        /* Sliders */
         input[type=range] { width: 100%; height: 6px; background: #e2e8f0; border-radius: 5px; outline: none; cursor: pointer; accent-color: #10b981; }
 
-        /* Quick Chips */
         .chips { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
         .chip { background: #e0f2fe; color: #0369a1; padding: 4px 10px; border-radius: 15px; font-size: 0.75rem; font-weight: 600; cursor: pointer; }
         .chip:hover { background: #0369a1; color: white; }
@@ -128,7 +110,6 @@
                         </div>
                         <div class="size-badge" id="originalSize">...</div>
                     </div>
-                    
                     <div class="preview-box">
                         <div class="label" style="color: #10b981;">Result</div>
                         <div class="img-wrapper" style="border-color: #10b981; background: #f0fdf4;">
@@ -138,14 +119,26 @@
                     </div>
                 </div>
 
+                <button id="downloadBtn" class="btn-action btn-download">
+                    <i class="fas fa-download"></i> Download Image
+                </button>
+
                 <hr style="margin: 25px 0; border-top: 1px solid #e2e8f0;">
 
                 <div class="tabs">
-                    <div class="tab active" id="tabAuto">Auto Size (KB)</div>
-                    <div class="tab" id="tabManual">Manual Quality</div>
+                    <div class="tab active" id="tabManual">Manual Quality</div>
+                    <div class="tab" id="tabAuto">Target Size (Auto)</div>
                 </div>
 
-                <div id="groupAuto" class="control-group">
+                <div id="groupManual" class="control-group">
+                    <div class="group-header">
+                        <span>Image Quality</span>
+                        <span id="qVal" style="color:#10b981;">80%</span>
+                    </div>
+                    <input type="range" id="qualityRange" min="1" max="100" value="80">
+                </div>
+
+                <div id="groupAuto" class="control-group" style="display:none;">
                     <div class="group-header">Target File Size (KB)</div>
                     <div class="input-row">
                         <input type="number" id="targetKB" value="50" class="input-styled" placeholder="Max KB">
@@ -155,21 +148,14 @@
                         <span class="chip" onclick="setKB(50)">50KB (Photo)</span>
                         <span class="chip" onclick="setKB(100)">100KB</span>
                     </div>
-                </div>
-
-                <div id="groupManual" class="control-group" style="display:none;">
-                    <div class="group-header">
-                        <span>Image Quality</span>
-                        <span id="qVal" style="color:#10b981;">80%</span>
-                    </div>
-                    <input type="range" id="qualityRange" min="1" max="100" value="80">
+                    <p style="font-size:0.8rem; color:#64748b; margin-top:5px;"><i class="fas fa-info-circle"></i> If quality drop isn't enough, dimensions will auto-shrink.</p>
                 </div>
 
                 <div class="control-group">
                     <div class="group-header">Dimensions (Pixels)</div>
                     <div class="input-row">
-                        <input type="number" id="widthInput" placeholder="W" class="input-styled">
-                        <input type="number" id="heightInput" placeholder="H" class="input-styled">
+                        <input type="number" id="widthInput" placeholder="Width" class="input-styled">
+                        <input type="number" id="heightInput" placeholder="Height" class="input-styled">
                     </div>
                     <div class="chips">
                         <span class="chip" onclick="setDim(350, 450)">Passport</span>
@@ -183,20 +169,16 @@
                 <div class="control-group">
                     <div class="group-header">Edit & Enhance</div>
                     <div style="display: flex; gap: 10px; margin-bottom: 15px;">
-                        <button class="btn-tool" onclick="rotateImg(-90)"><i class="fas fa-undo"></i> Left</button>
-                        <button class="btn-tool" onclick="rotateImg(90)"><i class="fas fa-redo"></i> Right</button>
+                        <button class="btn-tool" onclick="rotateImg(-90)"><i class="fas fa-undo"></i></button>
+                        <button class="btn-tool" onclick="rotateImg(90)"><i class="fas fa-redo"></i></button>
                         <button class="btn-tool" id="btnGray" onclick="toggleGrayscale()">B&W Mode</button>
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                         <select id="formatSelect">
-                            <option value="image/jpeg">JPG (Form Best)</option>
-                            <option value="image/png">PNG (High Q)</option>
+                            <option value="image/jpeg">JPG</option>
+                            <option value="image/png">PNG</option>
                             <option value="image/webp">WEBP</option>
                         </select>
-                        
-                        <button id="downloadBtn" class="btn-action btn-download" style="margin-top:0; padding:8px;">
-                            <i class="fas fa-download"></i> Download
-                        </button>
                     </div>
                 </div>
 
@@ -214,6 +196,7 @@
     </footer>
 
     <script>
+        // Elements
         const fileInput = document.getElementById('fileInput');
         const controlsArea = document.getElementById('controlsArea');
         const originalImg = document.getElementById('originalImg');
@@ -224,17 +207,22 @@
         const qualityRange = document.getElementById('qualityRange');
         const downloadBtn = document.getElementById('downloadBtn');
         const formatSelect = document.getElementById('formatSelect');
-        
+        const aspectRatioCheckbox = document.getElementById('aspectRatio');
+
         // State
         let sourceImage = new Image();
         let originalFile = null;
         let currentRotation = 0;
         let isGrayscale = false;
-        let isAutoMode = true;
+        let isAutoMode = false; // DEFAULT: Manual Mode
         let debounceTimer;
         let originalAspectRatio = 1;
 
-        // 1. Load Image
+        // 1. Init Default View
+        document.getElementById('tabManual').classList.add('active');
+        document.getElementById('groupManual').style.display = 'block';
+
+        // 2. Upload
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 originalFile = e.target.files[0];
@@ -247,11 +235,11 @@
                         originalImg.src = sourceImage.src;
                         originalAspectRatio = sourceImage.width / sourceImage.height;
                         
-                        // Set initial dimensions
+                        // Init Dimensions
                         widthInput.value = sourceImage.width;
                         heightInput.value = sourceImage.height;
                         
-                        // Show Editor
+                        // Show UI
                         document.getElementById('dropZone').style.display = 'none';
                         controlsArea.style.display = 'block';
                         processImage();
@@ -261,7 +249,7 @@
             }
         });
 
-        // 2. Processing Logic
+        // 3. Core Processor (Smart Auto-Resize)
         function processImage() {
             document.getElementById('compressedSize').innerText = "...";
             
@@ -269,40 +257,76 @@
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
 
+                // Get current width/height inputs
                 let w = parseInt(widthInput.value) || sourceImage.width;
                 let h = parseInt(heightInput.value) || sourceImage.height;
 
-                // Rotation Logic
+                // --- ROTATION & DRAWING ---
                 if (Math.abs(currentRotation) === 90 || Math.abs(currentRotation) === 270) {
                     canvas.width = h; canvas.height = w;
                 } else {
                     canvas.width = w; canvas.height = h;
                 }
 
-                // Apply Filters
                 if (isGrayscale) ctx.filter = 'grayscale(100%)';
 
-                // Draw
                 ctx.translate(canvas.width/2, canvas.height/2);
                 ctx.rotate(currentRotation * Math.PI / 180);
                 ctx.drawImage(sourceImage, -w/2, -h/2, w, h);
 
-                // Compress
+                // --- COMPRESSION LOGIC ---
                 const format = formatSelect.value;
                 let dataUrl;
-                
+
                 if (isAutoMode && format !== 'image/png') {
-                    // Auto KB Loop
+                    // === SMART AUTO RESIZE ===
+                    // 1. Force Aspect Ratio OFF so we can shrink freely
+                    // 2. Loop to reduce Quality -> then Reduce Dimensions
+                    
                     const targetBytes = parseInt(targetKBInput.value) * 1024;
-                    let quality = 0.95;
+                    let quality = 0.9;
+                    let scale = 1.0;
                     let attempt = 0;
+                    let success = false;
+
                     do {
-                        dataUrl = canvas.toDataURL(format, quality);
+                        // Apply scaling if needed
+                        if (scale < 1.0) {
+                            const scaledCanvas = document.createElement('canvas');
+                            scaledCanvas.width = canvas.width * scale;
+                            scaledCanvas.height = canvas.height * scale;
+                            const scaledCtx = scaledCanvas.getContext('2d');
+                            scaledCtx.drawImage(canvas, 0, 0, scaledCanvas.width, scaledCanvas.height);
+                            dataUrl = scaledCanvas.toDataURL(format, quality);
+                        } else {
+                            dataUrl = canvas.toDataURL(format, quality);
+                        }
+
+                        // Check size
                         let size = Math.round((dataUrl.length - 22) * 0.75);
-                        if (size <= targetBytes || quality <= 0.05) break;
-                        quality -= 0.05;
+                        
+                        if (size <= targetBytes) {
+                            success = true;
+                            // Update input boxes to reflect new smaller size
+                            if(scale < 1.0) {
+                                widthInput.value = Math.round(w * scale);
+                                heightInput.value = Math.round(h * scale);
+                                // Temporarily uncheck aspect ratio to allow this auto-shrink
+                                aspectRatioCheckbox.checked = false; 
+                            }
+                            break;
+                        }
+
+                        // Strategy: Lower quality first, then shrink image
+                        if (quality > 0.5) {
+                            quality -= 0.1;
+                        } else {
+                            scale -= 0.1; // Reduce size by 10%
+                        }
                         attempt++;
-                    } while (attempt < 15);
+
+                    } while (attempt < 25 && scale > 0.1);
+
                 } else {
                     // Manual
                     let q = parseInt(qualityRange.value) / 100;
@@ -310,7 +334,7 @@
                 }
 
                 // Update UI
-                compressedImg.src = dataUrl;
+                previewImg.src = dataUrl;
                 let finalSize = Math.round((dataUrl.length - 22) * 0.75);
                 document.getElementById('compressedSize').innerText = formatBytes(finalSize);
 
@@ -322,19 +346,22 @@
                     link.click();
                 }
 
-            }, 50); // Small delay for UI responsiveness
+            }, 50);
         }
 
-        // 3. Listeners
+        // 4. Event Listeners
         function trigger() { clearTimeout(debounceTimer); debounceTimer = setTimeout(processImage, 150); }
         
         [widthInput, heightInput, targetKBInput, qualityRange, formatSelect].forEach(el => {
             el.addEventListener('input', trigger);
         });
 
-        // Aspect Ratio Lock
+        // Aspect Ratio Logic
         widthInput.addEventListener('input', () => {
-             if(document.getElementById('aspectRatio').checked) heightInput.value = Math.round(widthInput.value / originalAspectRatio);
+            if(aspectRatioCheckbox.checked) heightInput.value = Math.round(widthInput.value / originalAspectRatio);
+        });
+        heightInput.addEventListener('input', () => {
+            if(aspectRatioCheckbox.checked) widthInput.value = Math.round(heightInput.value * originalAspectRatio);
         });
 
         // Tools
@@ -349,10 +376,11 @@
         window.setDim = (w, h) => { 
             widthInput.value = w; heightInput.value = h; 
             originalAspectRatio = w / h; 
+            aspectRatioCheckbox.checked = false; // Uncheck ratio for presets
             trigger(); 
         };
 
-        // Mode Switch
+        // Tabs Logic
         const modeTarget = document.getElementById('modeTarget');
         const modeManual = document.getElementById('modeManual');
         
@@ -368,10 +396,12 @@
             modeTarget.classList.add('active'); modeManual.classList.remove('active');
             document.getElementById('groupAuto').style.display = 'block';
             document.getElementById('qualityControl').style.display = 'none';
+            
+            // IMPORTANT: Untick Aspect Ratio for Auto Mode as requested
+            aspectRatioCheckbox.checked = false;
             trigger();
         };
 
-        // Update Quality Text
         qualityRange.addEventListener('input', (e) => document.getElementById('qVal').innerText = e.target.value + '%');
 
         function formatBytes(bytes) {
