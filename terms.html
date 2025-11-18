@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Terms & Conditions | EduOdia</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8fafc; color: #334155; line-height: 1.7; }
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+
+        /* Header Styles (Same as Privacy) */
+        header { background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #e2e8f0; backdrop-filter: blur(10px); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 70px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        .desktop-menu { display: none; gap: 30px; font-weight: 500; color: #64748b; }
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; }
+        @media (min-width: 768px) { .mobile-btn { display: none; } .desktop-menu { display: flex; } }
+
+        /* Content Styles */
+        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .content-box { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        
+        h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 10px; text-align: center; }
+        h2 { font-size: 1.5rem; color: #1e293b; margin-top: 30px; margin-bottom: 15px; border-left: 4px solid #0ea5e9; padding-left: 15px; }
+        p { margin-bottom: 15px; }
+        
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="logo.png" alt="Logo">EduOdia</a>
+            <nav class="desktop-menu">
+                <a href="index.html">Home</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-box">
+            <h1>Terms and Conditions</h1>
+            <p style="text-align:center; color:#94a3b8; margin-bottom:40px;">Welcome to EduOdia!</p>
+
+            <p>These terms and conditions outline the rules and regulations for the use of EduOdia's Website, located at https://eduodia.in.</p>
+
+            <h2>1. License to Use</h2>
+            <p>Unless otherwise stated, EduOdia and/or its licensors own the intellectual property rights for all material on EduOdia. All intellectual property rights are reserved. You may access this from EduOdia for your own personal use subjected to restrictions set in these terms and conditions.</p>
+            <p>You must not:</p>
+            <ul>
+                <li>Republish material from EduOdia.</li>
+                <li>Sell, rent, or sub-license material from EduOdia.</li>
+                <li>Reproduce, duplicate or copy material from EduOdia.</li>
+            </ul>
+
+            <h2>2. Disclaimer for Educational Content</h2>
+            <p>The PDFs and educational materials provided on this site are for educational purposes only. We do not claim ownership of the government textbooks; they are property of BSE Odisha and CHSE Odisha. We act as a directory to organize these free resources for students.</p>
+
+            <h2>3. Tools Usage</h2>
+            <p>Our tools (OCR, Image Resizer) process data locally in your browser. We do not store your uploaded files or images on our servers.</p>
+
+            <h2>4. Hyperlinking to our Content</h2>
+            <p>Government agencies, Search engines, News organizations, and Online directory distributors may link to our Website without prior written approval.</p>
+
+            <h2>5. Changes to Terms</h2>
+            <p>We reserve the right to request that you remove all links or any particular link to our Website. We also reserve the right to amend these terms and conditions and it's linking policy at any time.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="padding:0;">
+            <p>&copy; 2025 EduOdia.in</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>
