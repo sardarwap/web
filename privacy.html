@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy Policy | EduOdia</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8fafc; color: #334155; line-height: 1.7; }
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+
+        /* Header Styles (Same as Index) */
+        header { background: rgba(255,255,255,0.95); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #e2e8f0; backdrop-filter: blur(10px); }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 70px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        .desktop-menu { display: none; gap: 30px; font-weight: 500; color: #64748b; }
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; }
+        @media (min-width: 768px) { .mobile-btn { display: none; } .desktop-menu { display: flex; } }
+
+        /* Content Styles */
+        .container { max-width: 900px; margin: 0 auto; padding: 60px 20px; }
+        .content-box { background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        
+        h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 10px; text-align: center; }
+        .date { text-align: center; color: #94a3b8; margin-bottom: 40px; font-size: 0.9rem; }
+        
+        h2 { font-size: 1.5rem; color: #1e293b; margin-top: 30px; margin-bottom: 15px; border-left: 4px solid #10b981; padding-left: 15px; }
+        p { margin-bottom: 15px; }
+        ul { margin-bottom: 20px; padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: 50px; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo"><img src="logo.png" alt="Logo">EduOdia</a>
+            <nav class="desktop-menu">
+                <a href="index.html">Home</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden">
+            <a href="index.html">Home</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="content-box">
+            <h1>Privacy Policy</h1>
+            <p class="date">Last Updated: November 19, 2025</p>
+
+            <p>At EduOdia, accessible from https://eduodia.in, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by EduOdia and how we use it.</p>
+
+            <h2>1. Information We Collect</h2>
+            <p>We do not collect any personal identifiable information (PII) from our users. You can browse our website, download books, and use our tools without creating an account.</p>
+            <ul>
+                <li><strong>Log Files:</strong> Like many other websites, EduOdia uses log files. These files log visitors when they visit websites. The information collected includes IP addresses, browser type, ISP, and timestamps.</li>
+            </ul>
+
+            <h2>2. How We Use Information</h2>
+            <p>We use the information we collect in various ways, including to:</p>
+            <ul>
+                <li>Provide, operate, and maintain our website.</li>
+                <li>Improve, personalize, and expand our website.</li>
+                <li>Understand and analyze how you use our website (via Google Analytics).</li>
+            </ul>
+
+            <h2>3. Third Party Privacy Policies</h2>
+            <p>EduOdia's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers (like Google AdSense) for more detailed information.</p>
+
+            <h2>4. Consent</h2>
+            <p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
+
+            <h2>5. Contact Us</h2>
+            <p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us via email at <strong>contact@eduodia.in</strong>.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="padding:0;">
+            <p>&copy; 2025 EduOdia.in</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>
