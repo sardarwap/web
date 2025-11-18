@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Image Resizer & Compressor | EduOdia Tools</title>
-    <meta name="description" content="Free Image Compressor for Odisha Students. Resize photos for SAMS, BSE, CHSE, and Scholarship forms. Reduce size to 50KB or 20KB instantly.">
+    <title>Image Compressor (Fixed KB) | EduOdia Tools</title>
+    <meta name="description" content="Compress images to specific KB size (20KB, 50KB) for SAMS, Scholarship & Exam forms.">
     <link rel="icon" type="image/png" href="logo.png">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
@@ -40,13 +40,17 @@
         .upload-box input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
         
         /* Controls */
-        .controls { margin-top: 25px; display: none; } /* Hidden until image uploaded */
+        .controls { margin-top: 25px; display: none; }
+        .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .control-group { margin-bottom: 20px; }
         .control-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #475569; }
         
-        .slider-container { display: flex; align-items: center; gap: 15px; }
-        input[type="range"] { flex: 1; height: 6px; border-radius: 5px; background: #e2e8f0; outline: none; }
-        .val-badge { background: #0f172a; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; }
+        /* Inputs */
+        .input-styled {
+            width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px;
+            font-size: 1rem; font-weight: bold; color: #1e293b; transition: 0.2s;
+        }
+        .input-styled:focus { border-color: #10b981; outline: none; }
 
         /* Preview Area */
         .preview-area { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 20px; }
@@ -54,21 +58,21 @@
         .img-box img { max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid #ddd; margin-top: 10px; }
         .size-tag { display: inline-block; margin-top: 5px; font-size: 0.85rem; color: #64748b; font-weight: 600; }
         
-        /* Download Button */
-        .btn-download {
+        /* Buttons */
+        .btn-action {
             width: 100%; padding: 15px; border-radius: 10px; border: none;
-            font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 20px;
+            font-weight: 700; font-size: 1.1rem; cursor: pointer; margin-top: 10px;
             box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: 0.2s;
         }
-        .btn-download:hover { transform: translateY(-2px); }
-        .btn-download:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; color: #64748b; }
+        .btn-action:hover { transform: translateY(-2px); }
+        .btn-compress { background: #0f172a; color: white; box-shadow: 0 4px 15px rgba(15, 23, 42, 0.3); }
 
         /* Footer */
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
 
         /* Responsive */
         @media (max-width: 600px) {
-            .preview-area { grid-template-columns: 1fr; }
+            .preview-area, .control-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -81,57 +85,61 @@
                 <span>Edu<span class="text-gradient">Odia</span></span>
             </a>
             <a href="index.html" style="font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-arrow-left"></i> <span class="hidden sm:inline">Back</span>
+                <i class="fas fa-arrow-left"></i> Back
             </a>
         </div>
     </header>
 
     <div class="tool-container">
         <div style="text-align: center; margin-bottom: 30px;">
-            <h1 style="font-size: 2rem; font-weight: 800; color: #1e293b;">Photo <span class="text-gradient">Resizer</span></h1>
-            <p style="color: #64748b; margin-top: 5px;">Reduce image size for SAMS, Scholarship & Exam Forms.</p>
+            <h1 style="font-size: 2rem; font-weight: 800; color: #1e293b;">Passport Photo <span class="text-gradient">Maker</span></h1>
+            <p style="color: #64748b; margin-top: 5px;">Compress image to exact KB size (e.g. 50KB, 20KB).</p>
         </div>
 
         <div class="card">
             <div class="upload-box" id="dropZone">
                 <input type="file" id="fileInput" accept="image/*">
                 <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #94a3b8; margin-bottom: 10px;"></i>
-                <h3 id="fileName" style="color: #334155;">Tap to Select Image</h3>
+                <h3 id="fileName" style="color: #334155;">Tap to Upload Photo/Signature</h3>
                 <p style="font-size: 0.85rem; color: #94a3b8;">JPG, PNG supported</p>
             </div>
 
             <div class="controls" id="controlsArea">
                 
-                <div class="control-group">
-                    <label><i class="fas fa-tachometer-alt"></i> Quality / Compression</label>
-                    <div class="slider-container">
-                        <span style="font-size: 0.9rem;">Low Size</span>
-                        <input type="range" id="qualityRange" min="0.1" max="1.0" step="0.1" value="0.7">
-                        <span style="font-size: 0.9rem;">High Quality</span>
+                <div class="control-grid">
+                    <div class="control-group">
+                        <label><i class="fas fa-weight-hanging"></i> Target Size (KB)</label>
+                        <input type="number" id="targetKB" value="50" class="input-styled" placeholder="e.g. 50">
+                        <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;">Max allowed size (e.g. 50 for SAMS)</p>
+                    </div>
+
+                    <div class="control-group">
+                        <label><i class="fas fa-ruler-combined"></i> Max Width (px)</label>
+                        <input type="number" id="widthInput" value="600" class="input-styled">
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label><i class="fas fa-ruler-combined"></i> Max Width (px)</label>
-                    <input type="number" id="widthInput" value="800" style="width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px;">
-                    <p style="font-size: 0.75rem; color: #64748b; margin-top: 5px;">Standard Passport size width is approx 300-400px.</p>
-                </div>
+                <button id="compressBtn" class="btn-action btn-compress">
+                    <i class="fas fa-cog"></i> Compress to <span id="btnKbVal">50</span>KB
+                </button>
 
-                <div class="preview-area">
+                <div class="preview-area" id="previewArea" style="display:none;">
                     <div class="img-box">
-                        <span class="val-badge" style="background: #64748b;">Original</span>
+                        <span class="size-tag">Original</span>
+                        <br>
+                        <span id="originalSize" style="color:#ef4444; font-weight:bold;">0 KB</span>
                         <img id="originalImg" src="">
-                        <span id="originalSize" class="size-tag">0 KB</span>
                     </div>
                     <div class="img-box">
-                        <span class="val-badge" style="background: #10b981;">Compressed</span>
+                        <span class="size-tag">Result</span>
+                        <br>
+                        <span id="compressedSize" style="color:#10b981; font-weight:bold;">0 KB</span>
                         <img id="compressedImg" src="">
-                        <span id="compressedSize" class="size-tag" style="color: #10b981;">0 KB</span>
                     </div>
                 </div>
 
-                <button id="downloadBtn" class="btn-download bg-gradient">
-                    <i class="fas fa-download"></i> Download Compressed Image
+                <button id="downloadBtn" class="btn-action bg-gradient" style="display:none;">
+                    <i class="fas fa-download"></i> Download Image
                 </button>
             </div>
         </div>
@@ -150,15 +158,24 @@
         const fileInput = document.getElementById('fileInput');
         const fileNameDisplay = document.getElementById('fileName');
         const controlsArea = document.getElementById('controlsArea');
+        const previewArea = document.getElementById('previewArea');
         const originalImg = document.getElementById('originalImg');
         const compressedImg = document.getElementById('compressedImg');
         const originalSizeEl = document.getElementById('originalSize');
         const compressedSizeEl = document.getElementById('compressedSize');
-        const qualityRange = document.getElementById('qualityRange');
+        const targetKBInput = document.getElementById('targetKB');
         const widthInput = document.getElementById('widthInput');
+        const compressBtn = document.getElementById('compressBtn');
         const downloadBtn = document.getElementById('downloadBtn');
+        const btnKbVal = document.getElementById('btnKbVal');
 
         let currentFile = null;
+        let compressedBlob = null;
+
+        // Update Button Text on Input Change
+        targetKBInput.addEventListener('input', (e) => {
+            btnKbVal.innerText = e.target.value || '...';
+        });
 
         // 1. Handle File Selection
         fileInput.addEventListener('change', (e) => {
@@ -167,74 +184,114 @@
                 fileNameDisplay.innerText = currentFile.name;
                 fileNameDisplay.style.color = "#10b981";
                 
-                // Show original size
                 originalSizeEl.innerText = formatBytes(currentFile.size);
                 
-                // Show original image
                 const reader = new FileReader();
                 reader.onload = (e) => {
                     originalImg.src = e.target.result;
                     controlsArea.style.display = 'block';
-                    compressImage(); // Auto compress on load
+                    previewArea.style.display = 'none'; // Hide preview until compressed
+                    downloadBtn.style.display = 'none';
                 };
                 reader.readAsDataURL(currentFile);
             }
         });
 
-        // 2. Compression Logic
-        function compressImage() {
+        // 2. Smart Compression Logic
+        compressBtn.addEventListener('click', () => {
             if (!currentFile) return;
-
+            
+            const targetSize = parseInt(targetKBInput.value) * 1024; // Convert KB to Bytes
+            const maxWidth = parseInt(widthInput.value);
+            
+            compressBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
             const reader = new FileReader();
             reader.readAsDataURL(currentFile);
             reader.onload = (event) => {
                 const img = new Image();
                 img.src = event.target.result;
+                
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    let width = parseInt(widthInput.value);
-                    const scaleFactor = width / img.width;
-                    let height = img.height * scaleFactor;
+                    let width = img.width;
+                    let height = img.height;
+
+                    // Resize dimensions first
+                    if (width > maxWidth) {
+                        height = Math.round(height * (maxWidth / width));
+                        width = maxWidth;
+                    }
 
                     canvas.width = width;
                     canvas.height = height;
-
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
 
-                    // Get quality from slider
-                    const quality = parseFloat(qualityRange.value);
+                    // Iterative Quality Reduction
+                    let min = 0;
+                    let max = 1;
+                    let quality = 0.9;
+                    let dataUrl = '';
+                    let iteration = 0;
 
-                    // Export
-                    const dataUrl = canvas.toDataURL('image/jpeg', quality);
-                    compressedImg.src = dataUrl;
+                    // Try to find the best quality that fits
+                    // Simple loop: Reduce quality until it fits
+                    const tryCompress = () => {
+                        dataUrl = canvas.toDataURL('image/jpeg', quality);
+                        // Calculate approximate size of Base64
+                        const head = 'data:image/jpeg;base64,';
+                        const size = Math.round((dataUrl.length - head.length) * 3 / 4);
 
-                    // Calculate new size
-                    const head = 'data:image/jpeg;base64,';
-                    const size = Math.round((dataUrl.length - head.length) * 3 / 4);
-                    compressedSizeEl.innerText = formatBytes(size);
-
-                    // Setup Download
-                    downloadBtn.onclick = () => {
-                        const link = document.createElement('a');
-                        link.download = 'EduOdia-Compressed.jpg';
-                        link.href = dataUrl;
-                        link.click();
+                        if (size > targetSize && quality > 0.1) {
+                            quality -= 0.05; // Reduce quality by 5%
+                            iteration++;
+                            if(iteration < 20) {
+                                tryCompress(); // Recursive loop
+                            } else {
+                                finish(dataUrl, size); // Stop if too many tries
+                            }
+                        } else {
+                            finish(dataUrl, size);
+                        }
                     };
+
+                    tryCompress();
                 };
+            };
+        });
+
+        function finish(dataUrl, size) {
+            compressedImg.src = dataUrl;
+            compressedSizeEl.innerText = formatBytes(size);
+            
+            // Check if success
+            const target = parseInt(targetKBInput.value) * 1024;
+            if (size > target) {
+                compressedSizeEl.style.color = "#ef4444"; // Red if failed
+                alert("Could not compress to " + targetKBInput.value + "KB. Try reducing the Width.");
+            } else {
+                compressedSizeEl.style.color = "#10b981"; // Green if success
+            }
+
+            previewArea.style.display = 'grid';
+            downloadBtn.style.display = 'block';
+            compressBtn.innerHTML = '<i class="fas fa-cog"></i> Re-Compress';
+
+            // Setup Download
+            downloadBtn.onclick = () => {
+                const link = document.createElement('a');
+                link.download = 'EduOdia-Compressed.jpg';
+                link.href = dataUrl;
+                link.click();
             };
         }
 
-        // 3. Event Listeners for Controls
-        qualityRange.addEventListener('input', compressImage);
-        widthInput.addEventListener('input', compressImage);
-
-        // Helper: Format Bytes
         function formatBytes(bytes, decimals = 2) {
             if (bytes === 0) return '0 Bytes';
             const k = 1024;
             const dm = decimals < 0 ? 0 : decimals;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const sizes = ['Bytes', 'KB', 'MB'];
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
         }
