@@ -84,9 +84,12 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            /* This creates the "Class 10" look */
             border-bottom-width: 4px; 
             border-bottom-style: solid;
+            display: flex; /* Flexbox for alignment */
+            flex-direction: column;
+            justify-content: space-between; /* Push content apart */
+            min-height: 180px; /* Ensure consistent height */
         }
         .card:hover {
             transform: translateY(-5px);
@@ -97,56 +100,42 @@
             width: 60px; height: 60px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             margin: 0 auto 15px auto; font-size: 1.5rem; font-weight: bold; color: white;
+            flex-shrink: 0; /* Prevent icon from shrinking */
         }
         .card h3 { font-size: 1.2rem; margin-bottom: 5px; color: #1e293b; font-weight: 700; }
         .card p { font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
 
-        /* Board Exam Tag */
-        .tag-board {
-            display: inline-block; margin-top: 8px; background: #fef2f2; color: #ef4444;
-            padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold;
+        /* === CUSTOM TAGS (New Feature) === */
+        .class-tag {
+            display: inline-block; 
+            margin-top: 8px; /* Added spacing */
+            padding: 2px 8px; 
+            border-radius: 4px; 
+            font-size: 0.7rem; 
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.5; /* Ensure text fits */
         }
 
+        /* Tag Colors - Customize as needed */
+        .tag-red { background: #fef2f2; color: #ef4444; }
+        .tag-green { background: #ecfdf5; color: #10b981; }
+        .tag-blue { background: #e0f2fe; color: #3b82f6; }
+        .tag-orange { background: #fff7ed; color: #f97316; }
+        .tag-purple { background: #f5f3ff; color: #8b5cf6; }
+
+
         /* === COLORS === */
-        /* Class 1: Green */
-        .border-green { border-bottom-color: #10b981; }
-        .bg-green { background: #10b981; }
-        
-        /* Class 2: Teal */
-        .border-teal { border-bottom-color: #14b8a6; }
-        .bg-teal { background: #14b8a6; }
-
-        /* Class 3: Cyan */
-        .border-cyan { border-bottom-color: #06b6d4; }
-        .bg-cyan { background: #06b6d4; }
-
-        /* Class 4: Blue */
-        .border-blue { border-bottom-color: #3b82f6; }
-        .bg-blue { background: #3b82f6; }
-
-        /* Class 5: Indigo */
-        .border-indigo { border-bottom-color: #6366f1; }
-        .bg-indigo { background: #6366f1; }
-
-        /* Class 6: Violet */
-        .border-violet { border-bottom-color: #8b5cf6; }
-        .bg-violet { background: #8b5cf6; }
-
-        /* Class 7: Purple */
-        .border-purple { border-bottom-color: #a855f7; }
-        .bg-purple { background: #a855f7; }
-
-        /* Class 8: Pink */
-        .border-pink { border-bottom-color: #ec4899; }
-        .bg-pink { background: #ec4899; }
-
-        /* Class 9: Rose */
-        .border-rose { border-bottom-color: #f43f5e; }
-        .bg-rose { background: #f43f5e; }
-
-        /* Class 10: Red */
-        .border-red { border-bottom-color: #ef4444; }
-        .bg-red { background: #ef4444; }
+        .border-green { border-bottom-color: #10b981; } .bg-green { background: #10b981; }
+        .border-teal { border-bottom-color: #14b8a6; } .bg-teal { background: #14b8a6; }
+        .border-cyan { border-bottom-color: #06b6d4; } .bg-cyan { background: #06b6d4; }
+        .border-blue { border-bottom-color: #3b82f6; } .bg-blue { background: #3b82f6; }
+        .border-indigo { border-bottom-color: #6366f1; } .bg-indigo { background: #6366f1; }
+        .border-violet { border-bottom-color: #8b5cf6; } .bg-violet { background: #8b5cf6; }
+        .border-purple { border-bottom-color: #a855f7; } .bg-purple { background: #a855f7; }
+        .border-pink { border-bottom-color: #ec4899; } .bg-pink { background: #ec4899; }
+        .border-rose { border-bottom-color: #f43f5e; } .bg-rose { background: #f43f5e; }
+        .border-red { border-bottom-color: #ef4444; } .bg-red { background: #ef4444; }
 
 
         /* Footer */
@@ -204,62 +193,83 @@
                 
                 <a href="class-1.html" class="card border-green">
                     <div class="icon-circle bg-green">1</div>
-                    <h3>Class 1</h3>
-                    <p>Primary</p>
+                    <div>
+                        <h3>Class 1</h3>
+                        <p>Primary</p>
+                        </div>
                 </a>
 
                 <a href="class-2.html" class="card border-teal">
                     <div class="icon-circle bg-teal">2</div>
-                    <h3>Class 2</h3>
-                    <p>Primary</p>
+                    <div>
+                        <h3>Class 2</h3>
+                        <p>Primary</p>
+                    </div>
                 </a>
 
                 <a href="class-3.html" class="card border-cyan">
                     <div class="icon-circle bg-cyan">3</div>
-                    <h3>Class 3</h3>
-                    <p>Primary</p>
+                    <div>
+                        <h3>Class 3</h3>
+                        <p>Primary</p>
+                    </div>
                 </a>
 
                 <a href="class-4.html" class="card border-blue">
                     <div class="icon-circle bg-blue">4</div>
-                    <h3>Class 4</h3>
-                    <p>Primary</p>
+                    <div>
+                        <h3>Class 4</h3>
+                        <p>Primary</p>
+                    </div>
                 </a>
 
                 <a href="class-5.html" class="card border-indigo">
                     <div class="icon-circle bg-indigo">5</div>
-                    <h3>Class 5</h3>
-                    <p>Primary</p>
+                    <div>
+                        <h3>Class 5</h3>
+                        <p>Primary</p>
+                    </div>
                 </a>
 
                 <a href="class-6.html" class="card border-violet">
                     <div class="icon-circle bg-violet">6</div>
-                    <h3>Class 6</h3>
-                    <p>Middle</p>
+                    <div>
+                        <h3>Class 6</h3>
+                        <p>Middle</p>
+                        <span class="class-tag tag-purple">Important</span> </div>
                 </a>
 
                 <a href="class-7.html" class="card border-purple">
                     <div class="icon-circle bg-purple">7</div>
-                    <h3>Class 7</h3>
-                    <p>Middle</p>
+                    <div>
+                        <h3>Class 7</h3>
+                        <p>Middle</p>
+                    </div>
                 </a>
 
                 <a href="class-8.html" class="card border-pink">
                     <div class="icon-circle bg-pink">8</div>
-                    <h3>Class 8</h3>
-                    <p>Middle</p>
+                    <div>
+                        <h3>Class 8</h3>
+                        <p>Middle</p>
+                        <span class="class-tag tag-pink">New Syllabus</span> </div>
                 </a>
 
                 <a href="class-9.html" class="card border-rose">
                     <div class="icon-circle bg-rose">9</div>
-                    <h3>Class 9</h3>
-                    <p>High School</p>
+                    <div>
+                        <h3>Class 9</h3>
+                        <p>High School</p>
+                        <span class="class-tag tag-orange">Exam Prep</span> </div>
                 </a>
 
                 <a href="class-10.html" class="card border-red">
                     <div class="icon-circle bg-red">10</div>
-                    <h3>Class 10</h3>
-                    <span class="tag-board">BOARD EXAM</span>
+                    <div>
+                        <h3>Class 10</h3>
+                        <p>High School</p>
+                        <span class="class-tag tag-red">BOARD EXAM</span>
+                    </div>
                 </a>
 
             </div>
