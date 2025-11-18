@@ -52,7 +52,7 @@
         .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
         
         .desktop-menu { display: none; gap: 30px; align-items: center; }
-        .desktop-menu a { font-weight: 500; color: #64748b; }
+        .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
         .desktop-menu a:hover { color: #10b981; }
         
         /* Header Button */
@@ -64,7 +64,7 @@
 
         .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
 
-        /* === 4. HERO SECTION (UPDATED WITH CATCHY CARDS) === */
+        /* === 4. HERO SECTION (WITH FEATURE CARDS) === */
         .hero { background: white; padding: 60px 0 80px 0; text-align: center; position: relative; overflow: hidden; }
         .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 15px; color: #0f172a; }
         .hero p { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto 50px auto; }
@@ -73,95 +73,54 @@
         .hero-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; /* Slightly increased gap */
+            gap: 25px;
             max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* Hero Feature Card - ENHANCED */
+        /* Hero Feature Card */
         .feature-card {
             background: white;
             border: 1px solid #e2e8f0;
             border-radius: 16px;
-            padding: 30px; /* Increased padding */
+            padding: 30px;
             text-align: left;
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             position: relative;
-            box-shadow: 0 6px 15px -3px rgba(0,0,0,0.08); /* Stronger initial shadow */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Distribute content */
+            box-shadow: 0 6px 15px -3px rgba(0,0,0,0.08);
+            display: flex; flex-direction: column; justify-content: space-between;
         }
         .feature-card:hover {
-            transform: translateY(-8px); /* More pronounced lift */
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2); /* Stronger hover shadow */
-            border-color: transparent; /* Remove border on hover for clean look */
-            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); /* Gradient background on hover */
-            color: white; /* Text becomes white on hover */
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+            border-color: transparent;
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            color: white;
         }
 
         /* Elements inside feature-card on hover */
-        .feature-card:hover h3,
-        .feature-card:hover p,
-        .feature-card:hover .feature-link {
-            color: white;
-        }
-        .feature-card:hover .feature-icon {
-            background: rgba(255, 255, 255, 0.2); /* White translucent icon background */
-            color: white; /* White icon on hover */
-        }
+        .feature-card:hover h3, .feature-card:hover p, .feature-card:hover .feature-link { color: white; }
+        .feature-card:hover .feature-icon { background: rgba(255, 255, 255, 0.2); color: white; }
 
         .feature-icon {
-            width: 55px; height: 55px; border-radius: 12px; /* Slightly larger */
+            width: 55px; height: 55px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1.7rem; /* Larger icon */
-            margin-bottom: 20px; /* More space */
-            transition: all 0.3s ease; /* Transition for icon */
+            font-size: 1.7rem; margin-bottom: 20px; transition: all 0.3s ease;
         }
-        .feature-card h3 { 
-            font-size: 1.3rem; /* Slightly larger heading */
-            font-weight: 800; /* Bolder */
-            color: #1e293b; 
-            margin-bottom: 8px; 
-            transition: color 0.3s ease;
-        }
-        .feature-card p { 
-            font-size: 0.95rem; /* Slightly larger paragraph */
-            color: #64748b; 
-            margin-bottom: 25px; /* More space */
-            line-height: 1.5; 
-            flex-grow: 1;
-            transition: color 0.3s ease;
-        }
+        .feature-card h3 { font-size: 1.3rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
+        .feature-card p { font-size: 0.95rem; color: #64748b; margin-bottom: 25px; line-height: 1.5; flex-grow: 1; }
         
         .feature-link {
-            font-weight: 700; 
-            font-size: 1rem; /* Larger link text */
-            display: flex; 
-            align-items: center; 
-            gap: 8px; /* More gap for arrow */
-            margin-top: auto; 
-            transition: color 0.3s ease;
+            font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-top: auto; 
         }
+        .feature-link .fas { transition: transform 0.3s ease; }
+        .feature-card:hover .feature-link .fas { transform: translateX(5px); }
 
-        /* Arrow animation on hover */
-        .feature-link .fas {
-            transition: transform 0.3s ease;
-        }
-        .feature-card:hover .feature-link .fas {
-            transform: translateX(5px); /* Slide arrow to the right */
-        }
-
-        /* Card Specific Colors - Base (before hover) */
-        .card-green .feature-icon { background: #ecfdf5; color: #10b981; }
-        .card-green .feature-link { color: #10b981; }
-        
-        .card-blue .feature-icon { background: #e0f2fe; color: #0ea5e9; } /* Lighter blue */
-        .card-blue .feature-link { color: #0ea5e9; }
-        
-        .card-orange .feature-icon { background: #fff7ed; color: #f97316; }
-        .card-orange .feature-link { color: #f97316; }
+        /* Feature Card Colors */
+        .card-green .feature-icon { background: #ecfdf5; color: #10b981; } .card-green .feature-link { color: #10b981; }
+        .card-blue .feature-icon { background: #e0f2fe; color: #0ea5e9; } .card-blue .feature-link { color: #0ea5e9; }
+        .card-orange .feature-icon { background: #fff7ed; color: #f97316; } .card-orange .feature-link { color: #f97316; }
 
 
         /* === 5. CLASSES GRID === */
@@ -197,12 +156,12 @@
         .card h3 { font-size: 1.2rem; margin-bottom: 5px; color: #1e293b; font-weight: 700; }
         .card p { font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
 
-        /* Custom Tags */
+        /* Tags */
         .class-tag { display: inline-block; margin-top: 8px; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
         .tag-red { background: #fef2f2; color: #ef4444; }
         .tag-orange { background: #fff7ed; color: #f97316; }
 
-        /* Colors */
+        /* Card Border Colors */
         .border-green { border-bottom-color: #10b981; } .bg-green { background: #10b981; }
         .border-teal { border-bottom-color: #14b8a6; } .bg-teal { background: #14b8a6; }
         .border-cyan { border-bottom-color: #06b6d4; } .bg-cyan { background: #06b6d4; }
@@ -266,21 +225,21 @@
                 <a href="#classes" class="feature-card card-green">
                     <div class="feature-icon"><i class="fas fa-book-reader"></i></div>
                     <h3>Digital Textbooks</h3>
-                    <p>Download PDF books for Class 1 to 12 (BSE & CHSE Boards).</p>
+                    <p>Download PDF books for Class 1 to 12 (BSE & CHSE).</p>
                     <div class="feature-link">Browse Library <i class="fas fa-arrow-right"></i></div>
                 </a>
 
                 <a href="ocr-tool.html" class="feature-card card-blue">
                     <div class="feature-icon"><i class="fas fa-camera"></i></div>
                     <h3>Odia OCR Tool</h3>
-                    <p>Convert scanned images & PDFs with Odia text into editable text.</p>
+                    <p>Convert scanned images and PDFs into editable text.</p>
                     <div class="feature-link">Try OCR Now <i class="fas fa-arrow-right"></i></div>
                 </a>
 
                 <a href="image-tool.html" class="feature-card card-orange">
                     <div class="feature-icon"><i class="fas fa-compress-arrows-alt"></i></div>
                     <h3>Image Resizer</h3>
-                    <p>Compress photos and signatures for SAMS, Scholarship & Exam forms.</p>
+                    <p>Compress photos for SAMS, Scholarship & Exam forms.</p>
                     <div class="feature-link">Resize Image <i class="fas fa-arrow-right"></i></div>
                 </a>
 
@@ -350,7 +309,7 @@
             <div class="grid chse-grid" style="justify-content: center;">
                 <a href="chse-arts.html" class="card border-rose">
                     <div class="icon-circle" style="background: #f43f5e;"><i class="fas fa-palette"></i></div>
-                    <div><h3>Arts</h3><p>Political Sc, History</p></div>
+                    <div><h3>Arts</h3><p>Pol Sc, History</p></div>
                 </a>
                 <a href="chse-science.html" class="card border-teal">
                     <div class="icon-circle" style="background: #14b8a6;"><i class="fas fa-flask"></i></div>
