@@ -1,54 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body class="bg-gray-50 font-sans">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <div class="bg-white shadow-sm p-4">
-        <div class="max-w-4xl mx-auto flex items-center">
-            <a href="index.html" class="text-gray-500 hover:text-blue-600 mr-4"><i class="fas fa-arrow-left"></i> Back</a>
-            <h1 class="text-xl font-bold">Class 10 Textbooks</h1>
+    <title>Class 10 Books PDF Download (Odia Medium) - BSE Odisha Board | EduOdia</title>
+    <meta name="description" content="Download free BSE Odisha Class 10 Textbooks PDF for Board Exam preparation. Get Sahitya Sindhu, Algebra, Geometry, Physical Science, Life Science, History, Geography, and Grammar books.">
+    <meta name="keywords" content="Class 10 Odia Medium Books, BSE Odisha 10th Class PDF, Class 10 Board Exam Books, Matric Books Odisha, Class 10 Algebra PDF, Class 10 Science PDF, EduOdia">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://eduodia.in/class-10.html">
+
+    <meta property="og:title" content="Class 10 Books PDF Download | BSE Odisha Board">
+    <meta property="og:description" content="Free PDF Textbooks for Class 10 (Odia Medium). Math, Science, History, Geography & more for Matric Exam.">
+    <meta property="og:image" content="https://eduodia.in/logo.png">
+    <meta property="og:url" content="https://eduodia.in/class-10.html">
+    <meta property="og:type" content="website">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
+    <style>
+        /* === CORE STYLES === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f8fafc; 
+            color: #334155; 
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+        
+        /* Gradients */
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #0ea5e9;
+        }
+        
+        /* === HEADER === */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 70px;
+        }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        
+        .desktop-menu { display: none; gap: 30px; align-items: center; }
+        .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
+        .desktop-menu a:hover { color: #10b981; }
+
+        /* Header Button */
+        .btn-header {
+            padding: 9px 24px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
+            background: white; color: #10b981; border: 2px solid #10b981; 
+            transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .btn-header:hover { 
+            background: #10b981; color: white !important; border-color: #10b981;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4); transform: translateY(-2px);
+        }
+
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
+
+        /* === PAGE HEADER === */
+        .page-header {
+            background: white; padding: 40px 0 60px 0; border-bottom: 1px solid #f1f5f9; text-align: center;
+        }
+        .breadcrumb {
+            display: inline-flex; align-items: center; gap: 5px;
+            color: #64748b; font-size: 0.9rem; margin-bottom: 30px; font-weight: 500;
+        }
+        .breadcrumb:hover { color: #10b981; }
+
+        .class-badge {
+            display: inline-flex; justify-content: center; align-items: center;
+            /* Class 10 Theme: Red Gradient */
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            color: white; width: 80px; height: 80px; border-radius: 24px;
+            font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.4);
+        }
+        .page-header h1 { font-size: 2rem; color: #0f172a; margin-bottom: 5px; }
+        .page-header p { color: #64748b; font-size: 1rem; }
+        .board-tag { 
+            display: inline-block; background: #fee2e2; color: #dc2626; 
+            font-weight: 700; font-size: 0.8rem; padding: 4px 12px; 
+            border-radius: 20px; text-transform: uppercase; margin-top: 10px;
+        }
+
+        /* === BOOK GRID === */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: -30px;
+            padding-bottom: 60px;
+        }
+
+        .book-card {
+            background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+            padding: 25px; transition: all 0.3s ease; 
+            display: flex; flex-direction: column; justify-content: space-between;
+            border-left: 5px solid #ef4444; /* Red Accent */
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
+        }
+        
+        .book-top { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
+        .book-icon {
+            background: #fef2f2; color: #ef4444; width: 50px; height: 50px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; flex-shrink: 0;
+        }
+        .book-info h3 { font-size: 1.25rem; color: #1e293b; margin-bottom: 5px; line-height: 1.3; }
+        .book-info p { font-size: 0.85rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .download-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: #f1f5f9; color: #334155; font-weight: 700;
+            padding: 12px; border-radius: 50px; width: 100%;
+            transition: all 0.2s; 
+        }
+        .download-btn:hover {
+            background: #ef4444; color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Subject Specific Colors - Overrides for variety */
+        .card-math { border-left-color: #3b82f6; }
+        .card-math .book-icon { background: #eff6ff; color: #3b82f6; }
+        .card-math .download-btn:hover { background: #3b82f6; }
+
+        .card-science { border-left-color: #10b981; }
+        .card-science .book-icon { background: #ecfdf5; color: #10b981; }
+        .card-science .download-btn:hover { background: #10b981; }
+
+        .card-social { border-left-color: #f97316; }
+        .card-social .book-icon { background: #fff7ed; color: #f97316; }
+        .card-social .download-btn:hover { background: #f97316; }
+
+        /* Footer */
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .mobile-btn { display: none; }
+            .desktop-menu { display: flex; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo">
+                <span>Edu<span class="text-gradient">Odia</span></span>
+            </a>
+            
+            <nav class="desktop-menu">
+                <a href="index.html">Home</a>
+                <a href="blog/index.html">Blog</a>
+                <a href="ocr-tool.html">OCR Tool</a>
+                <a href="image-tool.html">Resizer</a>
+                <a href="#classes" class="btn-header">Browse Books</a>
+            </nav>
+            
+            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        
+        <div id="mobile-menu" class="hidden">
+            <a href="index.html">Home</a>
+            <a href="blog/index.html">Blog</a>
+            <a href="ocr-tool.html">OCR Tool</a>
+            <a href="image-tool.html">Image Resizer</a>
+            <a href="#classes" style="color: #10b981; font-weight:bold;">Browse Books</a>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <a href="index.html" class="breadcrumb">
+                <i class="fas fa-arrow-left"></i> Back to Library
+            </a>
+            
+            <div style="display: block; margin-top: 10px;">
+                <div class="class-badge">10</div>
+                <h1>Class 10 Textbooks</h1>
+                <p>BSE Odisha Board • Matric Exam</p>
+                <span class="board-tag">Board Exam</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="grid">
+
+            <div class="book-card">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                    <div class="book-info"><h3>Sahitya Sindhu</h3><p>Odia Literature</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1BE6czLwMB7vXDy_y-fAS576qCT3nRyLi/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-pen-nib"></i></div>
+                    <div class="book-info"><h3>Odia Grammar</h3><p>Byakarana</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1BcWbQzn493MQptHVVlUbI-yFEvPiTFp5/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-language"></i></div>
+                    <div class="book-info"><h3>English</h3><p>Skills of English</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1B-3gul84xLXX64QWAJxgt26tnQB9m9RA/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-spell-check"></i></div>
+                    <div class="book-info"><h3>English Grammar</h3><p>Practice Book</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1AmA6WKrWf5dkjuKhEoi87a5SH6bnKz0C/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-comment"></i></div>
+                    <div class="book-info"><h3>Hindi</h3><p>Hindi Patha</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1B4PzMuPsH7Qsjqqw0QtsPNtQ8sTr1eUz/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-pen-alt"></i></div>
+                    <div class="book-info"><h3>Hindi Grammar</h3><p>Vyakaran</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1B4EEPeoywiHgXvrILGpOaqO3UfPhN2v7/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-scroll"></i></div>
+                    <div class="book-info"><h3>Sanskrit</h3><p>Language</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1BTQ7oiwz0Jgqe2zaAnb0BSBCvKoQ11YS/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-scroll"></i></div>
+                    <div class="book-info"><h3>Sanskrit Grammar</h3><p>Vyakaranam</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1BQYKIbFmc6BFOhaS8bxpZg8SwiwGi6j1/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-math">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-calculator"></i></div>
+                    <div class="book-info"><h3>Algebra</h3><p>Bija Ganita</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1B-JtmrsYwrcdy4dNOKidCv4GSB9UfXye/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-math">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-drafting-compass"></i></div>
+                    <div class="book-info"><h3>Geometry</h3><p>Jyamiti</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1BDAY8-ceZZOpdm-xaocy3rhCSJy_RMzL/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-science">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-flask"></i></div>
+                    <div class="book-info"><h3>Physical Science</h3><p>Bhautika Bigyana</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1BYj7aUbYHcjTIfIyUiGhCgVT3vznaUe5/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-science">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-dna"></i></div>
+                    <div class="book-info"><h3>Life Science</h3><p>Jiba Bigyana</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1BEvnAtu_mnjln6WApSS_ghCF5_eg0ztp/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-social">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-landmark"></i></div>
+                    <div class="book-info"><h3>History</h3><p>Itihas</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1BM5QqN1bJc_YYUlvXelXoTkFBwtfHP9U/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-social">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-globe-asia"></i></div>
+                    <div class="book-info"><h3>Geography</h3><p>Bhugola</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1AfkHGMTimJOHe94oNCzs4uUxZmPgBJK6/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
         </div>
     </div>
 
-    <div class="max-w-4xl mx-auto px-4 py-8">
-        <div class="space-y-4">
-
-            <div class="bg-white p-4 rounded-lg shadow-sm flex items-center justify-between hover:shadow-md transition">
-                <div class="flex items-center">
-                    <div class="h-12 w-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center text-xl mr-4">
-                        <i class="fas fa-calculator"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-800">Mathematics (Algebra)</h3>
-                        <p class="text-sm text-gray-500">BSE Odisha Board</p>
-                    </div>
-                </div>
-                <a href="YOUR_PDF_LINK_HERE" class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 hover:text-white transition">
-                    <i class="fas fa-download mr-2"></i> Download
-                </a>
-            </div>
-
-            <div class="bg-white p-4 rounded-lg shadow-sm flex items-center justify-between hover:shadow-md transition">
-                <div class="flex items-center">
-                    <div class="h-12 w-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center text-xl mr-4">
-                        <i class="fas fa-flask"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-bold text-gray-800">Physical Science</h3>
-                        <p class="text-sm text-gray-500">BSE Odisha Board</p>
-                    </div>
-                </div>
-                <a href="YOUR_PDF_LINK_HERE" class="bg-blue-100 text-blue-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-600 hover:text-white transition">
-                    <i class="fas fa-download mr-2"></i> Download
-                </a>
-            </div>
-
+    <footer>
+        <div class="container">
+            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Edu<span style="color: #10b981;">Odia</span></h2>
+            <p style="font-size: 0.9rem; color: #94a3b8;">&copy; 2025 EduOdia.in. All rights reserved.</p>
         </div>
-    </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
 
 </body>
 </html>
