@@ -55,7 +55,7 @@
         .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
         .desktop-menu a:hover { color: #10b981; }
         
-        /* Premium Header Button (Outline Style) */
+        /* Header Button */
         .btn-header {
             padding: 9px 24px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
             background: white; color: #10b981; border: 2px solid #10b981; 
@@ -104,7 +104,6 @@
         .feature-link .fas { transition: transform 0.3s ease; }
         .feature-card:hover .feature-link .fas { transform: translateX(5px); }
 
-        /* Feature Colors */
         .card-green .feature-icon { background: #ecfdf5; color: #10b981; } .card-green .feature-link { color: #10b981; }
         .card-blue .feature-icon { background: #e0f2fe; color: #0ea5e9; } .card-blue .feature-link { color: #0ea5e9; }
         .card-orange .feature-icon { background: #fff7ed; color: #f97316; } .card-orange .feature-link { color: #f97316; }
@@ -118,7 +117,7 @@
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
 
-        /* === 5. CLASSES GRID === */
+        /* === 5. CLASSES GRID (UPDATED FOR 5x2 LAYOUT) === */
         .grid-section { padding: 60px 0; background: #f8fafc; }
         .section-white { background: white; border-top: 1px solid #e2e8f0; }
         
@@ -127,10 +126,25 @@
         .badge { background: #ecfdf5; color: #10b981; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
 
         .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: grid;
+            gap: 20px;
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            
+            /* Mobile: 2 Columns */
+            grid-template-columns: repeat(2, 1fr);
         }
-        /* CHSE Grid - Updated for 4 items */
+
+        /* Tablet: 3 Columns */
+        @media (min-width: 640px) {
+            .grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Desktop: EXACTLY 5 COLUMNS (5 Up, 5 Down) */
+        @media (min-width: 1024px) {
+            .grid { grid-template-columns: repeat(5, 1fr); }
+        }
+
+        /* CHSE Grid - Flexible */
         .chse-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1100px; }
 
         /* Class Card */
@@ -261,6 +275,7 @@
             </div>
 
             <div class="grid">
+                
                 <a href="class-1.html" class="card border-green">
                     <div class="icon-circle bg-green">1</div>
                     <div><h3>Class 1</h3><p>Primary</p></div>
@@ -281,6 +296,7 @@
                     <div class="icon-circle bg-indigo">5</div>
                     <div><h3>Class 5</h3><p>Primary</p></div>
                 </a>
+                
                 <a href="class-6.html" class="card border-violet">
                     <div class="icon-circle bg-violet">6</div>
                     <div><h3>Class 6</h3><p>Middle</p></div>
@@ -301,6 +317,7 @@
                     <div class="icon-circle bg-red">10</div>
                     <div><h3>Class 10</h3><p>High School</p><span class="class-tag tag-red">BOARD EXAM</span></div>
                 </a>
+
             </div>
         </div>
     </section>
@@ -316,7 +333,7 @@
                 
                 <a href="chse-compulsory.html" class="card border-indigo">
                     <div class="icon-circle bg-indigo"><i class="fas fa-book-open"></i></div>
-                    <div><h3>Compulsory</h3><p>Eng, MIL</p></div>
+                    <div><h3>Compulsory</h3><p>Eng, MIL, Yoga</p></div>
                 </a>
                 
                 <a href="chse-arts.html" class="card border-rose">
