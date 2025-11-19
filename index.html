@@ -4,13 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <title>EduOdia: Odisha Board Textbooks PDF & Student Tools (Class 1-12)</title>
+    
+    <meta name="description" content="Download free BSE Odisha Board Textbooks (Class 1 to 10) and CHSE +2 Books (Arts, Science, Commerce) in PDF. Use free tools like Odia OCR and Image Resizer for students.">
+    
+    <meta name="keywords" content="EduOdia, Odisha Board Book PDF, BSE Odisha Textbooks, CHSE Odisha Books Download, Class 10 Odia Medium Books, +2 Science Books PDF, Odia OCR Tool, Image Resizer for SAMS">
+    
+    <link rel="canonical" href="https://eduodia.in/">
+    
+    <meta name="robots" content="index, follow">
+    <meta name="google-site-verification" content="YOUR_GOOGLE_VERIFICATION_CODE_HERE" />
+
+    <meta property="og:title" content="EduOdia | Odisha's #1 Digital Library for Students">
+    <meta property="og:description" content="Free PDF Textbooks for Class 1 to 12 (BSE & CHSE). Includes Smart Tools like OCR and Photo Resizer for exam forms.">
+    <meta property="og:image" content="https://eduodia.in/logo.png">
+    <meta property="og:url" content="https://eduodia.in/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EduOdia">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "EduOdia",
+      "url": "https://eduodia.in",
+      "logo": "https://eduodia.in/logo.png",
+      "description": "Free Digital Library providing BSE and CHSE Odisha textbooks and student utility tools.",
+      "sameAs": [
+        "https://www.facebook.com/eduodia",
+        "https://twitter.com/eduodia"
+      ]
+    }
+    </script>
+
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>EduOdia | Odisha's Digital Library & Tools</title>
     <link rel="icon" type="image/png" href="logo.png">
-
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
 
     <style>
@@ -55,7 +87,7 @@
         .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
         .desktop-menu a:hover { color: #10b981; }
         
-        /* Header Button */
+        /* Premium Header Button */
         .btn-header {
             padding: 9px 24px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
             background: white; color: #10b981; border: 2px solid #10b981; 
@@ -104,11 +136,12 @@
         .feature-link .fas { transition: transform 0.3s ease; }
         .feature-card:hover .feature-link .fas { transform: translateX(5px); }
 
+        /* Feature Colors */
         .card-green .feature-icon { background: #ecfdf5; color: #10b981; } .card-green .feature-link { color: #10b981; }
         .card-blue .feature-icon { background: #e0f2fe; color: #0ea5e9; } .card-blue .feature-link { color: #0ea5e9; }
         .card-orange .feature-icon { background: #fff7ed; color: #f97316; } .card-orange .feature-link { color: #f97316; }
 
-        /* Pulse Badge */
+        /* Badge */
         .badge-new { 
             position: absolute; top: 15px; right: 15px; background: #ef4444; color: white; 
             font-size: 0.7rem; font-weight: bold; padding: 2px 8px; border-radius: 10px;
@@ -117,7 +150,7 @@
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
 
-        /* === 5. CLASSES GRID (UPDATED FOR 5x2 LAYOUT) === */
+        /* === 5. CLASSES GRID === */
         .grid-section { padding: 60px 0; background: #f8fafc; }
         .section-white { background: white; border-top: 1px solid #e2e8f0; }
         
@@ -126,25 +159,12 @@
         .badge { background: #ecfdf5; color: #10b981; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
 
         .grid {
-            display: grid;
-            gap: 20px;
-            max-width: 1200px; margin: 0 auto; padding: 0 20px;
-            
-            /* Mobile: 2 Columns */
-            grid-template-columns: repeat(2, 1fr);
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 20px;
         }
+        /* Desktop: 5 Columns */
+        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(5, 1fr); } }
 
-        /* Tablet: 3 Columns */
-        @media (min-width: 640px) {
-            .grid { grid-template-columns: repeat(3, 1fr); }
-        }
-
-        /* Desktop: EXACTLY 5 COLUMNS (5 Up, 5 Down) */
-        @media (min-width: 1024px) {
-            .grid { grid-template-columns: repeat(5, 1fr); }
-        }
-
-        /* CHSE Grid - Flexible */
         .chse-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1100px; }
 
         /* Class Card */
@@ -185,15 +205,6 @@
         /* Footer */
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
 
-        /* Scroll to Top */
-        #scrollTop {
-            position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white;
-            width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer;
-            display: none; align-items: center; justify-content: center; font-size: 1.2rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; z-index: 999;
-        }
-        #scrollTop:hover { background: #059669; transform: translateY(-3px); }
-
         /* Responsive */
         @media (min-width: 768px) {
             .mobile-btn { display: none; }
@@ -202,6 +213,15 @@
         }
         #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
         #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
+        
+        /* Scroll Top */
+        #scrollTop {
+            position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white;
+            width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer;
+            display: none; align-items: center; justify-content: center; font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; z-index: 999;
+        }
+        #scrollTop:hover { background: #059669; transform: translateY(-3px); }
     </style>
 </head>
 <body>
@@ -209,7 +229,7 @@
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="logo.png" alt="Logo">
+                <img src="logo.png" alt="EduOdia Logo">
                 <span>Edu<span class="text-gradient">Odia</span></span>
             </a>
             
