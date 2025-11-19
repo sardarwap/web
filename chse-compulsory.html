@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>+2 Compulsory Books | EduOdia</title>
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
+    <style>
+        /* === CORE STYLES === */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background-color: #f8fafc; 
+            color: #334155; 
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        .hidden { display: none !important; }
+        
+        /* Gradients */
+        .text-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #0ea5e9;
+        }
+        
+        /* === HEADER === */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center; height: 70px;
+        }
+        .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        
+        .desktop-menu { display: none; gap: 30px; align-items: center; }
+        .desktop-menu a { font-weight: 500; color: #64748b; }
+        .desktop-menu a:hover { color: #10b981; }
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
+
+        /* === PAGE HEADER === */
+        .page-header {
+            background: white; padding: 40px 0 60px 0; border-bottom: 1px solid #f1f5f9; text-align: center;
+        }
+        .breadcrumb {
+            display: inline-flex; align-items: center; gap: 5px;
+            color: #64748b; font-size: 0.9rem; margin-bottom: 30px; font-weight: 500;
+        }
+        .breadcrumb:hover { color: #10b981; }
+
+        .class-badge {
+            display: inline-flex; justify-content: center; align-items: center;
+            /* Compulsory Theme: Indigo Gradient */
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white; width: 80px; height: 80px; border-radius: 24px;
+            font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;
+            box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+        }
+        .class-badge i { font-size: 2rem; } /* For icon instead of number */
+        .page-header h1 { font-size: 2rem; color: #0f172a; margin-bottom: 5px; }
+        .page-header p { color: #64748b; font-size: 1rem; }
+
+        /* === BOOK GRID === */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: -30px;
+            padding-bottom: 60px;
+        }
+
+        .book-card {
+            background: white; border: 1px solid #e2e8f0; border-radius: 16px;
+            padding: 25px; transition: all 0.3s ease; 
+            display: flex; flex-direction: column; justify-content: space-between;
+            border-left: 5px solid #6366f1; /* Default Accent */
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1);
+        }
+        
+        .book-top { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
+        .book-icon {
+            background: #eef2ff; color: #6366f1; width: 50px; height: 50px;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; flex-shrink: 0;
+        }
+        .book-info h3 { font-size: 1.25rem; color: #1e293b; margin-bottom: 5px; line-height: 1.3; }
+        .book-info p { font-size: 0.85rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .download-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: #f1f5f9; color: #334155; font-weight: 700;
+            padding: 12px; border-radius: 50px; width: 100%;
+            transition: all 0.2s; 
+        }
+        .download-btn:hover {
+            background: #6366f1; color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Subject Specific Colors */
+        /* English - Blue */
+        .card-english { border-left-color: #3b82f6; }
+        .card-english .book-icon { background: #eff6ff; color: #3b82f6; }
+        .card-english .download-btn:hover { background: #3b82f6; }
+
+        /* Odia - Pink */
+        .card-odia { border-left-color: #ec4899; }
+        .card-odia .book-icon { background: #fdf2f8; color: #ec4899; }
+        .card-odia .download-btn:hover { background: #ec4899; }
+
+        /* Sanskrit - Orange */
+        .card-sanskrit { border-left-color: #f97316; }
+        .card-sanskrit .book-icon { background: #fff7ed; color: #f97316; }
+        .card-sanskrit .download-btn:hover { background: #f97316; }
+
+        /* Yoga - Green */
+        .card-yoga { border-left-color: #10b981; }
+        .card-yoga .book-icon { background: #ecfdf5; color: #10b981; }
+        .card-yoga .download-btn:hover { background: #10b981; }
+
+
+        /* Footer */
+        footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .mobile-btn { display: none; }
+            .desktop-menu { display: flex; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo">
+                <span>Edu<span class="text-gradient">Odia</span></span>
+            </a>
+            <nav class="desktop-menu">
+                <a href="index.html">Home</a>
+                <a href="blog/index.html">Blog</a>
+            </nav>
+            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden">
+            <a href="index.html" style="display:block; padding:10px;">Home</a>
+            <a href="blog/index.html" style="display:block; padding:10px;">Blog</a>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <a href="index.html" class="breadcrumb">
+                <i class="fas fa-arrow-left"></i> Back to Library
+            </a>
+            
+            <div style="display: block; margin-top: 10px;">
+                <div class="class-badge">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <h1>+2 Compulsory Books</h1>
+                <p>For Arts, Science & Commerce • CHSE Odisha</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="grid">
+
+            <div class="book-card card-english">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-language"></i></div>
+                    <div class="book-info"><h3>Invitation to English - 1</h3><p>Compulsory English</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/108DxNpb0J_jF9W6yAL0hXPIPlw-LQ1Yl/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-english">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-language"></i></div>
+                    <div class="book-info"><h3>Invitation to English - 2</h3><p>Compulsory English</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1042V8VnJPIoUBC3TKeYtr2KG2NMk6K7q/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-english">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-language"></i></div>
+                    <div class="book-info"><h3>Invitation to English - 3</h3><p>Compulsory English</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/10-6IxGM0RNRa09a-RgEsQgRI9JzyfTdU/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-english">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-language"></i></div>
+                    <div class="book-info"><h3>Invitation to English - 4</h3><p>Compulsory English</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1tP7vh_u3zwAYwPLKSEDlqKL7BI1qPPNJ/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-odia">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                    <div class="book-info"><h3>Sahitya Jyoti - 1</h3><p>M.I.L (Odia)</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-G8ZOL3B07as9ttZUGRtMAji8ll4sBKq/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-odia">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-book-open"></i></div>
+                    <div class="book-info"><h3>Sahitya Jyoti - 2</h3><p>M.I.L (Odia)</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-Ghx6nDiklb8zn0JKdxhP89jO4Ujgb0b/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-odia">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-pen-nib"></i></div>
+                    <div class="book-info"><h3>Odia Grammar - 1</h3><p>M.I.L (Odia)</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-OBqmK9uM1hKW2u7FmVxOUYHZGd3Rqit/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-odia">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-pen-nib"></i></div>
+                    <div class="book-info"><h3>Odia Grammar - 2</h3><p>M.I.L (Odia)</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-Omuv_ddYnhg41cynoQMtIfZHoxkhYTG/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-sanskrit">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-scroll"></i></div>
+                    <div class="book-info"><h3>Sahitya Sudha - 1</h3><p>Optional / Elective</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-FvSPSt5CzwV_NjikrohN0-HbzAiwdiG/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-sanskrit">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-scroll"></i></div>
+                    <div class="book-info"><h3>Sahitya Sudha - 2</h3><p>Optional / Elective</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-EeGeVGQMkLl9SIBSBZAAdpR3P657Q3R/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-sanskrit">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-om"></i></div>
+                    <div class="book-info"><h3>Sanskrit Prabha - 1</h3><p>Sanskrit</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-RqSLAybUcRArEtcHNp_I4Krn75g77UW/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-sanskrit">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-om"></i></div>
+                    <div class="book-info"><h3>Sanskrit Prabha - 2</h3><p>Sanskrit</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-fTeaSrFWatKMtvi_KPFklHPSAxJfyMo/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-yoga">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-spa"></i></div>
+                    <div class="book-info"><h3>Yoga</h3><p>Odia Medium</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-xNNjh4keGL1FoR9rXBgESNHzItIuunt/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+            <div class="book-card card-yoga">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-spa"></i></div>
+                    <div class="book-info"><h3>Yoga</h3><p>English Medium</p></div>
+                </div>
+                <a href="https://drive.google.com/file/d/1-pxQY7dBlxwo8A81dg5oVtb8YbO-j-oy/view?usp=sharing" target="_blank" class="download-btn"><i class="fas fa-download"></i> Download PDF</a>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Edu<span style="color: #10b981;">Odia</span></h2>
+            <p style="font-size: 0.9rem; color: #94a3b8;">&copy; 2025 EduOdia.in. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+</html>
