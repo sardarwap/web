@@ -41,7 +41,7 @@
             color: white;
         }
 
-        /* === 3. HEADER (Synced with Home) === */
+        /* === 3. HEADER === */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -98,7 +98,7 @@
             display: flex; flex-direction: column; transition: transform 0.3s;
         }
         .featured-post:hover { transform: translateY(-5px); border-color: #10b981; }
-        .featured-img { height: 250px; object-fit: cover; width: 100%; }
+        .featured-img { height: 250px; width: 100%; object-fit: cover; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg, #d1fae5, #10b981); }
         .featured-content { padding: 30px; }
 
         /* Grid Layout */
@@ -111,7 +111,7 @@
             display: flex; flex-direction: column;
         }
         .post-card:hover { transform: translateY(-5px); border-color: #10b981; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); }
-        .post-img { height: 180px; width: 100%; object-fit: cover; }
+        .post-img { height: 180px; width: 100%; display:flex; align-items:center; justify-content:center; }
         .post-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
         
         /* Typography */
@@ -143,7 +143,7 @@
         <div class="nav-container">
             <a href="../index.html" class="logo">
                 <img src="../logo.png" alt="Logo">
-                <span>Edu<span class="text-gradient">Odia</span></span>
+                <span>Edu<span class="text-gradient">Odia</span> Blog</span>
             </a>
             
             <nav class="desktop-menu">
@@ -168,8 +168,8 @@
 
     <div class="blog-hero">
         <span class="pill">Student Resources</span>
-        <h1>Learn Smarter, Not Harder</h1>
-        <p>Tips, Syllabus Updates, and Career Guidance for Odisha Students.</p>
+        <h1>Latest from EduOdia</h1>
+        <p>Study Materials, Syllabus Updates, and Exam Tips.</p>
     </div>
 
     <div class="container">
@@ -177,12 +177,12 @@
         <h3 class="section-head">Featured Post</h3>
         
         <div class="featured-post">
-            <div class="featured-img" style="background: linear-gradient(135deg, #d1fae5, #10b981); display:flex; align-items:center; justify-content:center;">
-                <i class="fas fa-pen-nib" style="font-size: 4rem; color: rgba(255,255,255,0.5);"></i>
+            <div class="featured-img">
+                <i class="fas fa-pen-nib" style="font-size: 5rem; color: white;"></i>
             </div>
             
             <div class="featured-content">
-                <span class="meta" style="color: #10b981;">Study Material • New</span>
+                <span class="meta" style="color: #10b981;">Study Material</span>
                 <h2><a href="odia-essay.html">100+ Odia Essay (Rachana) PDF Download</a></h2>
                 <p class="excerpt">Download the complete collection of selected Odia essays for Class 8, 9, 10, and +2 exams. Includes Festivals, Biographies, and Social Issues.</p>
                 <a href="odia-essay.html" class="read-more">Read & Download <i class="fas fa-arrow-right"></i></a>
@@ -193,38 +193,26 @@
         <div class="grid">
             
             <div class="post-card">
-                <div class="post-img" style="background: #e0f2fe; display:flex; align-items:center; justify-content:center;">
-                    <i class="fas fa-lightbulb" style="font-size: 3rem; color: #0ea5e9;"></i>
+                <div class="post-img" style="background: #e0f2fe;">
+                    <i class="fas fa-book-open" style="font-size: 3rem; color: #0ea5e9;"></i>
                 </div>
                 <div class="post-content">
-                    <span class="meta" style="color: #0ea5e9;">Study Tips</span>
-                    <h3><a href="article1.html">How to Score 90% in Board Exams</a></h3>
-                    <p class="excerpt">Passive reading doesn't work. Learn about "Active Recall" and the "Pomodoro Technique".</p>
-                    <a href="article1.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+                    <span class="meta" style="color: #0ea5e9;">Syllabus</span>
+                    <h3><a href="chse-syllabus.html">CHSE +2 Syllabus 2025-26 PDF</a></h3>
+                    <p class="excerpt">Updated syllabus for Arts, Science, and Commerce streams. Check unit-wise weightage.</p>
+                    <a href="chse-syllabus.html" class="read-more">Download Syllabus <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
-            <div class="post-card">
-                <div class="post-img" style="background: #fce7f3; display:flex; align-items:center; justify-content:center;">
-                    <i class="fas fa-bullhorn" style="font-size: 3rem; color: #db2777;"></i>
+            <div class="post-card" style="opacity: 0.7;">
+                <div class="post-img" style="background: #f3f4f6;">
+                    <i class="fas fa-clock" style="font-size: 3rem; color: #94a3b8;"></i>
                 </div>
                 <div class="post-content">
-                    <span class="meta" style="color: #db2777;">News</span>
-                    <h3><a href="article2.html">Syllabus Updates 2025</a></h3>
-                    <p class="excerpt">The Board has reduced chapters in Physical Science. Check the new weightage details here.</p>
-                    <a href="article2.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <div class="post-card">
-                <div class="post-img" style="background: #f3e8ff; display:flex; align-items:center; justify-content:center;">
-                    <i class="fas fa-briefcase" style="font-size: 3rem; color: #7c3aed;"></i>
-                </div>
-                <div class="post-content">
-                    <span class="meta" style="color: #7c3aed;">Career</span>
-                    <h3><a href="article3.html">Career Options after Science</a></h3>
-                    <p class="excerpt">Beyond MBBS and Engineering: Explore Data Science, Architecture, and Design.</p>
-                    <a href="article3.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+                    <span class="meta" style="color: #64748b;">Coming Soon</span>
+                    <h3><a href="#">Previous Year Questions</a></h3>
+                    <p class="excerpt">We are compiling the last 5 years of question papers for Class 10 and +2. Stay tuned!</p>
+                    <span class="read-more" style="color:#94a3b8;">Coming Soon...</span>
                 </div>
             </div>
 
