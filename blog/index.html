@@ -8,33 +8,45 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
 
-    <title>EduOdia Blog | Insights & Updates</title>
+    <title>EduOdia Blog | Insights & Resources</title>
     <link rel="icon" type="image/png" href="../logo.png">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
 
     <style>
-        /* === CORE STYLES === */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+        /* === 1. CORE SETTINGS === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            background-color: #f8fafc; color: #334155; line-height: 1.6;
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            color: #334155; 
+            line-height: 1.6;
+            display: flex; flex-direction: column; min-height: 100vh;
         }
         a { text-decoration: none; color: inherit; }
         .hidden { display: none !important; }
         img { max-width: 100%; display: block; }
-
-        /* Gradients & Colors */
+        
+        /* === 2. THEME COLORS === */
         .text-gradient {
             background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #0ea5e9;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: #0ea5e9;
         }
-        .bg-gradient { background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); color: white; }
-        
-        /* === HEADER === */
+        .bg-gradient {
+            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
+            color: white;
+        }
+
+        /* === 3. HEADER (Synced with Home) === */
         header {
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
-            position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid #e2e8f0;
         }
         .nav-container {
             max-width: 1200px; margin: 0 auto; padding: 0 20px;
@@ -44,13 +56,30 @@
         .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
         
         .desktop-menu { display: none; gap: 30px; align-items: center; }
-        .desktop-menu a { font-weight: 500; color: #64748b; }
+        .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
         .desktop-menu a:hover { color: #10b981; }
-        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        
+        /* Header Button */
+        .btn-header {
+            padding: 9px 24px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
+            background: white; color: #10b981; border: 2px solid #10b981; 
+            transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .btn-header:hover { 
+            background: #10b981; color: white !important; border-color: #10b981;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4); transform: translateY(-2px);
+        }
 
-        /* === BLOG HERO === */
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        
+        /* Mobile Menu */
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
+
+
+        /* === 4. BLOG HERO === */
         .blog-hero { text-align: center; padding: 60px 20px; background: white; border-bottom: 1px solid #f1f5f9; }
-        .blog-hero h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 10px; }
+        .blog-hero h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 10px; font-weight: 800; }
         .blog-hero p { color: #64748b; font-size: 1.1rem; }
         .pill { 
             display: inline-block; background: #ecfdf5; color: #10b981; 
@@ -58,37 +87,42 @@
             text-transform: uppercase; margin-bottom: 15px;
         }
 
-        /* === ARTICLES GRID === */
-        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
-        
-        /* Featured Post (Big Card) */
+        /* === 5. BLOG GRID === */
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; flex: 1; }
+
+        /* Featured Post */
         .featured-post {
             background: white; border-radius: 16px; overflow: hidden;
             border: 1px solid #e2e8f0; margin-bottom: 50px;
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-            display: flex; flex-direction: column;
+            display: flex; flex-direction: column; transition: transform 0.3s;
         }
+        .featured-post:hover { transform: translateY(-5px); border-color: #10b981; }
         .featured-img { height: 250px; object-fit: cover; width: 100%; }
         .featured-content { padding: 30px; }
-        
-        /* Regular Grid */
+
+        /* Grid Layout */
         .grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
         }
         .post-card {
             background: white; border-radius: 12px; overflow: hidden;
             border: 1px solid #e2e8f0; transition: transform 0.3s ease;
+            display: flex; flex-direction: column;
         }
-        .post-card:hover { transform: translateY(-5px); border-color: #10b981; }
-        .post-img { height: 200px; width: 100%; object-fit: cover; }
-        .post-content { padding: 20px; }
+        .post-card:hover { transform: translateY(-5px); border-color: #10b981; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); }
+        .post-img { height: 180px; width: 100%; object-fit: cover; }
+        .post-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
         
         /* Typography */
-        h2 { font-size: 1.5rem; margin-bottom: 10px; line-height: 1.3; color: #1e293b; }
-        h3 { font-size: 1.2rem; margin-bottom: 10px; color: #1e293b; }
-        .excerpt { color: #64748b; font-size: 0.95rem; margin-bottom: 20px; }
-        .meta { font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px; font-weight: 600; text-transform: uppercase; }
-        .read-more { color: #10b981; font-weight: bold; font-size: 0.9rem; }
+        h2 { font-size: 1.8rem; margin-bottom: 10px; line-height: 1.3; color: #1e293b; }
+        h3 { font-size: 1.2rem; margin-bottom: 10px; color: #1e293b; font-weight: 700; }
+        .excerpt { color: #64748b; font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1; }
+        .meta { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 10px; display: block; }
+        .read-more { color: #10b981; font-weight: 700; font-size: 0.9rem; margin-top: auto; display: inline-flex; align-items: center; gap: 5px; }
+        
+        /* Section Header */
+        .section-head { border-left: 5px solid #10b981; padding-left: 15px; margin-bottom: 30px; color: #1e293b; font-size: 1.5rem; font-weight: 800; }
 
         /* Footer */
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
@@ -101,8 +135,6 @@
             .featured-img { width: 50%; height: auto; }
             .featured-content { width: 50%; justify-content: center; display: flex; flex-direction: column; }
         }
-        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
-        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
     </style>
 </head>
 <body>
@@ -111,17 +143,26 @@
         <div class="nav-container">
             <a href="../index.html" class="logo">
                 <img src="../logo.png" alt="Logo">
-                <span>Edu<span class="text-gradient">Odia</span> Blog</span>
+                <span>Edu<span class="text-gradient">Odia</span></span>
             </a>
+            
             <nav class="desktop-menu">
                 <a href="../index.html">Home</a>
-                <a href="../index.html#classes">Books</a>
+                <a href="index.html" style="color:#10b981;">Blog</a>
+                <a href="../ocr-tool.html">OCR Tool</a>
+                <a href="../image-tool.html">Resizer</a>
+                <a href="../index.html#classes" class="btn-header">Browse Books</a>
             </nav>
+            
             <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
         </div>
+        
         <div id="mobile-menu" class="hidden">
             <a href="../index.html">Home</a>
-            <a href="../index.html#classes">Books</a>
+            <a href="index.html" style="color:#10b981;">Blog</a>
+            <a href="../ocr-tool.html">OCR Tool</a>
+            <a href="../image-tool.html">Image Resizer</a>
+            <a href="../index.html#classes" style="font-weight:bold;">Browse Books</a>
         </div>
     </header>
 
@@ -133,37 +174,57 @@
 
     <div class="container">
         
-        <h3 style="border-left: 4px solid #10b981; padding-left: 10px; margin-bottom: 20px;">Featured Post</h3>
+        <h3 class="section-head">Featured Post</h3>
+        
         <div class="featured-post">
-            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80" class="featured-img">
+            <div class="featured-img" style="background: linear-gradient(135deg, #d1fae5, #10b981); display:flex; align-items:center; justify-content:center;">
+                <i class="fas fa-pen-nib" style="font-size: 4rem; color: rgba(255,255,255,0.5);"></i>
+            </div>
+            
             <div class="featured-content">
-                <div class="meta" style="color: #10b981;">Study Strategy • Nov 2025</div>
-                <h2><a href="article1.html">How to Score 90% in Board Exams</a></h2>
-                <p class="excerpt">Passive reading doesn't work. Learn about "Active Recall" and the "Pomodoro Technique" to study less but remember more.</p>
-                <a href="article1.html" class="read-more">Read Full Article &rarr;</a>
+                <span class="meta" style="color: #10b981;">Study Material • New</span>
+                <h2><a href="odia-essay.html">100+ Odia Essay (Rachana) PDF Download</a></h2>
+                <p class="excerpt">Download the complete collection of selected Odia essays for Class 8, 9, 10, and +2 exams. Includes Festivals, Biographies, and Social Issues.</p>
+                <a href="odia-essay.html" class="read-more">Read & Download <i class="fas fa-arrow-right"></i></a>
             </div>
         </div>
 
-        <h3 style="border-left: 4px solid #0ea5e9; padding-left: 10px; margin-bottom: 20px; margin-top: 50px;">Recent Updates</h3>
+        <h3 class="section-head" style="border-color: #0ea5e9; margin-top: 60px;">Recent Updates</h3>
         <div class="grid">
             
             <div class="post-card">
-                <a href="article2.html"><img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=600&q=80" class="post-img"></a>
+                <div class="post-img" style="background: #e0f2fe; display:flex; align-items:center; justify-content:center;">
+                    <i class="fas fa-lightbulb" style="font-size: 3rem; color: #0ea5e9;"></i>
+                </div>
                 <div class="post-content">
-                    <div class="meta" style="color: #ef4444;">News</div>
-                    <h3><a href="article2.html">Syllabus Updates 2025</a></h3>
-                    <p class="excerpt">The Board has reduced chapters in Physical Science. Check the details here.</p>
-                    <a href="article2.html" class="read-more">Read More &rarr;</a>
+                    <span class="meta" style="color: #0ea5e9;">Study Tips</span>
+                    <h3><a href="article1.html">How to Score 90% in Board Exams</a></h3>
+                    <p class="excerpt">Passive reading doesn't work. Learn about "Active Recall" and the "Pomodoro Technique".</p>
+                    <a href="article1.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
             <div class="post-card">
-                <a href="article3.html"><img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80" class="post-img"></a>
+                <div class="post-img" style="background: #fce7f3; display:flex; align-items:center; justify-content:center;">
+                    <i class="fas fa-bullhorn" style="font-size: 3rem; color: #db2777;"></i>
+                </div>
                 <div class="post-content">
-                    <div class="meta" style="color: #8b5cf6;">Career</div>
+                    <span class="meta" style="color: #db2777;">News</span>
+                    <h3><a href="article2.html">Syllabus Updates 2025</a></h3>
+                    <p class="excerpt">The Board has reduced chapters in Physical Science. Check the new weightage details here.</p>
+                    <a href="article2.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="post-card">
+                <div class="post-img" style="background: #f3e8ff; display:flex; align-items:center; justify-content:center;">
+                    <i class="fas fa-briefcase" style="font-size: 3rem; color: #7c3aed;"></i>
+                </div>
+                <div class="post-content">
+                    <span class="meta" style="color: #7c3aed;">Career</span>
                     <h3><a href="article3.html">Career Options after Science</a></h3>
-                    <p class="excerpt">Beyond MBBS and Engineering: Explore Data Science and Architecture.</p>
-                    <a href="article3.html" class="read-more">Read More &rarr;</a>
+                    <p class="excerpt">Beyond MBBS and Engineering: Explore Data Science, Architecture, and Design.</p>
+                    <a href="article3.html" class="read-more">Read Article <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
 
@@ -171,8 +232,13 @@
     </div>
 
     <footer>
-        <div class="container" style="padding: 0;">
-            <p>&copy; 2025 EduOdia.in</p>
+        <div class="container" style="padding:0;">
+            <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Edu<span style="color: #10b981;">Odia</span></h2>
+            <p style="margin-bottom: 15px; font-size: 0.9rem;">
+                <a href="../about.html" style="margin: 0 10px; color: #94a3b8;">About Us</a> | 
+                <a href="../contact.html" style="margin: 0 10px; color: #94a3b8;">Contact</a>
+            </p>
+            <p style="font-size: 0.9rem; color: #64748b;">&copy; 2025 EduOdia.in. All rights reserved.</p>
         </div>
     </footer>
 
