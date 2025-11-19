@@ -55,87 +55,67 @@
         .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
         .desktop-menu a:hover { color: #10b981; }
         
-        /* === FIXED HEADER BUTTON (Premium Outline Style) === */
+        /* Premium Header Button (Outline Style) */
         .btn-header {
-            padding: 10px 24px; 
-            border-radius: 50px; 
-            font-weight: 700; 
-            font-size: 0.9rem;
-            background: white; 
-            color: #10b981; 
-            border: 2px solid #10b981; 
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            padding: 9px 24px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
+            background: white; color: #10b981; border: 2px solid #10b981; 
+            transition: all 0.3s ease; box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        
         .btn-header:hover { 
-            background: #10b981; 
-            color: white !important; 
-            border-color: #10b981;
-            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4);
-            transform: translateY(-2px);
+            background: #10b981; color: white !important; border-color: #10b981;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4); transform: translateY(-2px);
         }
 
         .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
-
 
         /* === 4. HERO SECTION === */
         .hero { background: white; padding: 60px 0 80px 0; text-align: center; position: relative; overflow: hidden; }
         .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 15px; color: #0f172a; }
         .hero p { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto 50px auto; }
 
-        /* Hero Feature Grid */
+        /* Hero Grid */
         .hero-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 0 20px;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; max-width: 1000px; margin: 0 auto; padding: 0 20px;
         }
 
         /* Hero Feature Card */
         .feature-card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 30px;
-            text-align: left;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            position: relative;
-            box-shadow: 0 6px 15px -3px rgba(0,0,0,0.08);
+            background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 30px;
+            text-align: left; transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; box-shadow: 0 6px 15px -3px rgba(0,0,0,0.08);
             display: flex; flex-direction: column; justify-content: space-between;
         }
         .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
-            border-color: transparent;
-            background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
-            color: white;
+            transform: translateY(-8px); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+            border-color: transparent; background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%); color: white;
         }
-
-        /* Elements inside feature-card on hover */
         .feature-card:hover h3, .feature-card:hover p, .feature-card:hover .feature-link { color: white; }
         .feature-card:hover .feature-icon { background: rgba(255, 255, 255, 0.2); color: white; }
 
         .feature-icon {
-            width: 55px; height: 55px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center;
+            width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
             font-size: 1.7rem; margin-bottom: 20px; transition: all 0.3s ease;
         }
         .feature-card h3 { font-size: 1.3rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
         .feature-card p { font-size: 0.95rem; color: #64748b; margin-bottom: 25px; line-height: 1.5; flex-grow: 1; }
         
-        .feature-link {
-            font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-top: auto; 
-        }
+        .feature-link { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-top: auto; }
         .feature-link .fas { transition: transform 0.3s ease; }
         .feature-card:hover .feature-link .fas { transform: translateX(5px); }
 
-        /* Feature Card Colors */
+        /* Feature Colors */
         .card-green .feature-icon { background: #ecfdf5; color: #10b981; } .card-green .feature-link { color: #10b981; }
         .card-blue .feature-icon { background: #e0f2fe; color: #0ea5e9; } .card-blue .feature-link { color: #0ea5e9; }
         .card-orange .feature-icon { background: #fff7ed; color: #f97316; } .card-orange .feature-link { color: #f97316; }
+
+        /* Pulse Badge */
+        .badge-new { 
+            position: absolute; top: 15px; right: 15px; background: #ef4444; color: white; 
+            font-size: 0.7rem; font-weight: bold; padding: 2px 8px; border-radius: 10px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
 
         /* === 5. CLASSES GRID === */
@@ -147,54 +127,35 @@
         .badge { background: #ecfdf5; color: #10b981; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
 
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
-            max-width: 1200px; margin: 0 auto; padding: 0 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 20px;
         }
-        .chse-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); max-width: 900px; }
+        /* CHSE Grid - Updated for 4 items */
+        .chse-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1100px; }
 
-        /* === CARD DESIGN === */
+        /* Class Card */
         .card {
-            background: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 16px;
-            padding: 25px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            border-bottom-width: 4px; 
-            border-bottom-style: solid;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 180px;
+            background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 25px;
+            text-align: center; transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
+            border-bottom-width: 4px; border-bottom-style: solid;
+            display: flex; flex-direction: column; justify-content: space-between; min-height: 180px;
         }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
         
         .icon-circle {
             width: 60px; height: 60px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 15px auto; font-size: 1.5rem; font-weight: bold; color: white;
-            flex-shrink: 0;
+            margin: 0 auto 15px auto; font-size: 1.5rem; font-weight: bold; color: white; flex-shrink: 0;
         }
         .card h3 { font-size: 1.2rem; margin-bottom: 5px; color: #1e293b; font-weight: 700; }
         .card p { font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
 
-        /* Custom Tags */
-        .class-tag {
-            display: inline-block; margin-top: 8px; padding: 2px 8px; border-radius: 4px; 
-            font-size: 0.7rem; font-weight: bold; text-transform: uppercase;
-        }
+        /* Tags */
+        .class-tag { display: inline-block; margin-top: 8px; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
         .tag-red { background: #fef2f2; color: #ef4444; }
         .tag-orange { background: #fff7ed; color: #f97316; }
 
-        /* === COLORS === */
+        /* Colors */
         .border-green { border-bottom-color: #10b981; } .bg-green { background: #10b981; }
         .border-teal { border-bottom-color: #14b8a6; } .bg-teal { background: #14b8a6; }
         .border-cyan { border-bottom-color: #06b6d4; } .bg-cyan { background: #06b6d4; }
@@ -207,9 +168,17 @@
         .border-red { border-bottom-color: #ef4444; } .bg-red { background: #ef4444; }
         .border-orange { border-bottom-color: #f97316; } .bg-orange { background: #f97316; }
 
-
         /* Footer */
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
+
+        /* Scroll to Top */
+        #scrollTop {
+            position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white;
+            width: 45px; height: 45px; border-radius: 50%; border: none; cursor: pointer;
+            display: none; align-items: center; justify-content: center; font-size: 1.2rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: 0.3s; z-index: 999;
+        }
+        #scrollTop:hover { background: #059669; transform: translateY(-3px); }
 
         /* Responsive */
         @media (min-width: 768px) {
@@ -265,6 +234,7 @@
                 </a>
 
                 <a href="ocr-tool.html" class="feature-card card-blue">
+                    <span class="badge-new">NEW</span>
                     <div class="feature-icon"><i class="fas fa-camera"></i></div>
                     <h3>Odia OCR Tool</h3>
                     <p>Convert scanned images and PDFs into editable text.</p>
@@ -272,6 +242,7 @@
                 </a>
 
                 <a href="image-tool.html" class="feature-card card-orange">
+                    <span class="badge-new">NEW</span>
                     <div class="feature-icon"><i class="fas fa-compress-arrows-alt"></i></div>
                     <h3>Image Resizer</h3>
                     <p>Compress photos for SAMS, Scholarship & Exam forms.</p>
@@ -324,19 +295,11 @@
                 </a>
                 <a href="class-9.html" class="card border-rose">
                     <div class="icon-circle bg-rose">9</div>
-                    <div>
-                        <h3>Class 9</h3>
-                        <p>High School</p>
-                        <span class="class-tag tag-orange">High School</span>
-                    </div>
+                    <div><h3>Class 9</h3><p>High School</p><span class="class-tag tag-orange">High School</span></div>
                 </a>
                 <a href="class-10.html" class="card border-red">
                     <div class="icon-circle bg-red">10</div>
-                    <div>
-                        <h3>Class 10</h3>
-                        <p>High School</p>
-                        <span class="class-tag tag-red">BOARD EXAM</span>
-                    </div>
+                    <div><h3>Class 10</h3><p>High School</p><span class="class-tag tag-red">BOARD EXAM</span></div>
                 </a>
             </div>
         </div>
@@ -350,18 +313,27 @@
             </div>
 
             <div class="grid chse-grid" style="justify-content: center;">
+                
+                <a href="chse-compulsory.html" class="card border-indigo">
+                    <div class="icon-circle bg-indigo"><i class="fas fa-book-open"></i></div>
+                    <div><h3>Compulsory</h3><p>Eng, MIL</p></div>
+                </a>
+                
                 <a href="chse-arts.html" class="card border-rose">
-                    <div class="icon-circle" style="background: #f43f5e;"><i class="fas fa-palette"></i></div>
-                    <div><h3>Arts</h3><p>Political Sc, History</p></div>
+                    <div class="icon-circle bg-rose"><i class="fas fa-palette"></i></div>
+                    <div><h3>Arts</h3><p>Pol Sc, History</p></div>
                 </a>
+
                 <a href="chse-science.html" class="card border-teal">
-                    <div class="icon-circle" style="background: #14b8a6;"><i class="fas fa-flask"></i></div>
-                    <div><h3>Science</h3><p>Physics, Chem, Bio</p></div>
+                    <div class="icon-circle bg-teal"><i class="fas fa-flask"></i></div>
+                    <div><h3>Science</h3><p>Physics, Chem</p></div>
                 </a>
+
                 <a href="chse-commerce.html" class="card border-blue">
-                    <div class="icon-circle" style="background: #3b82f6;"><i class="fas fa-chart-line"></i></div>
-                    <div><h3>Commerce</h3><p>Accountancy, BST</p></div>
+                    <div class="icon-circle bg-blue"><i class="fas fa-chart-line"></i></div>
+                    <div><h3>Commerce</h3><p>Acct, BST</p></div>
                 </a>
+
             </div>
         </div>
     </section>
@@ -379,12 +351,23 @@
         </div>
     </footer>
 
+    <button id="scrollTop" onclick="window.scrollTo(0,0)"><i class="fas fa-arrow-up"></i></button>
+
     <script>
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
         });
+
+        // Scroll Top Logic
+        window.onscroll = function() {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                document.getElementById("scrollTop").style.display = "flex";
+            } else {
+                document.getElementById("scrollTop").style.display = "none";
+            }
+        };
     </script>
 
 </body>
