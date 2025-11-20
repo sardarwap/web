@@ -17,6 +17,8 @@
     <meta property="og:type" content="website">
 
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
     <link rel="icon" type="image/png" href="logo.png">
 
@@ -24,7 +26,6 @@
          crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     
     <script src='https://unpkg.com/tesseract.js@5/dist/tesseract.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
@@ -52,14 +53,21 @@
         .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
         .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
         
-        /* Ad Container */
-        .ad-container { width: 100%; max-width: 728px; margin: 20px auto; text-align: center; background: #f1f5f9; padding: 10px; border-radius: 8px; min-height: 90px; }
-        
+        .desktop-menu { display: none; gap: 30px; align-items: center; }
+        .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
+        .desktop-menu a:hover { color: #10b981; }
+        .btn-header { padding: 8px 20px; border-radius: 50px; font-weight: bold; font-size: 0.9rem; background: #ecfdf5; color: #10b981; border: 1px solid #d1fae5; transition: 0.2s; }
+        .btn-header:hover { background: #10b981; color: white; }
+        .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
+
         /* OCR Card */
+        .tool-container { max-width: 900px; margin: 30px auto; padding: 0 20px; flex: 1; width: 100%; }
         .ocr-card {
             background: white; border-radius: 16px; border: 1px solid #e2e8f0;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
-            padding: 30px; max-width: 800px; margin: 20px auto; flex-grow: 1; width: 100%;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            padding: 30px; width: 100%;
         }
 
         /* Upload */
@@ -108,6 +116,12 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .mobile-btn { display: none; }
+            .desktop-menu { display: flex; }
+        }
     </style>
 </head>
 <body>
@@ -118,24 +132,25 @@
                 <img src="logo.png" alt="Logo">
                 <span>Edu<span class="text-gradient">Odia</span></span>
             </a>
-            <a href="index.html" style="font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-arrow-left"></i> Back Home
-            </a>
+            <nav class="desktop-menu">
+                <a href="index.html">Home</a>
+                <a href="blog/index.html">Blog</a>
+                <a href="ocr-tool.html">OCR Tool</a>
+                <a href="image-tool.html">Resizer</a>
+                <a href="index.html#classes" class="btn-header">Browse Books</a>
+            </nav>
+            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+        </div>
+        <div id="mobile-menu" class="hidden">
+            <a href="index.html">Home</a>
+            <a href="blog/index.html">Blog</a>
+            <a href="ocr-tool.html">OCR Tool</a>
+            <a href="image-tool.html">Image Resizer</a>
+            <a href="index.html#classes" style="font-weight:bold;">Browse Books</a>
         </div>
     </header>
 
-    <div class="ad-container">
-        <span style="font-size:10px; color:#94a3b8;">ADVERTISEMENT</span>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8207219571289162"
-             data-ad-slot="YOUR_AD_SLOT_ID_HERE"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
-    <div style="padding: 0 15px;">
+    <div class="tool-container">
         <div class="ocr-card">
             <div style="text-align: center; margin-bottom: 30px;">
                 <h1 style="font-size: 2rem; font-weight: 800; color: #1e293b; margin-bottom: 10px;">
@@ -174,17 +189,6 @@
         </div>
     </div>
 
-    <div class="ad-container">
-        <span style="font-size:10px; color:#94a3b8;">ADVERTISEMENT</span>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8207219571289162"
-             data-ad-slot="YOUR_AD_SLOT_ID_HERE"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
-
     <footer>
         <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Edu<span style="color: #10b981;">Odia</span></h2>
@@ -193,7 +197,6 @@
     </footer>
 
     <script>
-        // References
         const imageInput = document.getElementById('imageInput');
         const runButton = document.getElementById('runButton');
         const statusText = document.getElementById('statusText');
@@ -202,11 +205,15 @@
         const downloadContainer = document.getElementById('downloadContainer');
         const fileNameDisplay = document.getElementById('fileNameDisplay');
         
-        // Buttons
         const downloadTxt = document.getElementById('downloadTxt');
         const downloadDocx = document.getElementById('downloadDocx');
         const copyBtn = document.getElementById('copyBtn');
         const clearBtn = document.getElementById('clearBtn');
+
+        // Menu Toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
 
         // PDF Worker Setting
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';
