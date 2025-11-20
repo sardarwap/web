@@ -4,20 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <title>Free Image Compressor & Resizer (KB Reducer) | EduOdia Tools</title>
     <meta name="description" content="Free Online Image Compressor to reduce image size in KB (20KB, 50KB) for SAMS, Scholarship & Exam forms. Resize JPG/PNG, crop, rotate, and convert format instantly.">
-    <meta name="keywords" content="Image Compressor to 20kb, Photo Resizer for SAMS Odisha, Reduce Image Size in KB, Passport Photo Maker Online, JPG to PDF, EduOdia Tools">
     <link rel="canonical" href="https://eduodia.in/image-tool.html">
     
     <meta name="robots" content="index, follow">
-
-    <meta property="og:title" content="Image Resizer & Compressor (Under 50KB) | EduOdia">
-    <meta property="og:description" content="Resize and compress photos for online forms. Reduce size to 20KB, 50KB instantly.">
-    <meta property="og:image" content="https://eduodia.in/logo.png">
-    <meta property="og:type" content="website">
-
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-
     <link rel="icon" type="image/png" href="logo.png">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8207219571289162"
@@ -28,7 +23,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 
-        /* === CORE SETTINGS === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; 
@@ -46,11 +40,8 @@
         .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
         .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
         
-        /* Ad Container */
-        .ad-container { width: 100%; max-width: 728px; margin: 20px auto; text-align: center; background: #f1f5f9; padding: 10px; border-radius: 8px; min-height: 90px; }
-
         /* Tool Container */
-        .tool-container { max-width: 900px; margin: 20px auto; padding: 0 20px; flex: 1; width: 100%; }
+        .tool-container { max-width: 900px; margin: 40px auto; padding: 0 20px; flex: 1; width: 100%; }
         .card { background: white; border-radius: 16px; border: 1px solid #e2e8f0; padding: 30px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         
         /* Upload Box */
@@ -114,17 +105,6 @@
             <a href="index.html" style="font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 8px;"><i class="fas fa-arrow-left"></i> Back Home</a>
         </div>
     </header>
-
-    <div class="ad-container">
-        <span style="font-size:10px; color:#94a3b8;">ADVERTISEMENT</span>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8207219571289162"
-             data-ad-slot="YOUR_AD_SLOT_ID_HERE"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
 
     <div class="tool-container">
         <div style="text-align: center; margin-bottom: 30px;">
@@ -216,8 +196,8 @@
                     </div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                         <select id="formatSelect">
-                            <option value="image/jpeg">JPG (Best for Forms)</option>
-                            <option value="image/png">PNG (High Quality)</option>
+                            <option value="image/jpeg">JPG (Best)</option>
+                            <option value="image/png">PNG (High)</option>
                             <option value="image/webp">WEBP</option>
                         </select>
                     </div>
@@ -225,17 +205,6 @@
 
             </div>
         </div>
-    </div>
-
-    <div class="ad-container">
-        <span style="font-size:10px; color:#94a3b8;">ADVERTISEMENT</span>
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8207219571289162"
-             data-ad-slot="YOUR_AD_SLOT_ID_HERE"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
     <footer>
@@ -317,14 +286,11 @@
                     let attempt = 0;
                     let scale = 1.0;
                     
-                    // Smart Auto Loop
                     do {
-                         // If simple quality reduction isn't enough, shrink dimensions
                          if (quality <= 0.5) {
                             scale -= 0.1; 
                             let currentW = Math.floor(w * scale);
                             let currentH = Math.floor(h * scale);
-                            // Create temp canvas for scaled
                             const tempCanvas = document.createElement('canvas');
                             tempCanvas.width = (Math.abs(currentRotation)===90 || Math.abs(currentRotation)===270) ? currentH : currentW;
                             tempCanvas.height = (Math.abs(currentRotation)===90 || Math.abs(currentRotation)===270) ? currentW : currentH;
@@ -334,8 +300,6 @@
                             tempCtx.rotate(currentRotation * Math.PI / 180);
                             tempCtx.drawImage(sourceImage, -currentW/2, -currentH/2, currentW, currentH);
                             dataUrl = tempCanvas.toDataURL(format, quality);
-                            
-                            // Update Inputs visual
                             widthInput.value = currentW;
                             heightInput.value = currentH;
                          } else {
@@ -344,9 +308,7 @@
 
                          let size = Math.round((dataUrl.length - 22) * 0.75);
                          if (size <= targetBytes || scale <= 0.1) break;
-                         
                          if (quality > 0.5) quality -= 0.05;
-                         
                          attempt++;
                     } while (attempt < 25);
                 } else {
@@ -386,7 +348,7 @@
         window.setDim = (w, h) => { 
             widthInput.value = w; heightInput.value = h; 
             originalAspectRatio = w / h; 
-            aspectRatioCheckbox.checked = false; // Uncheck for preset
+            aspectRatioCheckbox.checked = false;
             trigger(); 
         };
 
@@ -404,7 +366,7 @@
             modeTarget.classList.add('active'); modeManual.classList.remove('active');
             document.getElementById('groupAuto').style.display = 'block';
             document.getElementById('qualityControl').style.display = 'none';
-            aspectRatioCheckbox.checked = false; // Allow resize for auto fit
+            aspectRatioCheckbox.checked = false;
             trigger();
         };
 
