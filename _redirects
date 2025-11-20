@@ -1,0 +1,5 @@
+# Fix specific Class 3 link
+/odisha-class-3-all-books-pdf-download/* /class-3.html  301
+
+# Safety Net (Keep this at the bottom)
+/* /404.html  404
