@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Class 6 Books | EduOdia</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    
+    <title>Class 6 Books PDF Download (Odia Medium) - BSE Odisha Board | EduOdia</title>
+    <meta name="description" content="Free Download BSE Odisha Class 6 Textbooks PDF. Get Sahitya (Odia), Mathematics, Science, History, Geography, Hindi, Sanskrit, and English books.">
+    <meta name="keywords" content="Class 6 Odia Medium Books, BSE Odisha 6th Class PDF, Class 6 Science Book Odia Medium, Class 6 Math Book Odisha, EduOdia">
+    <link rel="canonical" href="https://eduodia.in/class-6.html">
+    
+    <meta name="robots" content="index, follow">
 
+    <meta property="og:title" content="Class 6 Odia Medium Books PDF | BSE Odisha">
+    <meta property="og:description" content="Download Math, Science, History, and Geography books for Class 6. Free PDF.">
+    <meta property="og:image" content="https://eduodia.in/logo.png">
+    <meta property="og:type" content="website">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8207219571289162"
+         crossorigin="anonymous"></script>
 
     <style>
         /* === CORE STYLES === */
@@ -46,6 +62,8 @@
         .desktop-menu a { font-weight: 500; color: #64748b; }
         .desktop-menu a:hover { color: #10b981; }
         .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
 
         /* === PAGE TITLE === */
         .page-header {
@@ -57,10 +75,10 @@
         }
         .breadcrumb:hover { color: #10b981; }
 
+        /* Class 6 Theme: Violet */
         .class-badge {
             display: inline-flex; justify-content: center; align-items: center;
-            /* Class 6 Theme: Violet Gradient */
-            background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
             color: white; width: 80px; height: 80px; border-radius: 24px;
             font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;
             box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
@@ -83,7 +101,7 @@
             background: white; border: 1px solid #e2e8f0; border-radius: 16px;
             padding: 25px; transition: all 0.3s ease; 
             display: flex; flex-direction: column; justify-content: space-between;
-            border-left: 5px solid #8b5cf6; /* Violet Accent */
+            border-left: 5px solid #8b5cf6; /* VIOLET ACCENT */
         }
         .book-card:hover {
             transform: translateY(-5px);
@@ -106,9 +124,25 @@
             transition: all 0.2s; 
         }
         .download-btn:hover {
-            background: #8b5cf6; color: white;
+            background: #8b5cf6; color: white; /* Violet Hover */
             box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
         }
+        
+        /* Subject Specific Colors */
+        .subject-math .book-icon { color: #3b82f6; background: #eff6ff; }
+        .subject-math .download-btn:hover { background: #3b82f6; }
+        
+        .subject-odia .book-icon { color: #ec4899; background: #fdf2f8; }
+        .subject-odia .download-btn:hover { background: #ec4899; }
+        
+        .subject-science .book-icon { color: #10b981; background: #ecfdf5; }
+        .subject-science .download-btn:hover { background: #10b981; }
+
+        .subject-social .book-icon { color: #f97316; background: #fff7ed; }
+        .subject-social .download-btn:hover { background: #f97316; }
+
+        .subject-hindi .book-icon { color: #ef4444; background: #fef2f2; }
+        .subject-hindi .download-btn:hover { background: #ef4444; }
 
         /* Footer */
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
@@ -135,12 +169,16 @@
             <nav class="desktop-menu">
                 <a href="index.html">Home</a>
                 <a href="blog/index.html">Blog</a>
+                <a href="ocr-tool.html">OCR Tool</a>
+                <a href="image-tool.html">Resizer</a>
             </nav>
-            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            <button class="mobile-btn" id="mb"><i class="fas fa-bars"></i></button>
         </div>
         <div id="mobile-menu" class="hidden">
-            <a href="index.html">Home</a>
-            <a href="blog/index.html">Blog</a>
+            <a href="index.html" style="display:block; padding:10px;">Home</a>
+            <a href="blog/index.html" style="display:block; padding:10px;">Blog</a>
+            <a href="ocr-tool.html" style="display:block; padding:10px;">OCR Tool</a>
+            <a href="image-tool.html" style="display:block; padding:10px;">Image Resizer</a>
         </div>
     </header>
 
@@ -153,7 +191,7 @@
             <div style="display: block; margin-top: 10px;">
                 <div class="class-badge">6</div>
                 <h1>Class 6 Textbooks</h1>
-                <p>Middle School • BSE Odisha Board</p>
+                <p>Odia Medium • BSE Odisha Board</p>
             </div>
         </div>
     </section>
@@ -161,9 +199,9 @@
     <div class="container">
         <div class="grid">
 
-            <div class="book-card" style="border-left-color: #3b82f6;">
+            <div class="book-card subject-math" style="border-left-color: #3b82f6;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #eff6ff; color: #3b82f6;"><i class="fas fa-calculator"></i></div>
+                    <div class="book-icon"><i class="fas fa-calculator"></i></div>
                     <div class="book-info">
                         <h3>Mathematics</h3>
                         <p>Ganita</p>
@@ -174,12 +212,12 @@
                 </a>
             </div>
 
-            <div class="book-card" style="border-left-color: #ec4899;">
+            <div class="book-card subject-odia" style="border-left-color: #ec4899;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #fdf2f8; color: #ec4899;"><i class="fas fa-book-open"></i></div>
+                    <div class="book-icon"><i class="fas fa-book-open"></i></div>
                     <div class="book-info">
                         <h3>Sahitya</h3>
-                        <p>Odia Literature</p>
+                        <p>Literature</p>
                     </div>
                 </div>
                 <a href="https://drive.google.com/file/d/1DH5_fIzyB3DdRZoP1kgdL7-7DaDghIdO/view?usp=sharing" target="_blank" class="download-btn">
@@ -187,9 +225,9 @@
                 </a>
             </div>
 
-            <div class="book-card" style="border-left-color: #10b981;">
+            <div class="book-card subject-science" style="border-left-color: #10b981;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #ecfdf5; color: #10b981;"><i class="fas fa-flask"></i></div>
+                    <div class="book-icon"><i class="fas fa-flask"></i></div>
                     <div class="book-info">
                         <h3>Science</h3>
                         <p>Bigyana</p>
@@ -200,7 +238,7 @@
                 </a>
             </div>
 
-            <div class="book-card" style="border-left-color: #8b5cf6;">
+            <div class="book-card subject-eng" style="border-left-color: #8b5cf6;">
                 <div class="book-top">
                     <div class="book-icon" style="background: #f5f3ff; color: #8b5cf6;"><i class="fas fa-language"></i></div>
                     <div class="book-info">
@@ -212,10 +250,10 @@
                     <i class="fas fa-download"></i> Download PDF
                 </a>
             </div>
-
-            <div class="book-card" style="border-left-color: #f97316;">
+            
+             <div class="book-card subject-social" style="border-left-color: #f97316;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #fff7ed; color: #f97316;"><i class="fas fa-landmark"></i></div>
+                    <div class="book-icon"><i class="fas fa-landmark"></i></div>
                     <div class="book-info">
                         <h3>History</h3>
                         <p>Itihas</p>
@@ -226,9 +264,9 @@
                 </a>
             </div>
 
-            <div class="book-card" style="border-left-color: #6366f1;">
+            <div class="book-card subject-social" style="border-left-color: #0ea5e9;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #eef2ff; color: #6366f1;"><i class="fas fa-globe-asia"></i></div>
+                    <div class="book-icon" style="background:#e0f2fe; color:#0ea5e9;"><i class="fas fa-globe-asia"></i></div>
                     <div class="book-info">
                         <h3>Geography</h3>
                         <p>Bhugola</p>
@@ -239,9 +277,9 @@
                 </a>
             </div>
 
-            <div class="book-card" style="border-left-color: #ef4444;">
+            <div class="book-card subject-hindi" style="border-left-color: #ef4444;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #fee2e2; color: #ef4444;"><i class="fas fa-comment"></i></div>
+                    <div class="book-icon"><i class="fas fa-comment"></i></div>
                     <div class="book-info">
                         <h3>Hindi</h3>
                         <p>Hindi Patha</p>
@@ -252,15 +290,15 @@
                 </a>
             </div>
 
-            <div class="book-card" style="border-left-color: #f59e0b;">
+            <div class="book-card" style="border-left-color: #d97706;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #fffbeb; color: #f59e0b;"><i class="fas fa-scroll"></i></div>
+                    <div class="book-icon" style="background:#fffbeb; color:#d97706;"><i class="fas fa-scroll"></i></div>
                     <div class="book-info">
                         <h3>Sanskrit</h3>
                         <p>Language</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1DET-qpi0ZvXJMWKkJk4cCw3BMqHzioJ7/view?usp=sharing" target="_blank" class="download-btn">
+                <a href="https://drive.google.com/file/d/1DET-qpi0ZvXJMWKkJk4cCw3BMqHzioJ7/view?usp=sharing" target="_blank" class="download-btn" style="hover: background:#d97706;">
                     <i class="fas fa-download"></i> Download PDF
                 </a>
             </div>
@@ -276,11 +314,7 @@
     </footer>
 
     <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        document.getElementById('mb').onclick=()=>document.getElementById('mobile-menu').style.display=document.getElementById('mobile-menu').style.display==='block'?'none':'block';
     </script>
 
 </body>
