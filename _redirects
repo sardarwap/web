@@ -1,5 +1,36 @@
-# Fix specific Class 3 link
-/odisha-class-3-all-books-pdf-download/* /class-3.html  301
+# === Class 1 to 10 Books ===
+https://eduodia.in/odisha-1-to-10-class-books/   /index.html  301
+https://eduodia.in/bse-odisha-class-1-textbooks-pdf-download/   /class-1.html  301
+/odisha-class-1-all-books-pdf-download/  /class-1.html  301
+/odisha-class-2-all-books-pdf-download/  /class-2.html  301
+/odisha-class-3-all-books-pdf-download/  /class-3.html  301
+/odisha-class-4-all-books-pdf-download/  /class-4.html  301
+/odisha-class-5-all-books-pdf-download/  /class-5.html  301
+/odisha-class-6-all-books-pdf-download/  /class-6.html  301
+/odisha-class-7-all-books-pdf-download/  /class-7.html  301
+/odisha-class-8-all-books-pdf-download/  /class-8.html  301
+/odisha-class-9-all-books-pdf-download/  /class-9.html  301
+/odisha-class-10-all-books-pdf-download/ /class-10.html 301
 
-# Safety Net (Keep this at the bottom)
-/* /404.html  404
+# === CHSE (+2) Books ===
+/odisha-chse-2-compulsory-books-download/ /chse-compulsory.html 301
+
+# Science Stream
+/odisha-chse-2-science-books-1st-year/    /chse-science.html    301
+/odisha-chse-2-science-books-2nd-year/    /chse-science.html    301
+
+# Arts Stream
+/odisha-chse-2-arts-books-1st-year/       /chse-arts.html       301
+/odisha-chse-2-arts-books-2nd-year/       /chse-arts.html       301
+
+# Commerce Stream
+/odisha-chse-2-commerce-books-1st-year/   /chse-commerce.html   301
+/odisha-chse-2-commerce-books-2nd-year/   /chse-commerce.html   301
+
+# === Articles / Blog ===
+/odisha-chse-2-syllabus-download/         /blog/chse-syllabus.html 301
+/odia-essay-pdf-download-2023/            /blog/odia-essay.html    301
+
+# === Safety Net ===
+# If a link doesn't match above, send to 404 page (which redirects Home)
+/* /404.html 404
