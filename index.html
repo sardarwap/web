@@ -4,54 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <!-- Anti-Cache -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
 
-    <meta http-equiv="Cache-Control" content="public, max-age=604800, immutable">
-
-    <title>EduOdia: Odisha Board Textbooks PDF & Student Tools (Class 1-12)</title>
-    <meta name="description" content="Download free BSE Odisha Board Textbooks (Class 1 to 10) and CHSE +2 Books (Arts, Science, Commerce) in PDF. Use free tools like Odia OCR and Image Resizer for students.">
-    <meta name="keywords" content="EduOdia, Odisha Board Book PDF, BSE Odisha Textbooks, CHSE Odisha Books Download, Class 10 Odia Medium Books, +2 Science Books PDF, Odia OCR Tool, Image Resizer for SAMS">
-    <link rel="canonical" href="https://eduodia.in/">
-    <meta name="robots" content="index, follow">
-    <meta name="google-site-verification" content="M8d5ePhNC2tFqhpuKmKk50rmuw9ZABEwmu59bmwNpoU" />
-
-    <meta property="og:title" content="EduOdia | Odisha's #1 Digital Library for Students">
-    <meta property="og:description" content="Free PDF Textbooks for Class 1 to 12 (BSE & CHSE). Includes Smart Tools like OCR and Photo Resizer for exam forms.">
-    <meta property="og:image" content="https://eduodia.in/logo.png">
-    <meta property="og:url" content="https://eduodia.in/">
-    <meta property="og:type" content="website">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "EduOdia",
-      "url": "https://eduodia.in",
-      "logo": "https://eduodia.in/logo.png",
-      "description": "Free Digital Library providing BSE and CHSE Odisha textbooks and student utility tools."
-    }
-    </script>
-
+    <title>EduOdia | Odisha's Digital Library & Tools</title>
     <link rel="icon" type="image/png" href="logo.png">
-    
+
+    <!-- Icons (jsDelivr - Safe) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
 
     <style>
-        /* === CORE SETTINGS === */
+        /* === 1. CORE SETTINGS === */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             background-color: #f8fafc; 
             color: #334155; 
             line-height: 1.6;
-            scroll-behavior: smooth;
-            text-rendering: optimizeLegibility; /* Text Speed */
         }
         a { text-decoration: none; color: inherit; }
         .hidden { display: none !important; }
         
-        /* === THEME COLORS === */
+        /* === 2. THEME COLORS === */
         .text-gradient {
             background: linear-gradient(135deg, #10b981 0%, #0ea5e9 100%);
             -webkit-background-clip: text;
@@ -63,7 +39,7 @@
             color: white;
         }
 
-        /* === HEADER === */
+        /* === 3. HEADER === */
         header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -81,7 +57,7 @@
         .desktop-menu a { font-weight: 500; color: #64748b; transition: color 0.2s; }
         .desktop-menu a:hover { color: #10b981; }
         
-        /* Premium Header Button */
+        /* Premium Header Button (Outline Style) */
         .btn-header {
             padding: 9px 24px; border-radius: 50px; font-weight: 700; font-size: 0.9rem;
             background: white; color: #10b981; border: 2px solid #10b981; 
@@ -94,7 +70,7 @@
 
         .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
 
-        /* === HERO === */
+        /* === 4. HERO SECTION === */
         .hero { background: white; padding: 60px 0 80px 0; text-align: center; position: relative; overflow: hidden; }
         .hero h1 { font-size: 2.5rem; font-weight: 900; line-height: 1.2; margin-bottom: 15px; color: #0f172a; }
         .hero p { font-size: 1.1rem; color: #64748b; max-width: 600px; margin: 0 auto 50px auto; }
@@ -105,7 +81,7 @@
             gap: 25px; max-width: 1000px; margin: 0 auto; padding: 0 20px;
         }
 
-        /* Feature Card */
+        /* Hero Feature Card */
         .feature-card {
             background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 30px;
             text-align: left; transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -125,6 +101,7 @@
         }
         .feature-card h3 { font-size: 1.3rem; font-weight: 800; color: #1e293b; margin-bottom: 8px; }
         .feature-card p { font-size: 0.95rem; color: #64748b; margin-bottom: 25px; line-height: 1.5; flex-grow: 1; }
+        
         .feature-link { font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; margin-top: auto; }
         .feature-link .fas { transition: transform 0.3s ease; }
         .feature-card:hover .feature-link .fas { transform: translateX(5px); }
@@ -141,18 +118,20 @@
         }
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
 
-        /* === GRID SECTION === */
+
+        /* === 5. CLASSES GRID === */
         .grid-section { padding: 60px 0; background: #f8fafc; }
-        .section-white { background: white; border-top: 1px solid #e2e8f0; }
+        .section-white { background: white; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
+        
         .section-title { text-align: center; margin-bottom: 50px; }
         .section-title h2 { font-size: 2rem; color: #0f172a; margin-top: 10px; }
         .badge { background: #ecfdf5; color: #10b981; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
 
         .grid {
-            display: grid; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 20px;
-            grid-template-columns: repeat(2, 1fr); /* Mobile */
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 20px;
         }
-        @media (min-width: 640px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+        /* Desktop: 5 Columns */
         @media (min-width: 1024px) { .grid { grid-template-columns: repeat(5, 1fr); } }
 
         .chse-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); max-width: 1100px; }
@@ -188,6 +167,8 @@
         .border-rose { border-bottom-color: #f43f5e; } .bg-rose { background: #f43f5e; }
         .border-red { border-bottom-color: #ef4444; } .bg-red { background: #ef4444; }
         .border-orange { border-bottom-color: #f97316; } .bg-orange { background: #f97316; }
+        .border-amber { border-bottom-color: #d97706; } .bg-amber { background: #d97706; }
+        .border-emerald { border-bottom-color: #059669; } .bg-emerald { background: #059669; }
 
         /* Footer */
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
@@ -213,10 +194,11 @@
 </head>
 <body>
 
+    <!-- HEADER -->
     <header>
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <img src="logo.png" alt="Logo">
+                <img src="logo.png" alt="EduOdia Logo">
                 <span>Edu<span class="text-gradient">Odia</span></span>
             </a>
             
@@ -231,6 +213,7 @@
             <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
         </div>
         
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden">
             <a href="index.html">Home</a>
             <a href="blog/index.html">Blog</a>
@@ -240,6 +223,7 @@
         </div>
     </header>
 
+    <!-- HERO -->
     <section class="hero">
         <div class="container" style="max-width: 1200px; margin: 0 auto;">
             <h1>Odisha's Best <br><span class="text-gradient">Digital Library</span></h1>
@@ -247,6 +231,7 @@
             
             <div class="hero-grid">
                 
+                <!-- Card 1 -->
                 <a href="#classes" class="feature-card card-green">
                     <div class="feature-icon"><i class="fas fa-book-reader"></i></div>
                     <h3>Digital Textbooks</h3>
@@ -254,6 +239,7 @@
                     <div class="feature-link">Browse Library <i class="fas fa-arrow-right"></i></div>
                 </a>
 
+                <!-- Card 2 -->
                 <a href="ocr-tool.html" class="feature-card card-blue">
                     <span class="badge-new">NEW</span>
                     <div class="feature-icon"><i class="fas fa-camera"></i></div>
@@ -262,6 +248,7 @@
                     <div class="feature-link">Try OCR Now <i class="fas fa-arrow-right"></i></div>
                 </a>
 
+                <!-- Card 3 -->
                 <a href="image-tool.html" class="feature-card card-orange">
                     <span class="badge-new">NEW</span>
                     <div class="feature-icon"><i class="fas fa-compress-arrows-alt"></i></div>
@@ -274,6 +261,7 @@
         </div>
     </section>
 
+    <!-- CLASS 1-10 GRID -->
     <section id="classes" class="grid-section">
         <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div class="section-title">
@@ -282,6 +270,8 @@
             </div>
 
             <div class="grid">
+                
+                <!-- Row 1 -->
                 <a href="class-1.html" class="card border-green">
                     <div class="icon-circle bg-green">1</div>
                     <div><h3>Class 1</h3><p>Primary</p></div>
@@ -302,6 +292,8 @@
                     <div class="icon-circle bg-indigo">5</div>
                     <div><h3>Class 5</h3><p>Primary</p></div>
                 </a>
+                
+                <!-- Row 2 -->
                 <a href="class-6.html" class="card border-violet">
                     <div class="icon-circle bg-violet">6</div>
                     <div><h3>Class 6</h3><p>Middle</p></div>
@@ -322,10 +314,12 @@
                     <div class="icon-circle bg-red">10</div>
                     <div><h3>Class 10</h3><p>High School</p><span class="class-tag tag-red">BOARD EXAM</span></div>
                 </a>
+
             </div>
         </div>
     </section>
 
+    <!-- CHSE (+2) SECTION -->
     <section class="grid-section section-white">
         <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <div class="section-title">
@@ -354,6 +348,43 @@
         </div>
     </section>
 
+    <!-- NEW D.EL.ED SECTION -->
+    <section class="grid-section" style="background: #f8fafc;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div class="section-title">
+                <span class="badge" style="background: #ecfdf5; color: #059669;">Teacher Training</span>
+                <h2>Odisha D.El.Ed Books</h2>
+            </div>
+
+            <div class="grid chse-grid" style="justify-content: center;">
+                
+                <!-- 1st Year -->
+                <a href="deled-1.html" class="card border-amber">
+                    <div class="icon-circle bg-amber">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div>
+                        <h3>1st Year</h3>
+                        <p>Foundation</p>
+                    </div>
+                </a>
+
+                <!-- 2nd Year -->
+                <a href="deled-2.html" class="card border-emerald">
+                    <div class="icon-circle bg-emerald">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div>
+                        <h3>2nd Year</h3>
+                        <p>Methodology</p>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
             <h2 style="font-size: 1.5rem; margin-bottom: 10px;">Edu<span style="color: #10b981;">Odia</span></h2>
@@ -367,6 +398,7 @@
         </div>
     </footer>
 
+    <!-- Scroll Top -->
     <button id="scrollTop" onclick="window.scrollTo(0,0)"><i class="fas fa-arrow-up"></i></button>
 
     <script>
