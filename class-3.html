@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Class 3 Books | EduOdia</title>
-    <link rel="icon" type="image/png" href="logo.png">
+    
+    <title>Class 3 Books PDF Download (Odia Medium) - Ganita Maza & Jana Ajana | EduOdia</title>
+    <meta name="description" content="Free Download BSE Odisha Class 3 Textbooks PDF. Get 'Ama Bhasha Ama Sahitya', 'Ganita Maza' (Math), 'Jana Ajana' (EVS/Science), and English books for Odia Medium.">
+    <meta name="keywords" content="Class 3 Odia Book PDF, Ganita Maza Class 3 PDF, Jana Ajana Class 3 Question Answer, BSE Odisha Class 3 Textbooks, OSEPA Class 3 Workbook, EduOdia">
+    <link rel="canonical" href="https://eduodia.in/class-3.html">
+    
+    <meta name="robots" content="index, follow">
 
+    <meta property="og:title" content="Class 3 Odia Medium Books PDF | BSE Odisha">
+    <meta property="og:description" content="Download Ganita Maza, Jana Ajana, and Sahitya books for Class 3. Free PDF.">
+    <meta property="og:image" content="https://eduodia.in/logo.png">
+    <meta property="og:type" content="website">
+
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8207219571289162"
+         crossorigin="anonymous"></script>
 
     <style>
         /* === CORE STYLES === */
@@ -46,6 +62,8 @@
         .desktop-menu a { font-weight: 500; color: #64748b; }
         .desktop-menu a:hover { color: #10b981; }
         .mobile-btn { display: block; background: none; border: none; font-size: 1.5rem; color: #64748b; }
+        #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
+        #mobile-menu a { display: block; padding: 12px 15px; color: #334155; font-weight: 500; }
 
         /* === PAGE TITLE === */
         .page-header {
@@ -57,9 +75,9 @@
         }
         .breadcrumb:hover { color: #10b981; }
 
+        /* Class 3 Theme: Cyan/Blue */
         .class-badge {
             display: inline-flex; justify-content: center; align-items: center;
-            /* Class 3 Theme: Cyan/Teal Gradient */
             background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
             color: white; width: 80px; height: 80px; border-radius: 24px;
             font-size: 2.5rem; font-weight: 800; margin-bottom: 20px;
@@ -83,7 +101,7 @@
             background: white; border: 1px solid #e2e8f0; border-radius: 16px;
             padding: 25px; transition: all 0.3s ease; 
             display: flex; flex-direction: column; justify-content: space-between;
-            border-left: 5px solid #06b6d4; /* Default Accent */
+            border-left: 5px solid #06b6d4; /* CYAN ACCENT */
         }
         .book-card:hover {
             transform: translateY(-5px);
@@ -92,7 +110,7 @@
         
         .book-top { display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
         .book-icon {
-            background: #ecfdf5; color: #10b981; width: 50px; height: 50px;
+            background: #cffafe; color: #06b6d4; width: 50px; height: 50px;
             border-radius: 12px; display: flex; align-items: center; justify-content: center;
             font-size: 1.5rem; flex-shrink: 0;
         }
@@ -106,9 +124,19 @@
             transition: all 0.2s; 
         }
         .download-btn:hover {
-            background: #06b6d4; color: white;
+            background: #06b6d4; color: white; /* Cyan Hover */
             box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
         }
+        
+        /* Custom colors for subjects */
+        .subject-math .book-icon { color: #3b82f6; background: #eff6ff; }
+        .subject-math .download-btn:hover { background: #3b82f6; }
+        
+        .subject-odia .book-icon { color: #ec4899; background: #fdf2f8; }
+        .subject-odia .download-btn:hover { background: #ec4899; }
+        
+        .subject-evs .book-icon { color: #10b981; background: #ecfdf5; }
+        .subject-evs .download-btn:hover { background: #10b981; }
 
         /* Footer */
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
@@ -135,12 +163,16 @@
             <nav class="desktop-menu">
                 <a href="index.html">Home</a>
                 <a href="blog/index.html">Blog</a>
+                <a href="ocr-tool.html">OCR Tool</a>
+                <a href="image-tool.html">Resizer</a>
             </nav>
-            <button class="mobile-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            <button class="mobile-btn" id="mb"><i class="fas fa-bars"></i></button>
         </div>
         <div id="mobile-menu" class="hidden">
-            <a href="index.html">Home</a>
-            <a href="blog/index.html">Blog</a>
+            <a href="index.html" style="display:block; padding:10px;">Home</a>
+            <a href="blog/index.html" style="display:block; padding:10px;">Blog</a>
+            <a href="ocr-tool.html" style="display:block; padding:10px;">OCR Tool</a>
+            <a href="image-tool.html" style="display:block; padding:10px;">Image Resizer</a>
         </div>
     </header>
 
@@ -161,41 +193,41 @@
     <div class="container">
         <div class="grid">
 
-            <div class="book-card" style="border-left-color: #3b82f6;">
+            <div class="book-card subject-odia" style="border-left-color: #ec4899;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #eff6ff; color: #3b82f6;"><i class="fas fa-calculator"></i></div>
-                    <div class="book-info">
-                        <h3>Ganita Maza</h3>
-                        <p>Mathematics</p>
-                    </div>
-                </div>
-                <a href="https://drive.google.com/file/d/1BvKFdOP1ACJzvpDukHV_D_VcsTVGdWsm/view?usp=sharing" target="_blank" class="download-btn">
-                    <i class="fas fa-download"></i> Download PDF
-                </a>
-            </div>
-
-            <div class="book-card" style="border-left-color: #ec4899;">
-                <div class="book-top">
-                    <div class="book-icon" style="background: #fdf2f8; color: #ec4899;"><i class="fas fa-book-open"></i></div>
+                    <div class="book-icon"><i class="fas fa-book-open"></i></div>
                     <div class="book-info">
                         <h3>Ama Bhasha Ama Sahitya</h3>
                         <p>Literature</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="download-btn" style="hover: background: #ec4899;">
+                <a href="#" class="download-btn">
                     <i class="fas fa-download"></i> Download PDF
                 </a>
             </div>
 
-            <div class="book-card" style="border-left-color: #10b981;">
+            <div class="book-card subject-math" style="border-left-color: #3b82f6;">
                 <div class="book-top">
-                    <div class="book-icon" style="background: #ecfdf5; color: #10b981;"><i class="fas fa-leaf"></i></div>
+                    <div class="book-icon"><i class="fas fa-calculator"></i></div>
+                    <div class="book-info">
+                        <h3>Ganita Maza</h3>
+                        <p>Mathematics</p>
+                    </div>
+                </div>
+                <a href="#" class="download-btn">
+                    <i class="fas fa-download"></i> Download PDF
+                </a>
+            </div>
+
+            <div class="book-card subject-evs" style="border-left-color: #10b981;">
+                <div class="book-top">
+                    <div class="book-icon"><i class="fas fa-leaf"></i></div>
                     <div class="book-info">
                         <h3>Jana Ajana</h3>
                         <p>Environmental Studies</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="download-btn">
+                <a href="#" class="download-btn">
                     <i class="fas fa-download"></i> Download PDF
                 </a>
             </div>
@@ -205,23 +237,23 @@
                     <div class="book-icon" style="background: #f5f3ff; color: #8b5cf6;"><i class="fas fa-language"></i></div>
                     <div class="book-info">
                         <h3>My English Book</h3>
-                        <p>English</p>
+                        <p>English Language</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1C6JVnzhcSEXJU8Gkw2L1iwIKhrHI2T3H/view?usp=sharing" target="_blank" class="download-btn">
+                <a href="#" class="download-btn" style="hover: background: #8b5cf6;">
                     <i class="fas fa-download"></i> Download PDF
                 </a>
             </div>
-
-            <div class="book-card" style="border-left-color: #f97316;">
+            
+             <div class="book-card" style="border-left-color: #f97316;">
                 <div class="book-top">
                     <div class="book-icon" style="background: #fff7ed; color: #f97316;"><i class="fas fa-pencil-alt"></i></div>
                     <div class="book-info">
-                        <h3>Math Workbook</h3>
-                        <p>Practice</p>
+                        <h3>Abhyasa Pustika</h3>
+                        <p>Workbook</p>
                     </div>
                 </div>
-                <a href="https://drive.google.com/file/d/1BvWv5MPDINI0Hg0ZBjhwZEtw_JSI77D_/view?usp=sharing" target="_blank" class="download-btn">
+                <a href="#" class="download-btn" style="hover: background: #f97316;">
                     <i class="fas fa-download"></i> Download PDF
                 </a>
             </div>
@@ -237,11 +269,7 @@
     </footer>
 
     <script>
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
+        document.getElementById('mb').onclick=()=>document.getElementById('mobile-menu').style.display=document.getElementById('mobile-menu').style.display==='block'?'none':'block';
     </script>
 
 </body>
