@@ -3,33 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <link rel="preload" as="image" href="logo.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <title>D.El.Ed 1st Year Books PDF Download | EduOdia</title>
     <meta name="description" content="Download SCERT Odisha D.El.Ed (CT) 1st Year Textbooks PDF. FC2, FC4, FC5, PC1 (Odia), PC4 (Science), PC6a (Hindi).">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://eduodia.in/deled-1.html">
+    
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <link rel="icon" type="image/png" href="logo.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8207219571289162"
-     crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css" media="print" onload="this.media='all'">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8207219571289162" crossorigin="anonymous"></script>
 
     <style>
-        /* === CORE STYLES === */
+        /* === CORE STYLES (Internal for Speed) === */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f8fafc; color: #334155; line-height: 1.6; }
+        body { 
+            font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; line-height: 1.6;
+            text-rendering: optimizeLegibility;
+        }
         a { text-decoration: none; color: inherit; }
         .hidden { display: none !important; }
-        .text-gradient { background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; color: #d97706; }
         
-        header { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #e2e8f0; }
+        /* Header */
+        header { background: rgba(255,255,255,0.98); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #e2e8f0; }
         .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 70px; display: flex; justify-content: space-between; align-items: center; }
         .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 800; color: #1e293b; }
+        
+        /* Explicit Width/Height to prevent layout shift (LCP Fix) */
         .logo img { height: 40px; width: 40px; border-radius: 50%; margin-right: 12px; border: 1px solid #eee; }
+        
         .desktop-menu { display: none; gap: 30px; font-weight: 500; color: #64748b; }
         .mobile-btn { display: block; font-size: 1.5rem; color: #64748b; background: none; border: none; }
         #mobile-menu { background: white; border-top: 1px solid #eee; padding: 10px; }
 
+        /* Page Title */
         .page-header { background: white; padding: 40px 0 60px 0; border-bottom: 1px solid #f1f5f9; text-align: center; }
         .breadcrumb { display: inline-flex; align-items: center; gap: 5px; color: #64748b; font-size: 0.9rem; margin-bottom: 30px; }
         
@@ -41,6 +56,7 @@
         }
         h1 { font-size: 2rem; color: #0f172a; margin-bottom: 5px; }
 
+        /* Grid */
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: -30px; padding-bottom: 60px; }
 
@@ -48,6 +64,7 @@
             background: white; border: 1px solid #e2e8f0; border-radius: 16px; padding: 25px; 
             display: flex; flex-direction: column; justify-content: space-between;
             border-left: 5px solid #d97706; transition: transform 0.3s;
+            contain: content; /* Rendering Performance */
         }
         .book-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -10px rgba(0,0,0,0.1); }
         
@@ -61,6 +78,9 @@
             display: flex; justify-content: center; gap: 10px; transition: 0.2s;
         }
         .download-btn:hover { background: #d97706; color: white; }
+        
+        /* Ad Container */
+        .ad-box { width: 100%; text-align: center; margin: 20px 0; min-height: 100px; background: #f1f5f9; border-radius: 8px; padding: 10px; }
 
         footer { background: #0f172a; color: white; text-align: center; padding: 40px 0; margin-top: auto; }
         @media (min-width: 768px) { .mobile-btn { display: none; } .desktop-menu { display: flex; } }
@@ -70,7 +90,10 @@
 
     <header>
         <div class="nav-container">
-            <a href="index.html" class="logo"><img src="logo.png" alt="Logo"><span>Edu<span class="text-gradient">Odia</span></span></a>
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Logo" width="40" height="40">
+                <span>Edu<span style="color:#10b981">Odia</span></span>
+            </a>
             <nav class="desktop-menu"><a href="index.html">Home</a><a href="blog/index.html">Blog</a></nav>
             <button class="mobile-btn" id="mb"><i class="fas fa-bars"></i></button>
         </div>
@@ -86,10 +109,23 @@
             <div style="display: block; margin-top: 10px;">
                 <div class="class-badge"><i class="fas fa-user-graduate"></i></div>
                 <h1>D.El.Ed 1st Year Books</h1>
-                <p>SCERT Odisha • FC & PC Series</p>
+                <p>SCERT Odisha • Teacher Training</p>
             </div>
         </div>
     </section>
+    
+    <div class="container">
+        <div class="ad-box">
+            <span style="font-size:10px; color:#94a3b8;">ADVERTISEMENT</span>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8207219571289162"
+                 data-ad-slot="YOUR_AD_SLOT_ID_HERE"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+    </div>
 
     <div class="container">
         <div class="grid">
@@ -142,6 +178,19 @@
                 <a href="https://drive.google.com/file/d/141EXHPLYIhuhan_CFi9uUl6RRxcPw8sk/view?usp=drive_link" target="_blank" class="download-btn">Download PDF</a>
             </div>
 
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="ad-box">
+            <span style="font-size:10px; color:#94a3b8;">ADVERTISEMENT</span>
+             <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8207219571289162"
+             data-ad-slot="YOUR_AD_SLOT_ID_HERE"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 
