@@ -377,18 +377,22 @@
                 
                 <div class="form-group">
                     <label>Photo (Upload or Camera)</label>
+                    
+                    <div style="margin-bottom: 8px; padding: 8px; background: #e8f4f8; border-radius: 4px; border: 1px solid #b3e5fc;">
+                        <label style="font-size: 11px; margin-bottom: 2px; color: #0277bd;">✨ AI Background Magic (Applies to Uploads & Camera):</label>
+                        <select id="bgReplaceColor" style="padding: 4px; font-size: 12px; width: 100%; border: 1px solid #0288d1;">
+                            <option value="none">Keep Real Background</option>
+                            <option value="#64b5f6">Blue Passport Background</option>
+                            <option value="#ffffff">White Passport Background</option>
+                        </select>
+                    </div>
+
                     <div style="display: flex; gap: 5px;">
                         <input type="file" id="stuPhoto" accept="image/*" style="flex: 1; padding: 4px;">
                         <button type="button" class="btn-small btn-camera" style="width: auto; margin:0;" onclick="startCamera()">📷 Camera</button>
                     </div>
                     
                     <div id="cameraArea" style="display:none; flex-direction:column; gap:5px; margin-top:10px; background:#eee; padding:10px; border-radius:4px;">
-                        <label style="font-size: 11px; margin-bottom: 2px;">Camera Background Magic:</label>
-                        <select id="bgReplaceColor" style="padding: 4px; font-size: 12px; margin-bottom: 5px;">
-                            <option value="none">Keep Real Background</option>
-                            <option value="#64b5f6">Blue Passport Background</option>
-                            <option value="#ffffff">White Passport Background</option>
-                        </select>
                         <video id="videoFeed" style="width: 100%; background: #000; border-radius:4px;" autoplay playsinline></video>
                         <div style="display:flex; gap: 5px;">
                             <button type="button" class="btn-small" style="background-color: #27ae60;" onclick="takeSnapshot()">📸 Take Snapshot</button>
@@ -499,11 +503,11 @@
         </span>
     `;
 
+    // --- FORMATTERS ---
     document.querySelectorAll('.aadhaar-input').forEach(input => {
         input.addEventListener('input', function (e) {
             let val = e.target.value.replace(/\D/g, '');
             if (val.length > 12) val = val.substring(0, 12);
-            
             let formatted = val;
             if (val.length > 8) {
                 formatted = val.substring(0, 4) + '-' + val.substring(4, 8) + '-' + val.substring(8, 12);
@@ -518,7 +522,6 @@
         input.addEventListener('input', function (e) {
             let val = e.target.value.replace(/\D/g, ''); 
             if (val.length > 10) val = val.substring(0, 10); 
-            
             let formatted = val;
             if (val.length > 7) {
                 formatted = val.substring(0, 4) + '-' + val.substring(4, 7) + '-' + val.substring(7, 10);
@@ -533,7 +536,6 @@
         input.addEventListener('input', function (e) {
             let val = e.target.value.replace(/\D/g, ''); 
             if (val.length > 6) val = val.substring(0, 6); 
-            
             let formatted = val;
             if (val.length > 4) {
                 formatted = val.substring(0, 2) + '.' + val.substring(2, 4) + '.' + val.substring(4, 6);
@@ -550,6 +552,7 @@
         return digitsOnly.length === 12; 
     }
 
+    // --- DATA MANAGEMENT ---
     window.onload = function() {
         const storedData = localStorage.getItem('aadhaarPermanentData');
         if (storedData) {
@@ -621,59 +624,23 @@
         reader.readAsText(file);
     });
 
-    document.getElementById('stuPhoto').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                pendingUploadedPhoto = event.target.result;
-                document.getElementById('photoStatus').innerText = "✓ Photo file ready";
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    async function startCamera() {
-        const video = document.getElementById('videoFeed');
-        const cameraArea = document.getElementById('cameraArea');
-        document.getElementById('photoStatus').innerText = ''; 
-        
-        try {
-            videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-            video.srcObject = videoStream;
-            cameraArea.style.display = 'flex';
-        } catch (err) {
-            alert("Could not access camera. Error: " + err.message);
-        }
-    }
-
-    async function takeSnapshot() {
-        const video = document.getElementById('videoFeed');
-        const canvas = document.getElementById('photoCanvas');
-        const context = canvas.getContext('2d');
-        
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        
-        const dataUrl = canvas.toDataURL('image/png');
-        const bgColor = document.getElementById('bgReplaceColor').value;
-        const submitBtn = document.getElementById('submitBtn');
-        
-        stopCamera();
-        
+    // --- REUSABLE AI BACKGROUND REMOVER ---
+    async function processImageWithAI(dataUrl, bgColor, successCallback, errorCallback) {
         if (bgColor === 'none') {
-            document.getElementById('capturedPhotoData').value = dataUrl;
-            document.getElementById('photoStatus').innerText = "✓ Snapshot captured successfully!";
+            successCallback(dataUrl);
             return;
         }
 
-        // Lock the submit button so they don't save before AI finishes
+        const submitBtn = document.getElementById('submitBtn');
         submitBtn.disabled = true;
         document.getElementById('photoStatus').innerText = "⏳ Applying AI Background... (Takes 5-15s the first time)";
         
         try {
-            const blob = await imglyRemoveBackground(dataUrl);
+            const config = {
+                publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/"
+            };
+            
+            const blob = await imglyRemoveBackground(dataUrl, config);
             const url = URL.createObjectURL(blob);
             const img = new Image();
             img.onload = () => {
@@ -689,18 +656,87 @@
                 // Draw Cutout Person
                 ctx.drawImage(img, 0, 0);
                 
-                document.getElementById('capturedPhotoData').value = finalCanvas.toDataURL('image/png');
-                document.getElementById('photoStatus').innerText = "✓ AI Background changed successfully!";
-                submitBtn.disabled = false;
+                const finalDataUrl = finalCanvas.toDataURL('image/png');
                 URL.revokeObjectURL(url);
+                submitBtn.disabled = false;
+                successCallback(finalDataUrl);
             };
             img.src = url;
         } catch (err) {
             console.error(err);
-            document.getElementById('capturedPhotoData').value = dataUrl;
-            document.getElementById('photoStatus').innerText = "⚠️ AI Background Failed. Saved original photo instead.";
             submitBtn.disabled = false;
+            errorCallback(dataUrl, err);
         }
+    }
+
+    // --- PHOTO UPLOAD HANDLING ---
+    document.getElementById('stuPhoto').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const originalDataUrl = event.target.result;
+                const bgColor = document.getElementById('bgReplaceColor').value;
+                
+                if (bgColor === 'none') {
+                    pendingUploadedPhoto = originalDataUrl;
+                    document.getElementById('photoStatus').innerText = "✓ Photo uploaded ready";
+                } else {
+                    processImageWithAI(originalDataUrl, bgColor, 
+                        (finalUrl) => {
+                            pendingUploadedPhoto = finalUrl;
+                            document.getElementById('photoStatus').innerText = "✓ AI Background applied to uploaded photo!";
+                        },
+                        (fallbackUrl, err) => {
+                            pendingUploadedPhoto = fallbackUrl;
+                            document.getElementById('photoStatus').innerText = "⚠️ AI Failed. Using original uploaded photo.";
+                        }
+                    );
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // --- CAMERA HANDLING ---
+    async function startCamera() {
+        const video = document.getElementById('videoFeed');
+        const cameraArea = document.getElementById('cameraArea');
+        document.getElementById('photoStatus').innerText = ''; 
+        
+        try {
+            videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+            video.srcObject = videoStream;
+            cameraArea.style.display = 'flex';
+        } catch (err) {
+            alert("Could not access camera. Error: " + err.message);
+        }
+    }
+
+    function takeSnapshot() {
+        const video = document.getElementById('videoFeed');
+        const canvas = document.getElementById('photoCanvas');
+        const context = canvas.getContext('2d');
+        
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        const dataUrl = canvas.toDataURL('image/png');
+        const bgColor = document.getElementById('bgReplaceColor').value;
+        
+        stopCamera();
+        
+        processImageWithAI(dataUrl, bgColor, 
+            (finalUrl) => {
+                document.getElementById('capturedPhotoData').value = finalUrl;
+                document.getElementById('photoStatus').innerText = "✓ AI Background applied to snapshot!";
+            },
+            (fallbackUrl, err) => {
+                document.getElementById('capturedPhotoData').value = fallbackUrl;
+                document.getElementById('photoStatus').innerText = "⚠️ AI Failed. Saved original snapshot instead.";
+            }
+        );
     }
 
     function stopCamera() {
@@ -710,9 +746,10 @@
         document.getElementById('cameraArea').style.display = 'none';
     }
 
+    // --- FORM SUBMISSION ---
     function saveRecord() {
         const submitBtn = document.getElementById('submitBtn');
-        if(submitBtn.disabled) return; // Prevent saving if AI is processing
+        if(submitBtn.disabled) return; 
 
         const stuName = document.getElementById('stuName').value.toUpperCase();
         const stuSex = document.getElementById('stuSex').value; 
@@ -743,6 +780,7 @@
         const capturedInput = document.getElementById('capturedPhotoData').value;
         let photoUrl = "";
         
+        // Priority: Camera Snapshot > File Upload > Keep Existing
         if (capturedInput) {
             photoUrl = capturedInput; 
         } else if (pendingUploadedPhoto) {
