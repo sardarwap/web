@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Aadhaar Register</title>
     
-    <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser/imgly_background_removal.umd.min.js"></script>
+    <script src="https://unpkg.com/@imgly/background-removal@1.4.5/dist/browser/imgly_background_removal.umd.js"></script>
 
     <style>
         :root {
@@ -624,10 +624,44 @@
         reader.readAsText(file);
     });
 
+    // --- COMPRESSION HELPER TO PREVENT AI OOM CRASHES ---
+    function resizeImageForAI(dataUrl, callback) {
+        const img = new Image();
+        img.onload = function() {
+            let width = img.width;
+            let height = img.height;
+            const maxDim = 500; // Safest size for web-based AI
+            
+            if (width > maxDim || height > maxDim) {
+                if (width > height) {
+                    height = Math.round((height * maxDim) / width);
+                    width = maxDim;
+                } else {
+                    width = Math.round((width * maxDim) / height);
+                    height = maxDim;
+                }
+            }
+            
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            callback(canvas.toDataURL('image/png'));
+        };
+        img.src = dataUrl;
+    }
+
+
     // --- REUSABLE AI BACKGROUND REMOVER ---
     async function processImageWithAI(dataUrl, bgColor, successCallback, errorCallback) {
         if (bgColor === 'none') {
             successCallback(dataUrl);
+            return;
+        }
+
+        if (typeof imglyRemoveBackground === 'undefined') {
+            errorCallback(dataUrl, new Error("AI Library failed to load. Check internet connection."));
             return;
         }
 
@@ -637,12 +671,13 @@
         
         try {
             const config = {
-                publicPath: "https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/"
+                publicPath: "https://unpkg.com/@imgly/background-removal@1.4.5/dist/"
             };
             
             const blob = await imglyRemoveBackground(dataUrl, config);
             const url = URL.createObjectURL(blob);
             const img = new Image();
+            
             img.onload = () => {
                 const finalCanvas = document.createElement('canvas');
                 finalCanvas.width = img.width;
@@ -663,7 +698,7 @@
             };
             img.src = url;
         } catch (err) {
-            console.error(err);
+            console.error("AI Error:", err);
             submitBtn.disabled = false;
             errorCallback(dataUrl, err);
         }
@@ -678,21 +713,24 @@
                 const originalDataUrl = event.target.result;
                 const bgColor = document.getElementById('bgReplaceColor').value;
                 
-                if (bgColor === 'none') {
-                    pendingUploadedPhoto = originalDataUrl;
-                    document.getElementById('photoStatus').innerText = "✓ Photo uploaded ready";
-                } else {
-                    processImageWithAI(originalDataUrl, bgColor, 
-                        (finalUrl) => {
-                            pendingUploadedPhoto = finalUrl;
-                            document.getElementById('photoStatus').innerText = "✓ AI Background applied to uploaded photo!";
-                        },
-                        (fallbackUrl, err) => {
-                            pendingUploadedPhoto = fallbackUrl;
-                            document.getElementById('photoStatus').innerText = "⚠️ AI Failed. Using original uploaded photo.";
-                        }
-                    );
-                }
+                // Shrink image FIRST so AI doesn't crash on huge 4K phone pictures
+                resizeImageForAI(originalDataUrl, function(resizedDataUrl) {
+                    if (bgColor === 'none') {
+                        pendingUploadedPhoto = resizedDataUrl;
+                        document.getElementById('photoStatus').innerText = "✓ Photo uploaded ready";
+                    } else {
+                        processImageWithAI(resizedDataUrl, bgColor, 
+                            (finalUrl) => {
+                                pendingUploadedPhoto = finalUrl;
+                                document.getElementById('photoStatus').innerText = "✓ AI Background applied to uploaded photo!";
+                            },
+                            (fallbackUrl, err) => {
+                                pendingUploadedPhoto = fallbackUrl;
+                                document.getElementById('photoStatus').innerText = `⚠️ AI Failed (${err.message}). Using original.`;
+                            }
+                        );
+                    }
+                });
             };
             reader.readAsDataURL(file);
         }
@@ -718,11 +756,13 @@
         const canvas = document.getElementById('photoCanvas');
         const context = canvas.getContext('2d');
         
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        // Scale down camera snapshot slightly to ensure fast AI processing
+        const ratio = video.videoWidth / video.videoHeight;
+        canvas.width = 400; 
+        canvas.height = 400 / ratio;
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
         
-        const dataUrl = canvas.toDataURL('image/png');
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
         const bgColor = document.getElementById('bgReplaceColor').value;
         
         stopCamera();
@@ -734,7 +774,7 @@
             },
             (fallbackUrl, err) => {
                 document.getElementById('capturedPhotoData').value = fallbackUrl;
-                document.getElementById('photoStatus').innerText = "⚠️ AI Failed. Saved original snapshot instead.";
+                document.getElementById('photoStatus').innerText = `⚠️ AI Failed (${err.message}). Saved original snapshot.`;
             }
         );
     }
@@ -746,7 +786,6 @@
         document.getElementById('cameraArea').style.display = 'none';
     }
 
-    // --- FORM SUBMISSION ---
     function saveRecord() {
         const submitBtn = document.getElementById('submitBtn');
         if(submitBtn.disabled) return; 
@@ -780,7 +819,6 @@
         const capturedInput = document.getElementById('capturedPhotoData').value;
         let photoUrl = "";
         
-        // Priority: Camera Snapshot > File Upload > Keep Existing
         if (capturedInput) {
             photoUrl = capturedInput; 
         } else if (pendingUploadedPhoto) {
