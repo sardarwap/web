@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduodia - Admin Panel</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --bg-color: #f4f7f6;
+            --card-bg: #fff;
+            --text-color: #333;
+            --danger-color: #e74c3c;
+            --success-color: #27ae60;
+            --guest-color: #9b59b6;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px 15px; display: flex; justify-content: center; }
+        .admin-container { max-width: 900px; width: 100%; }
+        
+        h1 { color: var(--primary-color); margin-bottom: 5px; }
+        p.subtitle { color: #666; margin-bottom: 25px; font-size: 0.95em; }
+
+        .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+        .metric-card { background: var(--card-bg); padding: 18px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); text-align: center; }
+        .metric-card h3 { font-size: 0.85em; color: #777; text-transform: uppercase; margin-bottom: 5px; }
+        .metric-card p { font-size: 1.8em; font-weight: bold; color: var(--primary-color); }
+
+        .admin-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-link { flex: 1; padding: 12px; background: #e2e8f0; border: none; border-radius: 8px; font-size: 0.92em; font-weight: bold; color: #4a5568; cursor: pointer; text-align: center; min-width: 130px; }
+        .tab-link.active { background-color: var(--primary-color); color: white; box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3); }
+
+        .controls-bar { background: var(--card-bg); padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 20px; }
+        .search-input { width: 100%; padding: 12px 16px; font-size: 1em; border: 2px solid #ddd; border-radius: 8px; outline: none; }
+
+        .table-container { background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); overflow: hidden; padding: 5px 0; }
+        .panel-content { display: none; }
+        .panel-content.active { display: block; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; vertical-align: middle; }
+        th { background-color: #fcfcfc; color: #555; font-weight: 600; font-size: 0.9em; text-transform: uppercase; }
+        
+        .user-cell { display: flex; align-items: center; gap: 12px; }
+        .admin-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; background: #eee; border: 2px solid #ddd; }
+        .user-info strong { font-size: 1.05em; color: #2c3e50; }
+        .user-info p { font-size: 0.82em; color: #7f8c8d; margin-top: 2px; }
+        
+        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; }
+        .status-active { background-color: #d4edda; color: var(--success-color); }
+        .status-locked { background-color: #f8d7da; color: var(--danger-color); }
+        .status-guest { background-color: #e8daef; color: var(--guest-color); }
+
+        .action-container { display: flex; flex-direction: column; gap: 6px; }
+        .btn-action { padding: 6px 12px; border: none; border-radius: 4px; font-weight: bold; font-size: 0.82em; cursor: pointer; color: white; text-align: center; }
+        .btn-lock { background-color: var(--danger-color); }
+        .btn-unlock { background-color: var(--success-color); }
+        .btn-access { background-color: #34495e; }
+
+        .settings-form { padding: 25px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.95em; color: #4a5568; }
+        .form-group input[type="text"], .form-group input[type="tel"] { width: 100%; padding: 12px; font-size: 1em; border: 2px solid #ddd; border-radius: 6px; outline: none; }
+        .form-group input:focus { border-color: var(--primary-color); }
+        .qr-preview-admin { max-width: 140px; height: 140px; object-fit: contain; border: 1px dashed #bbb; margin-top: 10px; display: block; border-radius: 6px; background: #fafafa; padding: 4px; }
+        .btn-save-settings { width: 100%; max-width: 280px; padding: 14px; border: none; border-radius: 6px; font-weight: bold; font-size: 1.05em; background: var(--primary-color); color: white; cursor: pointer; display: block; margin: 10px auto 0 auto; box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2); }
+
+        #admin-lockscreen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px; }
+
+        /* Mobile Layout Collapsing Overrides */
+        @media (max-width: 650px) {
+            .metrics-grid { gap: 10px; }
+            .metric-card p { font-size: 1.3em; }
+            thead { display: none; }
+            tr { display: block; background: var(--card-bg); border-radius: 10px; padding: 15px; margin-bottom: 15px; border: 1px solid #eee; }
+            td { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border: none; }
+            td:first-child { border-bottom: 1px dashed #eee; padding-bottom: 12px; margin-bottom: 8px; }
+            .reg-table td:nth-of-type(2):before { content: "Account Status: "; font-weight: bold; color: #777; }
+            .reg-table td:nth-of-type(3):before { content: "Action Control: "; font-weight: bold; color: #777; }
+            .guest-table td:nth-of-type(2):before { content: "User Type: "; font-weight: bold; color: #777; }
+            .guest-table td:nth-of-type(3):before { content: "Performance Result: "; font-weight: bold; color: #777; }
+            .action-container { width: 100%; } .btn-action { width: 100%; padding: 10px; }
+            .settings-form { padding: 15px; } .btn-save-settings { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="admin-lockscreen">
+        <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align:center; max-width: 360px; width: 100%;">
+            <h2>Admin Verification</h2>
+            <p style="font-size:0.9em; color:#666; margin-bottom: 20px;">Please enter your administrative pass-key token to continue access.</p>
+            <input type="password" id="admin-pin" placeholder="Enter Admin Password" style="width:100%; padding:12px; text-align:center; margin-bottom:15px; border-radius:6px; border:2px solid #ddd;">
+            <button onclick="verifyAdminPasscode()" style="width:100%; padding:12px; background:var(--primary-color); border:none; color:white; font-weight:bold; border-radius:6px; cursor:pointer;">Authenticate Portal</button>
+        </div>
+    </div>
+
+    <div class="admin-container" id="admin-main-view" style="display:none;">
+        <button onclick="window.location.href='index.html'" style="padding: 8px 15px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px; font-weight:bold;">← Main Portal</button>
+        
+        <h1>⚙️ Management Dashboard</h1>
+        <p class="subtitle">Grant access licenses manually and customize gateway credentials dynamically</p>
+
+        <div class="metrics-grid">
+            <div class="metric-card"><h3>Registered Users</h3><p id="metric-total">0</p></div>
+            <div class="metric-card"><h3>Locked Profiles</h3><p id="metric-locked" style="color:var(--danger-color);">0</p></div>
+            <div class="metric-card"><h3>Unregistered Attempts</h3><p id="metric-unregistered" style="color:var(--guest-color);">0</p></div>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="tab-link active" id="tab-reg-btn" onclick="switchAdminTab('registered')">👥 Registered Students</button>
+            <button class="tab-link" id="tab-guest-btn" onclick="switchAdminTab('unregistered')">🌐 Unregistered Attempts</button>
+            <button class="tab-link" id="tab-settings-btn" onclick="switchAdminTab('settings')">💳 Payment Settings</button>
+        </div>
+
+        <div class="controls-bar" id="search-filter-wrapper">
+            <input type="text" id="search-bar" class="search-input" placeholder="Search records by keywords..." oninput="triggerSearchFilter()">
+        </div>
+
+        <div id="panel-registered" class="panel-content active">
+            <div class="table-container">
+                <table class="reg-table">
+                    <thead>
+                        <tr><th style="width: 45%;">Student Profile</th><th style="width: 20%;">Status</th><th style="width: 35%;">Administrative Options Actions</th></tr>
+                    </thead>
+                    <tbody id="reg-table-body">
+                        <tr><td colspan="3" style="text-align:center; padding:30px;">Loading users...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="panel-unregistered" class="panel-content">
+            <div class="table-container">
+                <table class="guest-table">
+                    <thead>
+                        <tr><th style="width: 50%;">Guest Student Name</th><th style="width: 25%;">User Type</th><th style="width: 25%;">Exam Result</th></tr>
+                    </thead>
+                    <tbody id="guest-table-body">
+                        <tr><td colspan="3" style="text-align:center; padding:30px;">Analyzing leaderboard data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="panel-settings" class="panel-content">
+            <div class="settings-form">
+                <div class="form-group">
+                    <label>Active Merchant UPI Handle Address</label>
+                    <input type="text" id="setup-upi" placeholder="e.g., eduodia@upi, 9876543210@ibl">
+                </div>
+                <div class="form-group">
+                    <label>WhatsApp Support Mobile Handle (Include Country Code, No spaces/No plus sign)</label>
+                    <input type="tel" id="setup-whatsapp" placeholder="e.g., 919876543210">
+                </div>
+                <div class="form-group">
+                    <label>Upload Payment QR Code Asset Image</label>
+                    <input type="file" id="setup-qr-file" accept="image/*" onchange="processAdminQRUpload(event)">
+                    <img id="setup-qr-preview" class="qr-preview-admin" src="https://cdn-icons-png.flaticon.com/512/241/241508.png" alt="Preview Frame">
+                </div>
+                <button class="btn-save-settings" onclick="commitPaymentConfigurations()">🔒 Save Configurations</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKUwaFzBIIHr0q_qGE2GT7t5ulxnZRJYY",
+            authDomain: "quiz-web-f4cb8.firebaseapp.com",
+            projectId: "quiz-web-f4cb8",
+            storageBucket: "quiz-web-f4cb8.firebasestorage.app",
+            messagingSenderId: "724284966944",
+            appId: "1:724284966944:web:319a680630af1703a39445",
+            measurementId: "G-VSCB35YM1J"
+        };
+        firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
+
+        let registeredUsers = []; let unregisteredAttempts = []; let activeTab = "registered";
+        let base64QRDataString = "";
+
+        function verifyAdminPasscode() {
+            const input = document.getElementById('admin-pin').value;
+            if (input === "12345") {
+                document.getElementById('admin-lockscreen').style.display = 'none';
+                document.getElementById('admin-main-view').style.display = 'block';
+                syncAdministrativeData();
+                downloadPaymentConfigValues();
+            } else { alert("❌ Authentication Failed! Access Denied."); }
+        }
+
+        function switchAdminTab(target) {
+            activeTab = target;
+            document.querySelectorAll('.panel-content').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
+            document.getElementById('search-filter-wrapper').style.display = target === 'settings' ? 'none' : 'block';
+
+            if(target === 'registered') {
+                document.getElementById('panel-registered').classList.add('active');
+                document.getElementById('tab-reg-btn').classList.add('active');
+                buildRegisteredTable(registeredUsers);
+            } else if(target === 'unregistered') {
+                document.getElementById('panel-unregistered').classList.add('active');
+                document.getElementById('tab-guest-btn').classList.add('active');
+                buildGuestTable(unregisteredAttempts);
+            } else {
+                document.getElementById('panel-settings').classList.add('active');
+                document.getElementById('tab-settings-btn').classList.add('active');
+            }
+        }
+
+        function syncAdministrativeData() {
+            db.collection("users").orderBy("createdAt", "desc").onSnapshot((userSnapshot) => {
+                registeredUsers = []; let lockedCount = 0; let registeredNamesMap = new Set();
+                userSnapshot.forEach((doc) => {
+                    const id = doc.id; const data = doc.data();
+                    const status = data.status ? data.status : "active";
+                    if (status === "locked") lockedCount++;
+                    if(data.name) registeredNamesMap.add(data.name.toUpperCase().trim());
+                    registeredUsers.push({ id, ...data, status });
+                });
+                document.getElementById('metric-total').innerText = registeredUsers.length;
+                document.getElementById('metric-locked').innerText = lockedCount;
+
+                db.collection("leaderboard").get().then((lbSnapshot) => {
+                    unregisteredAttempts = [];
+                    lbSnapshot.forEach((doc) => {
+                        const lbData = doc.data(); const lbName = lbData.name ? lbData.name.toUpperCase().trim() : "";
+                        if (lbName !== "" && !registeredNamesMap.has(lbName)) unregisteredAttempts.push(lbData);
+                    });
+                    document.getElementById('metric-unregistered').innerText = unregisteredAttempts.length;
+                    if(activeTab === 'registered') buildRegisteredTable(registeredUsers);
+                    else if(activeTab === 'unregistered') buildGuestTable(unregisteredAttempts);
+                });
+            });
+        }
+
+        function downloadPaymentConfigValues() {
+            db.collection("settings").doc("payment").get().then(doc => {
+                if(doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('setup-upi').value = data.upi || '';
+                    document.getElementById('setup-whatsapp').value = data.whatsapp || '';
+                    if(data.qrCode) {
+                        base64QRDataString = data.qrCode;
+                        document.getElementById('setup-qr-preview').src = data.qrCode;
+                    }
+                }
+            });
+        }
+
+        function processAdminQRUpload(event) {
+            const file = event.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas'); const MAX_SIZE = 300; 
+                    let w = img.width; let h = img.height;
+                    if (w > h) { if (w > MAX_SIZE) { h *= MAX_SIZE / w; w = MAX_SIZE; } } else { if (h > MAX_SIZE) { w *= MAX_SIZE / h; h = MAX_SIZE; } }
+                    canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h);
+                    
+                    base64QRDataString = canvas.toDataURL('image/jpeg', 0.75); 
+                    document.getElementById('setup-qr-preview').src = base64QRDataString;
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        function commitPaymentConfigurations() {
+            const upi = document.getElementById('setup-upi').value.trim();
+            const whatsapp = document.getElementById('setup-whatsapp').value.trim();
+
+            if(!upi || !whatsapp) { alert("Please complete both configuration fields!"); return; }
+
+            db.collection("settings").doc("payment").set({
+                upi: upi, whatsapp: whatsapp, qrCode: base64QRDataString
+            }).then(() => {
+                alert("🎉 Payment configurations updated globally on live database!");
+            }).catch(e => alert("Write permission exception: " + e.message));
+        }
+
+        function buildRegisteredTable(dataset) {
+            const tbody = document.getElementById('reg-table-body'); tbody.innerHTML = '';
+            if (dataset.length === 0) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px;">No records.</td></tr>'; return; }
+            
+            dataset.forEach((user) => {
+                const tr = document.createElement('tr');
+                const avatar = user.profilePic ? user.profilePic : "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+                const isLocked = user.status === "locked";
+                const activePermissionsList = user.unlocked && user.unlocked.length > 0 ? user.unlocked.join(", ") : "None";
+
+                tr.innerHTML = `
+                    <td>
+                        <div class="user-cell">
+                            <img src="${avatar}" class="admin-avatar">
+                            <div class="user-info">
+                                <strong>${user.name}</strong><p>📞 +91 ${user.phone} | 🔑 Pass: ${user.password || 'N/A'}</p>
+                                <p style="color:var(--primary-color); font-size:0.78em; font-weight:bold; margin-top:4px;">🔓 Unlocked IDs: ${activePermissionsList}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="status-badge ${isLocked ? 'status-locked' : 'status-active'}">${user.status}</span></td>
+                    <td>
+                        <div class="action-container">
+                            <button class="btn-action btn-access" onclick="promptPremiumUnlock('${user.id}', '${user.name}')">🔑 Manage Access</button>
+                            <button class="btn-action ${isLocked ? 'btn-unlock' : 'btn-lock'}" onclick="toggleAccountStatus('${user.id}', '${user.status}')">${isLocked ? 'Unlock' : 'Lock Account'}</button>
+                        </div>
+                    </td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function buildGuestTable(dataset) {
+            const tbody = document.getElementById('guest-table-body'); tbody.innerHTML = '';
+            if (dataset.length === 0) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px;">No guest data logs available.</td></tr>'; return; }
+            dataset.forEach((guest) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><div class="user-cell"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="admin-avatar" style="border-color:#9b59b6;"><div class="user-info"><strong>${guest.name || "Anonymous Guest"}</strong><p>📝 Attended Exam: <strong>${guest.quizName || 'TEST'}</strong></p></div></div></td>
+                    <td><span class="status-badge status-guest">Guest User</span></td>
+                    <td><span class="score-value" style="color:#e67e22;">${guest.score}</span> / ${guest.totalQuestions || 30}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function promptPremiumUnlock(docId, studentName) {
+            const itemIdInput = prompt(`Enter unique Item ID to manage parameters for [ ${studentName.toUpperCase()} ]:\n\nProvide the exact ID text field.`);
+            if (!itemIdInput || itemIdInput.trim() === "") return;
+            const sanitizedId = itemIdInput.trim(); const docRef = db.collection("users").doc(docId);
+            docRef.get().then(doc => {
+                let current = doc.data().unlocked || [];
+                if (current.includes(sanitizedId)) {
+                    if (confirm(`Revoke license from [${sanitizedId}]?`)) {
+                        docRef.update({ unlocked: firebase.firestore.FieldValue.arrayRemove(sanitizedId) }).then(() => alert("Access revoked."));
+                    }
+                } else { docRef.update({ unlocked: firebase.firestore.FieldValue.arrayUnion(sanitizedId) }).then(() => alert("Access granted!")); }
+            });
+        }
+
+        function toggleAccountStatus(docId, currentStatus) {
+            const targetStatus = currentStatus === "active" ? "locked" : "active";
+            if (!confirm(`Change profile status to [${targetStatus.toUpperCase()}]?`)) return;
+            db.collection("users").doc(docId).update({ status: targetStatus });
+        }
+
+        function triggerSearchFilter() {
+            const query = document.getElementById('search-bar').value.toLowerCase().trim();
+            if (activeTab === "registered") {
+                if (query === "") { buildRegisteredTable(registeredUsers); return; }
+                buildRegisteredTable(registeredUsers.filter(u => (u.name && u.name.toLowerCase().includes(query)) || (u.phone && u.phone.includes(query))));
+            } else if (activeTab === "unregistered") {
+                if (query === "") { buildGuestTable(unregisteredAttempts); return; }
+                buildGuestTable(unregisteredAttempts.filter(g => (g.name && g.name.toLowerCase().includes(query)) || (g.quizName && g.quizName.toLowerCase().includes(query))));
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduodia - Authentication</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --bg-color: #f4f7f6;
+            --card-bg: #fff;
+            --text-color: #333;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px 15px;
+        }
+        .auth-container {
+            background: var(--card-bg);
+            max-width: 420px;
+            width: 100%;
+            padding: 30px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h2 { text-align: center; color: var(--primary-color); margin-bottom: 25px; }
+        
+        /* Form Toggles */
+        .auth-tabs { display: flex; margin-bottom: 25px; border-bottom: 2px solid #eee; }
+        .tab-btn {
+            flex: 1; padding: 12px; background: none; border: none;
+            font-size: 1.05em; font-weight: bold; color: #777; cursor: pointer;
+            text-align: center; transition: all 0.2s;
+        }
+        .tab-btn.active { color: var(--primary-color); border-bottom: 3px solid var(--primary-color); }
+        
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-size: 0.9em; font-weight: 600; color: #555; margin-bottom: 6px; }
+        input, select {
+            width: 100%; padding: 12px 14px; font-size: 1em;
+            border: 2px solid #ddd; border-radius: 8px; transition: border-color 0.2s;
+        }
+        input:focus, select:focus { outline: none; border-color: var(--primary-color); }
+        
+        button.btn-submit {
+            width: 100%; padding: 14px; font-size: 1.1em; font-weight: bold;
+            background: var(--primary-color); color: white; border: none;
+            border-radius: 8px; cursor: pointer; margin-top: 10px; transition: background 0.2s;
+        }
+        button.btn-submit:hover { background: #357ABD; }
+        
+        .toggle-link { text-align: center; margin-top: 15px; font-size: 0.9em; }
+        .toggle-link a { color: var(--primary-color); text-decoration: none; font-weight: bold; cursor: pointer; }
+        
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        
+        #forgot-question-box {
+            background: #eaf2fb; padding: 12px; border-radius: 6px;
+            margin-bottom: 15px; font-weight: bold; color: #2c3e50; display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-tabs" id="tabs-header">
+            <button class="tab-btn active" onclick="switchForm('signin')">Sign In</button>
+            <button class="tab-btn" onclick="switchForm('signup')">Sign Up</button>
+        </div>
+
+        <div id="signin-form" class="auth-form active">
+            <h2>Welcome Back</h2>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="login-phone" placeholder="Enter your mobile number">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="login-pass" placeholder="Enter your password">
+            </div>
+            <button class="btn-submit" onclick="handleSignIn()">Sign In</button>
+            <div class="toggle-link">
+                <a onclick="switchForm('forgot')">Forgot Password?</a>
+            </div>
+        </div>
+
+        <div id="signup-form" class="auth-form">
+            <h2>Create Account</h2>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="reg-name" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" id="reg-phone" placeholder="Enter mobile number">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="reg-pass" placeholder="Create a password">
+            </div>
+            <div class="form-group">
+                <label>Security Question (For Recovery)</label>
+                <select id="reg-question">
+                    <option value="What is your childhood nickname?">What is your childhood nickname?</option>
+                    <option value="What is the name of your first school?">What is the name of your first school?</option>
+                    <option value="What city were you born in?">What city were you born in?</option>
+                    <option value="What is your favorite food?">What is your favorite food?</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Security Answer</label>
+                <input type="text" id="reg-answer" placeholder="Enter your answer">
+            </div>
+            <button class="btn-submit" onclick="handleSignUp()">Sign Up</button>
+        </div>
+
+        <div id="forgot-form" class="auth-form">
+            <h2>Recover Password</h2>
+            <div class="form-group" id="forgot-phone-group">
+                <label>Enter Registered Phone Number</label>
+                <input type="tel" id="forgot-phone" placeholder="Enter your mobile number">
+                <button class="btn-submit" style="margin-top:12px; background:#333;" onclick="fetchSecurityQuestion()">Verify Phone</button>
+            </div>
+            
+            <div id="forgot-recovery-box" style="display:none;">
+                <div id="forgot-question-box"></div>
+                <div class="form-group">
+                    <label>Your Answer</label>
+                    <input type="text" id="forgot-answer" placeholder="Enter security answer">
+                </div>
+                <div class="form-group">
+                    <label>Create New Password</label>
+                    <input type="password" id="forgot-new-pass" placeholder="Enter new password">
+                </div>
+                <button class="btn-submit" onclick="handlePasswordReset()">Reset Password</button>
+            </div>
+            
+            <div class="toggle-link">
+                <a onclick="switchForm('signin')">← Back to Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKUwaFzBIIHr0q_qGE2GT7t5ulxnZRJYY",
+            authDomain: "quiz-web-f4cb8.firebaseapp.com",
+            projectId: "quiz-web-f4cb8",
+            storageBucket: "quiz-web-f4cb8.firebasestorage.app",
+            messagingSenderId: "724284966944",
+            appId: "1:724284966944:web:319a680630af1703a39445",
+            measurementId: "G-VSCB35YM1J"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        let recoveryDocId = ""; // Stores reference during recovery password cycles
+
+        function switchForm(formType) {
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tabs-header').style.display = 'flex';
+
+            if (formType === 'signin') {
+                document.getElementById('signin-form').classList.add('active');
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            } else if (formType === 'signup') {
+                document.getElementById('signup-form').classList.add('active');
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            } else if (formType === 'forgot') {
+                document.getElementById('tabs-header').style.display = 'none';
+                document.getElementById('forgot-form').classList.add('active');
+                // Reset helper container variables
+                document.getElementById('forgot-recovery-box').style.display = 'none';
+                document.getElementById('forgot-phone-group').style.display = 'block';
+            }
+        }
+
+        // SIGN UP DATABASE LOGIC
+        async function handleSignUp() {
+            const name = document.getElementById('reg-name').value.trim();
+            const phone = document.getElementById('reg-phone').value.trim();
+            const password = document.getElementById('reg-pass').value;
+            const question = document.getElementById('reg-question').value;
+            const answer = document.getElementById('reg-answer').value.trim().toLowerCase();
+
+            if(!name || !phone || !password || !answer) {
+                alert("Please fill in all layout configuration parameters!"); return;
+            }
+
+            try {
+                // Check if user account already exists in database collection mapping
+                const userCheck = await db.collection("users").where("phone", "==", phone).get();
+                if(!userCheck.empty) {
+                    alert("This phone number is already registered! Please Sign In."); return;
+                }
+
+                // Inject user schema document structure directly to Cloud collection
+                await db.collection("users").add({
+                    name: name, phone: phone, password: password,
+                    securityQuestion: question, securityAnswer: answer,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                alert("🎉 Account created successfully! Please Sign In.");
+                switchForm('signin');
+            } catch (err) { alert("Registration Error: " + err.message); }
+        }
+
+        // SIGN IN DATABASE LOGIC
+        async function handleSignIn() {
+            const phone = document.getElementById('login-phone').value.trim();
+            const pass = document.getElementById('login-pass').value;
+
+            if(!phone || !pass) { alert("Please provide both parameters!"); return; }
+
+            try {
+                const query = await db.collection("users")
+                                      .where("phone", "==", phone)
+                                      .where("password", "==", pass).get();
+
+                if(query.empty) {
+                    alert("❌ Invalid Phone Number or Password!"); return;
+                }
+
+                // Cache credentials session parameters securely inside LocalStorage maps
+                const userData = query.docs[0].data();
+                localStorage.setItem('eduodiaUserName', userData.name);
+                localStorage.setItem('eduodiaUserPhone', userData.phone);
+
+                // Instantly sync background history arrays if cloud structures exist
+                alert("Welcome back, " + userData.name + "!");
+                window.location.href = "profile.html";
+            } catch (err) { alert("Auth Execution Error: " + err.message); }
+        }
+
+        // FORGOT PASSWORD STEP 1: Fetch Question
+        async function fetchSecurityQuestion() {
+            const phone = document.getElementById('forgot-phone').value.trim();
+            if(!phone) { alert("Please enter your phone number!"); return; }
+
+            try {
+                const query = await db.collection("users").where("phone", "==", phone).get();
+                if(query.empty) { alert("No user found with this phone number."); return; }
+
+                const doc = query.docs[0];
+                recoveryDocId = doc.id;
+                const data = doc.data();
+
+                // Show challenge inputs UI
+                document.getElementById('forgot-question-box').innerText = "Question: " + data.securityQuestion;
+                document.getElementById('forgot-question-box').style.display = 'block';
+                document.getElementById('forgot-phone-group').style.display = 'none';
+                document.getElementById('forgot-recovery-box').style.display = 'block';
+            } catch (err) { alert(err.message); }
+        }
+
+        // FORGOT PASSWORD STEP 2: Verify and Reset
+        async function handlePasswordReset() {
+            const answer = document.getElementById('forgot-answer').value.trim().toLowerCase();
+            const newPass = document.getElementById('forgot-new-pass').value;
+
+            if(!answer || !newPass) { alert("All verification criteria fields required!"); return; }
+
+            try {
+                const docRef = db.collection("users").doc(recoveryDocId);
+                const doc = await docRef.get();
+                const data = doc.data();
+
+                if(data.securityAnswer !== answer) {
+                    alert("❌ Incorrect security question answer!"); return;
+                }
+
+                // Answer matches, update database parameters tracking
+                await docRef.update({ password: newPass });
+                alert("🔒 Password reset successful! Please sign in with your new password.");
+                switchForm('signin');
+            } catch (err) { alert(err.message); }
+        }
+    </script>
+</body>
+</html>

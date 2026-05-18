@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduodia - My Profile</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --bg-color: #f4f7f6;
+            --card-bg: #fff;
+            --warning-bg: #fff3cd;
+            --warning-border: #ffeeba;
+            --warning-text: #856404;
+            --success-bg: #d4edda;
+            --success-text: #155724;
+        }
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+        
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg-color); 
+            padding: 20px 15px; 
+            display: flex; 
+            justify-content: center; 
+            color: #333; 
+        }
+        
+        .main-container { 
+            max-width: 750px; 
+            width: 100%; 
+        }
+        
+        /* Navigation Controls Header */
+        .dashboard-navigation { 
+            display: flex; 
+            justify-content: space-between; 
+            gap: 12px; 
+            margin-bottom: 20px; 
+        }
+        
+        .btn-nav { 
+            padding: 12px 20px; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 0.95em; 
+            transition: all 0.2s; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex: 1; 
+            text-align: center; 
+        }
+        .btn-back { background: #333; color: white; }
+        .btn-back:hover { background: #444; }
+        .btn-leaderboard { background: #f39c12; color: white; }
+        .btn-leaderboard:hover { background: #d68910; }
+        .btn-nav:active { transform: scale(0.98); }
+
+        /* Unified Card Component Style */
+        .section-card { 
+            background: var(--card-bg); 
+            padding: 25px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04); 
+            margin-bottom: 20px; 
+        }
+        
+        .profile-card { text-align: center; }
+        
+        .profile-pic-container { 
+            position: relative; 
+            width: 120px; 
+            height: 120px; 
+            margin: 0 auto 15px auto; 
+        }
+        
+        .profile-pic { 
+            width: 100%; 
+            height: 100%; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 4px solid var(--primary-color); 
+            background-color: #eee; 
+        }
+        
+        .upload-btn { 
+            position: absolute; 
+            bottom: 0; 
+            right: 0; 
+            background: var(--primary-color); 
+            color: white; 
+            border: none; 
+            border-radius: 50%; 
+            width: 36px; 
+            height: 36px; 
+            cursor: pointer; 
+            font-size: 1.1em; 
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        #file-input { display: none; }
+        
+        .user-name-input { 
+            font-size: 1.6em; 
+            font-weight: bold; 
+            border: none; 
+            border-bottom: 2px dashed #ccc; 
+            text-align: center; 
+            color: var(--primary-color); 
+            background: transparent; 
+            width: 90%; 
+            max-width: 320px; 
+            padding: 4px; 
+        }
+        .user-name-input:focus { outline: none; border-bottom-color: var(--primary-color); }
+        .sub-label { font-size: 0.85em; color: #777; margin-top: 8px; }
+
+        /* Cloud Sync Authentication Cards */
+        .sync-card { padding: 20px; border-radius: 12px; margin-bottom: 20px; }
+        .sync-card.warning { background-color: var(--warning-bg); border: 1px solid var(--warning-border); color: var(--warning-text); }
+        .sync-card.success { background-color: var(--success-bg); border: 1px solid #c3e6cb; color: var(--success-text); }
+        .sync-card h3 { margin-bottom: 6px; font-size: 1.1em; display: flex; align-items: center; gap: 6px; }
+        .sync-card p { font-size: 0.9em; line-height: 1.45; margin-bottom: 12px; }
+        
+        .btn-auth { 
+            padding: 8px 16px; font-size: 0.88em; font-weight: bold; border-radius: 6px; cursor: pointer; transition: all 0.2s; 
+            border: 1px solid currentColor; background: transparent; color: inherit; 
+        }
+        .btn-auth:hover { background: currentColor; color: #fff; }
+
+        /* Examination History Lists Layout */
+        h2 { font-size: 1.3em; margin-bottom: 15px; color: var(--primary-color); border-bottom: 2px solid #f0f0f0; padding-bottom: 8px;}
+        .history-list { list-style: none; }
+        
+        .history-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 15px 0; 
+            border-bottom: 1px solid #eee; 
+            gap: 15px; 
+        }
+        .history-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .history-details strong { font-size: 1.05em; color: #2c3e50; display: block; margin-bottom: 3px; }
+        .history-details p { font-size: 0.82em; color: #7f8c8d; }
+        
+        .item-right-actions { display: flex; align-items: center; gap: 8px; }
+        
+        .score-badge { 
+            background: #eaf2fb; 
+            color: var(--primary-color); 
+            padding: 8px 14px; 
+            border-radius: 20px; 
+            font-weight: bold; 
+            font-size: 0.95em; 
+            white-space: nowrap; 
+            margin-right: 4px; 
+        }
+        
+        .action-btn { 
+            border: none; 
+            padding: 9px 15px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 0.9em; 
+            text-align: center; 
+            color: white; 
+            transition: opacity 0.2s; 
+        }
+        .action-btn:hover { opacity: 0.9; }
+        .btn-reattempt { background: #27ae60; }
+        .btn-rank { background: #f39c12; }
+
+        /* --- MOBILE SCREEN OVERRIDES (@media) --- */
+        @media (max-width: 550px) {
+            body { padding: 10px 10px; }
+            .section-card { padding: 18px; }
+            .user-name-input { font-size: 1.4em; }
+            .history-item { flex-direction: column; align-items: flex-start; gap: 12px; padding: 15px 5px; }
+            .item-right-actions { width: 100%; justify-content: flex-end; border-top: 1px dashed #eee; padding-top: 10px; }
+            .action-btn { flex: 1; font-size: 0.85em; padding: 9px 12px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="dashboard-navigation">
+            <button class="btn-nav btn-back" onclick="window.location.href='index.html'">← Dashboard</button>
+            <button class="btn-nav btn-leaderboard" onclick="window.location.href='leaderboard.html'">🏆 Global Ranks</button>
+        </div>
+        
+        <div class="section-card profile-card">
+            <div class="profile-pic-container">
+                <img id="profile-pic" class="profile-pic" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profile Picture">
+                <button class="upload-btn" onclick="document.getElementById('file-input').click()">📷</button>
+                <input type="file" id="file-input" accept="image/*" onchange="compressAndSaveImage(event)">
+            </div>
+            <input type="text" id="user-name" class="user-name-input" placeholder="Enter your name..." onchange="saveUserName()">
+            <p class="sub-label">Tap your name field to update it at any time.</p>
+        </div>
+
+        <div id="sync-banner-placement"></div>
+
+        <div class="section-card">
+            <h2>📊 My Attended Quizzes</h2>
+            <ul class="history-list" id="history-list">
+                <li style="text-align:center; padding: 20px; color: #777;">Loading metrics history...</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKUwaFzBIIHr0q_qGE2GT7t5ulxnZRJYY",
+            authDomain: "quiz-web-f4cb8.firebaseapp.com",
+            projectId: "quiz-web-f4cb8",
+            storageBucket: "quiz-web-f4cb8.firebasestorage.app",
+            messagingSenderId: "724284966944",
+            appId: "1:724284966944:web:319a680630af1703a39445",
+            measurementId: "G-VSCB35YM1J"
+        };
+        firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
+        const userPhone = localStorage.getItem('eduodiaUserPhone');
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedName = localStorage.getItem('eduodiaUserName'); const savedPic = localStorage.getItem('eduodiaUserPic');
+            if (savedName) document.getElementById('user-name').value = savedName;
+            if (savedPic) document.getElementById('profile-pic').src = savedPic;
+            renderSyncBanner(); loadPersonalHistory();
+        });
+
+        function renderSyncBanner() {
+            const container = document.getElementById('sync-banner-placement');
+            if (userPhone) {
+                container.innerHTML = `<div class="sync-card success"><h3>☁️ Cloud Account Linked</h3><p>Logged in via <strong>+91 ${userPhone}</strong>.</p><button class="btn-auth" onclick="handleLogout()">Sign Out</button></div>`;
+            } else {
+                container.innerHTML = `<div class="sync-card warning"><h3>🔒 Progress Warning</h3><p>Scores are stored locally. Sign Up to protect your records.</p><button class="btn-auth" onclick="window.location.href='auth.html'">Connect Cloud Account</button></div>`;
+            }
+        }
+
+        function handleLogout() { localStorage.clear(); alert("Signed out!"); window.location.href = "index.html"; }
+        function saveUserName() { localStorage.setItem('eduodiaUserName', document.getElementById('user-name').value); }
+
+        function compressAndSaveImage(event) {
+            const file = event.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas'); const MAX_SIZE = 200; 
+                    let w = img.width; let h = img.height;
+                    if (w > h) { if (w > MAX_SIZE) { h *= MAX_SIZE / w; w = MAX_SIZE; } } else { if (h > MAX_SIZE) { w *= MAX_SIZE / h; h = MAX_SIZE; } }
+                    canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h);
+                    const compressedBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                    
+                    document.getElementById('profile-pic').src = compressedBase64; 
+                    localStorage.setItem('eduodiaUserPic', compressedBase64);
+
+                    // Sync avatar image modification seamlessly back to Cloud Firestore
+                    if (userPhone) {
+                        db.collection("users").where("phone", "==", userPhone).get()
+                          .then((snapshot) => {
+                              if (!snapshot.empty) {
+                                  const docId = snapshot.docs[0].id;
+                                  db.collection("users").doc(docId).update({ profilePic: compressedBase64 });
+                              }
+                          });
+                    }
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+
+        async function loadPersonalHistory() {
+            const historyList = document.getElementById('history-list');
+            let historyData = JSON.parse(localStorage.getItem('eduodiaQuizHistory')) || [];
+
+            if (userPhone && historyData.length === 0) {
+                try {
+                    const snapshot = await db.collection("leaderboard").where("name", "==", localStorage.getItem('eduodiaUserName')).get();
+                    snapshot.forEach(doc => {
+                        const d = doc.data();
+                        historyData.push({ 
+                            quizName: d.quizName, score: d.score, total: d.totalQuestions || 30, 
+                            date: d.timestamp ? new Date(d.timestamp.seconds * 1000).toLocaleDateString() : "Prior Attempt", 
+                            quizUrl: "questions/10th/English/sd10_eng_agrain.json" 
+                        });
+                    });
+                    localStorage.setItem('eduodiaQuizHistory', JSON.stringify(historyData));
+                } catch(e) { console.log(e); }
+            }
+
+            // --- INTEL DUP FILTER: BLOCK MULTIPLE REATTEMPTS ---
+            // Iterates forward to explicitly log and isolate the 1st Attempt score only
+            let uniqueHistory = [];
+            let seenQuizzes = new Set();
+            
+            historyData.forEach(item => {
+                if (item.quizName && !seenQuizzes.has(item.quizName.toUpperCase().trim())) {
+                    seenQuizzes.add(item.quizName.toUpperCase().trim());
+                    uniqueHistory.push(item);
+                }
+            });
+
+            if (uniqueHistory.length === 0) {
+                historyList.innerHTML = '<li style="text-align:center; padding: 20px; color: #777;">You haven\'t attended any quizzes yet.</li>'; return;
+            }
+
+            historyList.innerHTML = '';
+            // Display newest distinct exam submissions at the top
+            uniqueHistory.slice().reverse().forEach(item => {
+                const li = document.createElement('li'); li.className = 'history-item';
+                li.innerHTML = `
+                    <div class="history-details"><strong>${item.quizName}</strong><p>Attempted: ${item.date}</p></div>
+                    <div class="item-right-actions">
+                        <span class="score-badge">${item.score} / ${item.total}</span>
+                        <button class="action-btn btn-rank" onclick="window.location.href='leaderboard.html?quiz=' + encodeURIComponent('${item.quizName}')">Rank</button>
+                        <button class="action-btn btn-reattempt" onclick="window.location.href='mock-test.html?quizData=${item.quizUrl}'">Reattempt</button>
+                    </div>`;
+                historyList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduodia - Mock Test</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --bg-color: #f4f7f6;
+            --text-color: #333;
+            --card-bg: #fff;
+            --answered-color: #27ae60;
+            --unanswered-color: #e74c3c;
+            --warning-color: #f39c12;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        #loading-screen { text-align: center; font-size: 1.4em; margin-top: 50px; color: var(--primary-color); font-weight: bold; }
+        .test-container { background: var(--card-bg); max-width: 800px; width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); overflow: hidden; display: none; }
+
+        #start-screen { padding: 40px 25px; text-align: center; }
+        #start-screen h2 { color: var(--primary-color); margin-bottom: 12px; font-size: 2em;}
+        #start-screen p { color: #555; margin-bottom: 25px; font-size: 1.05em; line-height: 1.5;}
+        
+        .name-input {
+            padding: 14px 16px; font-size: 1.1em; width: 100%; max-width: 360px;
+            margin-bottom: 25px; border-radius: 8px; border: 2px solid #ccc;
+            text-align: center; transition: border-color 0.3s;
+        }
+        .name-input:focus { outline: none; border-color: var(--primary-color); }
+        .start-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+        .test-header { background: var(--primary-color); color: white; padding: 18px 25px; display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .test-header h2 { font-size: 1.3em; word-break: break-word; }
+        .timer { font-weight: bold; font-size: 1.1em; background: rgba(0,0,0,0.2); padding: 6px 12px; border-radius: 6px; white-space: nowrap; }
+        
+        .question-section { padding: 30px 25px; }
+        #question-text { font-size: 1.25em; margin-bottom: 22px; line-height: 1.5; font-weight: 600; color: #2c3e50; }
+        .options-list { list-style: none; }
+        
+        .option-item { background: var(--bg-color); margin-bottom: 12px; padding: 14px 18px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s ease; }
+        .option-item:hover { border-color: var(--primary-color); background: #edf4fe; }
+        .option-item label { display: flex; align-items: center; cursor: pointer; width: 100%; font-size: 1.05em; line-height: 1.4; }
+        .option-item input { margin-right: 12px; width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; }
+
+        .test-footer { padding: 18px 25px; background: #fafafa; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        
+        button { padding: 12px 22px; border: none; border-radius: 6px; background: var(--primary-color); color: white; font-size: 1em; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        button:hover { background: #357ABD; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-review { background: var(--warning-color); }
+        .btn-review:hover { background: #d68910; }
+        
+        #review-panel { display: none; padding: 20px 25px; background: #f9f9f9; border-bottom: 1px solid #ddd; }
+        .review-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(42px, 1fr)); gap: 10px; margin-top: 15px; }
+        .review-box { padding: 10px 0; text-align: center; border-radius: 6px; color: white; font-weight: bold; cursor: pointer; }
+        .box-answered { background-color: var(--answered-color); }
+        .box-unanswered { background-color: var(--unanswered-color); }
+        .box-current { border: 3px solid #2c3e50; color: #2c3e50; background-color: #fff; }
+
+        #results { display: none; padding: 35px 25px; text-align: center; background: var(--card-bg); max-width: 800px; width: 100%; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .performance-msg { font-size: 1.2em; font-weight: bold; margin: 15px 0 25px 0; padding: 12px; border-radius: 8px; line-height: 1.4; }
+        .action-block { display: flex; flex-direction: column; gap: 12px; max-width: 380px; margin: 0 auto 25px auto; }
+        
+        .review-list { text-align: left; margin-top: 25px; max-height: 480px; overflow-y: auto; padding-right: 8px; }
+        .review-list::-webkit-scrollbar { width: 6px; }
+        .review-list::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+
+        .result-item { background: #fdfdfd; border-left: 5px solid #ccc; padding: 18px; margin-bottom: 16px; border-radius: 6px; border-top: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee; }
+        .result-item.correct { border-left-color: var(--answered-color); }
+        .result-item.incorrect { border-left-color: var(--unanswered-color); }
+        .result-item.skipped { border-left-color: #95a5a6; }
+        .result-question { font-weight: bold; margin-bottom: 12px; font-size: 1.1em; color: #2c3e50; line-height: 1.4; }
+        .result-status { font-size: 0.82em; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .ans-text { font-size: 0.95em; color: #444; margin-bottom: 6px; background: #fff; padding: 10px; border-radius: 5px; border: 1px solid #eee; line-height: 1.4;}
+        .explanation-text { margin-top: 12px; background: #eaf2fb; border-color: #b9d4f0; color: #2c3e50; }
+
+        @media (max-width: 600px) {
+            body { padding: 10px 8px; }
+            #start-screen { padding: 30px 15px; }
+            #start-screen h2 { font-size: 1.6em; }
+            .start-actions button, .action-block button { width: 100%; margin: 0; }
+            .test-header { padding: 14px 16px; h2 { font-size: 1.1em; } }
+            .question-section { padding: 22px 16px; }
+            .option-item { padding: 12px 14px; }
+            .test-footer { padding: 14px 16px; }
+            #results { padding: 25px 15px; h2 { font-size: 1.5em; } }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loading-screen">Starting Test Engine...</div>
+
+    <div id="start-screen" class="test-container">
+        <h2 id="start-quiz-title">Mock Test</h2>
+        <p id="start-screen-msg">Please enter your name below to begin. Your score will be recorded on the global leaderboard!</p>
+        <div id="name-input-container">
+            <input type="text" id="student-name-input" class="name-input" placeholder="Enter your full name">
+        </div>
+        <div class="start-actions">
+            <button onclick="beginQuiz()" style="background: #27ae60; padding: 12px 30px;">Start Quiz</button>
+            <button onclick="goHome()" style="background: #95a5a6; padding: 12px 30px;">Cancel</button>
+        </div>
+    </div>
+
+    <div class="test-container" id="test-view">
+        <div class="test-header">
+            <h2 id="quiz-title-display">Online Mock Test</h2>
+            <div class="timer">Time Left: <span id="time">--:--</span></div>
+        </div>
+        <div id="review-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0; font-size: 1.1em;">Question Review</h3>
+                <button onclick="toggleReview()" style="padding: 6px 14px; background: #7f8c8d; font-size: 0.88em;">Close</button>
+            </div>
+            <div class="review-grid" id="review-grid"></div>
+        </div>
+        <div class="question-section" id="active-question-area">
+            <div id="question-text">Question loading...</div>
+            <ul class="options-list" id="options"></ul>
+        </div>
+        <div class="test-footer">
+            <button id="prev-btn" onclick="prevQuestion()" disabled>Previous</button>
+            <button class="btn-review" onclick="toggleReview()">Review</button>
+            <span id="question-tracker">1 of X</span>
+            <button id="next-btn" onclick="nextQuestion()">Next</button>
+        </div>
+    </div>
+
+    <div id="results">
+        <h2 style="color: var(--text-color);">Test Evaluation Complete!</h2>
+        <p id="score-text" style="margin: 10px 0; font-size: 1.1em;"></p>
+        <div id="performance-msg" class="performance-msg"></div>
+        
+        <div class="action-block">
+            <button id="instant-rank-btn" style="background: #f39c12; color:white; padding: 14px;">🏆 My Rank</button>
+            <button onclick="window.location.href='profile.html'" style="background: #333; color:white; padding: 12px;">👤 View Profile History</button>
+        </div>
+        
+        <div id="detailed-review" class="review-list"></div>
+        <button onclick="goHome()" style="margin-top: 20px; background:var(--primary-color); padding: 12px 35px;">Back to Home Dashboard</button>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKUwaFzBIIHr0q_qGE2GT7t5ulxnZRJYY",
+            authDomain: "quiz-web-f4cb8.firebaseapp.com",
+            projectId: "quiz-web-f4cb8",
+            storageBucket: "quiz-web-f4cb8.firebasestorage.app",
+            messagingSenderId: "724284966944",
+            appId: "1:724284966944:web:319a680630af1703a39445",
+            measurementId: "G-VSCB35YM1J"
+        };
+        firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
+
+        let questions = []; let currentQuestionIndex = 0; let userAnswers = []; let timeLeft = 0; let timerInterval;
+        let activeQuizName = "Mock Test"; let globalUserName = ""; 
+
+        const loadingScreen = document.getElementById('loading-screen'); const startScreen = document.getElementById('start-screen'); 
+        const testView = document.getElementById('test-view'); const resultsView = document.getElementById('results');
+        const questionText = document.getElementById('question-text'); const optionsList = document.getElementById('options');
+        const prevBtn = document.getElementById('prev-btn'); const nextBtn = document.getElementById('next-btn');
+        const tracker = document.getElementById('question-tracker'); const timeDisplay = document.getElementById('time');
+        const scoreText = document.getElementById('score-text'); const performanceMsg = document.getElementById('performance-msg'); 
+        const detailedReview = document.getElementById('detailed-review'); const reviewPanel = document.getElementById('review-panel');
+        const reviewGrid = document.getElementById('review-grid'); const activeQuestionArea = document.getElementById('active-question-area');
+        let reviewIsOpen = false;
+
+        async function fetchTestData() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                let quizUrl = urlParams.get('quizData');
+                if (!quizUrl) {
+                    loadingScreen.innerHTML = "<h3>No quiz selected!</h3><button onclick='goHome()'>Go Dashboard</button>"; return;
+                }
+                const urlParts = quizUrl.split('/');
+                activeQuizName = urlParts[urlParts.length - 1].replace('.json', '').replace('sd10_', '').toUpperCase();
+
+                if (quizUrl.includes('https://quiz.eduodia.com/')) {
+                    quizUrl = quizUrl.replace('https://quiz.eduodia.com/', './');
+                }
+                const response = await fetch(quizUrl);
+                const data = await response.json();
+                formatData(data);
+            } catch (error) {
+                loadingScreen.innerHTML = "<h3>Failed to load test parameters.</h3>";
+            }
+        }
+
+        function formatData(data) {
+            const mins = data.totalTime ? data.totalTime : 30;
+            timeLeft = mins * 60; 
+            questions = data.question.map(q => {
+                let correctIndex = 0; const ansStr = q.answerId.toLowerCase().trim();
+                if(ansStr === "b") correctIndex = 1; if(ansStr === "c") correctIndex = 2; if(ansStr === "d") correctIndex = 3;
+                return { question: `${q.questionOrder}. ${q.questionTitle}`, options: [q.choiceA, q.choiceB, q.choiceC, q.choiceD], answer: correctIndex, explanation: q.answerExplanation };
+            });
+            userAnswers = new Array(questions.length).fill(null);
+            loadingScreen.style.display = 'none';
+            document.getElementById('start-quiz-title').innerText = activeQuizName;
+            
+            const savedName = localStorage.getItem('eduodiaUserName');
+            if (savedName && savedName.trim() !== "") {
+                globalUserName = savedName.trim();
+                document.getElementById('start-screen-msg').innerHTML = `Welcome back, <strong style="color:var(--primary-color); font-size:1.15em;">${globalUserName}</strong>!<br>Click start below to begin your evaluation window.`;
+                document.getElementById('name-input-container').style.display = 'none';
+            } else {
+                document.getElementById('name-input-container').style.display = 'block';
+            }
+            startScreen.style.display = 'block';
+        }
+
+        function beginQuiz() {
+            if (!globalUserName || globalUserName.trim() === "") {
+                const nameInput = document.getElementById('student-name-input').value;
+                if(nameInput.trim() === "") { alert("Please input your name parameters!"); return; }
+                globalUserName = nameInput.trim();
+                localStorage.setItem('eduodiaUserName', globalUserName); 
+            }
+            startScreen.style.display = 'none'; testView.style.display = 'block';
+            document.getElementById('quiz-title-display').innerText = activeQuizName;
+            startTimer(); loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestionIndex]; questionText.innerText = q.question; optionsList.innerHTML = '';
+            q.options.forEach((opt, index) => {
+                if(!opt || opt.trim() === '') return; 
+                const li = document.createElement('li'); li.className = 'option-item';
+                const isChecked = userAnswers[currentQuestionIndex] === index ? 'checked' : '';
+                li.innerHTML = `<label><input type="radio" name="option" value="${index}" ${isChecked} onchange="saveAnswer(${index})"> ${opt}</label>`;
+                optionsList.appendChild(li);
+            });
+            tracker.innerText = `${currentQuestionIndex + 1} / ${questions.length}`;
+            prevBtn.disabled = currentQuestionIndex === 0;
+            nextBtn.innerText = currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next';
+            nextBtn.style.background = currentQuestionIndex === questions.length - 1 ? '#27ae60' : 'var(--primary-color)';
+            if(reviewIsOpen) generateReviewGrid();
+        }
+
+        function saveAnswer(index) { userAnswers[currentQuestionIndex] = index; if(reviewIsOpen) generateReviewGrid(); }
+        function nextQuestion() { if (currentQuestionIndex < questions.length - 1) { currentQuestionIndex++; loadQuestion(); } else { submitTest(); } }
+        function prevQuestion() { if (currentQuestionIndex > 0) { currentQuestionIndex--; loadQuestion(); } }
+        function toggleReview() { reviewIsOpen = !reviewIsOpen; reviewPanel.style.display = reviewIsOpen ? 'block' : 'none'; activeQuestionArea.style.display = reviewIsOpen ? 'none' : 'block'; if(reviewIsOpen) generateReviewGrid(); }
+        
+        function generateReviewGrid() {
+            reviewGrid.innerHTML = ''; 
+            userAnswers.forEach((ans, index) => {
+                const box = document.createElement('div'); box.className = 'review-box';
+                box.classList.add(ans !== null ? 'box-answered' : 'box-unanswered');
+                if (index === currentQuestionIndex) box.classList.add('box-current');
+                box.innerText = index + 1;
+                box.onclick = () => { currentQuestionIndex = index; toggleReview(); loadQuestion(); };
+                reviewGrid.appendChild(box);
+            });
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval); let score = 0; detailedReview.innerHTML = '';
+            userAnswers.forEach((ans, index) => {
+                const q = questions[index]; const resultDiv = document.createElement('div'); resultDiv.className = 'result-item';
+                let statusHTML = ''; let detailsHTML = ''; let explanationHTML = '';
+                if (q.explanation && q.explanation.trim() !== '') explanationHTML = `<div class="ans-text explanation-text"><strong>Explanation:</strong> ${q.explanation}</div>`;
+
+                if (ans === null) {
+                    resultDiv.classList.add('skipped'); statusHTML = `<div class="result-status status-skipped">Status: Skipped</div>`; detailsHTML = `<div class="ans-text" style="color:#777; font-style:italic;">Skipped row.</div>`;
+                } else if (ans === q.answer) {
+                    score++; resultDiv.classList.add('correct'); statusHTML = `<div class="result-status status-correct">Status: Correct ✓</div>`; detailsHTML = `<div class="ans-text"><strong>Your Answer:</strong> ${q.options[ans]}</div>${explanationHTML}`;
+                } else {
+                    resultDiv.classList.add('incorrect'); statusHTML = `<div class="result-status status-incorrect">Status: Incorrect ✗</div>`;
+                    detailsHTML = `<div class="ans-text"><del style="color:#e74c3c;"><strong>Your Answer:</strong> ${q.options[ans]}</del></div><div class="ans-text" style="border-left:3px solid #27ae60;"><strong>Correct Answer:</strong> <span style="color:#27ae60;">${q.options[q.answer]}</span></div>${explanationHTML}`;
+                }
+                resultDiv.innerHTML = `<div class="result-question">${q.question}</div>${statusHTML}${detailsHTML}`; detailedReview.appendChild(resultDiv);
+            });
+
+            const percentage = (score / questions.length) * 100;
+            if (percentage >= 80) { performanceMsg.innerText = "🌟 Excellent! Great Job!"; performanceMsg.style.cssText = "background:#e8f8f5; color:#27ae60; border:1px solid #27ae60;"; }
+            else if (percentage >= 50) { performanceMsg.innerText = "👍 Good effort! Practice more."; performanceMsg.style.cssText = "background:#fef9e7; color:#d68910; border:1px solid #f1c40f;"; }
+            else { performanceMsg.innerText = "📚 Keep reviewing mistakes."; performanceMsg.style.cssText = "background:#fadbd8; color:#c0392b; border:1px solid #e74c3c;"; }
+
+            testView.style.display = 'none'; resultsView.style.display = 'block';
+            scoreText.innerHTML = `You scored <strong>${score}</strong> out of <strong>${questions.length}</strong>`;
+
+            document.getElementById('instant-rank-btn').onclick = function() {
+                window.location.href = `leaderboard.html?quiz=${encodeURIComponent(activeQuizName)}`;
+            };
+
+            // --- FIRST ATTEMPT LOG ENGINE LOCK ---
+            db.collection("leaderboard")
+              .where("name", "==", globalUserName)
+              .where("quizName", "==", activeQuizName)
+              .get()
+              .then((snapshot) => {
+                  if (snapshot.empty) {
+                      db.collection("leaderboard").add({
+                          name: globalUserName, score: score, totalQuestions: questions.length, quizName: activeQuizName,
+                          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                      }).then(() => console.log("Cloud synced successfully.")).catch(err => console.error(err));
+                  } else {
+                      console.log("Subsequent reattempt intercepted. Leaderboard retention locked to 1st attempt entry.");
+                  }
+              });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const historyRecord = {
+                quizName: activeQuizName, quizUrl: urlParams.get('quizData'), score: score, total: questions.length,
+                date: new Date().toLocaleDateString() + " at " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+            };
+            let personalHistory = JSON.parse(localStorage.getItem('eduodiaQuizHistory')) || [];
+            personalHistory.push(historyRecord); localStorage.setItem('eduodiaQuizHistory', JSON.stringify(personalHistory));
+        }
+
+        function startTimer() { timerInterval = setInterval(() => { if(timeLeft <= 0) { clearInterval(timerInterval); submitTest(); } else { let mins = Math.floor(timeLeft / 60); let secs = timeLeft % 60; timeDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`; timeLeft--; } }, 1000); }
+        function goHome() { window.location.href = "index.html"; }
+        fetchTestData();
+    </script>
+</body>
+</html>

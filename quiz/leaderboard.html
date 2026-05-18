@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduodia - Global Leaderboard</title>
+    <style>
+        :root {
+            --primary-color: #4A90E2;
+            --bg-color: #f4f7f6;
+            --card-bg: #fff;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); padding: 30px 15px; display: flex; justify-content: center; }
+        
+        .leaderboard-container { background: var(--card-bg); max-width: 700px; width: 100%; padding: 30px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: var(--primary-color); margin-bottom: 5px; font-size: 2em; }
+        p.subtitle { text-align: center; color: #666; margin-top: 0; margin-bottom: 25px; font-size: 0.95em; }
+        
+        .quiz-select-container { text-align: center; margin-bottom: 25px; }
+        .quiz-select { padding: 12px 16px; font-size: 1.05em; font-weight: bold; color: var(--primary-color); border: 2px solid var(--primary-color); border-radius: 8px; width: 100%; max-width: 420px; background-color: #fff; cursor: pointer; outline: none; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 14px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background-color: var(--primary-color); color: white; font-weight: 600; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; }
+        tr:hover { background-color: #fcfcfc; }
+        
+        .rank-badge { display: inline-block; width: 28px; height: 28px; line-height: 28px; text-align: center; border-radius: 50%; font-weight: bold; }
+        .rank-1 { background-color: #f1c40f; color: #fff; font-size: 1.05em; }
+        .rank-2 { background-color: #95a5a6; color: #fff; }
+        .rank-3 { background-color: #cd7f32; color: #fff; }
+        .rank-other { color: #7f8c8d; font-size: 0.95em; }
+        
+        .student-name { font-size: 1.05em; font-weight: 600; color: #2c3e50; }
+        .score-value { font-weight: bold; font-size: 1.1em; color: #27ae60; }
+
+        @media (max-width: 500px) {
+            th, td { padding: 12px 8px; font-size: 0.95em; }
+            .leaderboard-container { padding: 20px 12px; }
+            h1 { font-size: 1.7em; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="leaderboard-container">
+        <button onclick="window.location.href='profile.html'" style="padding: 10px 16px; background: #333; color: white; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 20px; font-weight: bold; font-size: 0.9em;">← Back to Profile</button>
+        
+        <h1>🏆 Exam Leaderboard</h1>
+        <p class="subtitle">Real-time global rankings sorted by highest scores</p>
+        
+        <div class="quiz-select-container">
+            <select id="quiz-dropdown" class="quiz-select" onchange="renderLeaderboard()">
+                <option value="">Loading exams...</option>
+            </select>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 15%;">Rank</th>
+                    <th style="width: 55%;">Student Name</th>
+                    <th style="width: 30%;">Score Secured</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard-body">
+                <tr><td colspan="3" style="text-align:center; padding: 30px; color:#777;">Accessing database entries...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBKUwaFzBIIHr0q_qGE2GT7t5ulxnZRJYY",
+            authDomain: "quiz-web-f4cb8.firebaseapp.com",
+            projectId: "quiz-web-f4cb8",
+            storageBucket: "quiz-web-f4cb8.firebasestorage.app",
+            messagingSenderId: "724284966944",
+            appId: "1:724284966944:web:319a680630af1703a39445",
+            measurementId: "G-VSCB35YM1J"
+        };
+        firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
+
+        const tableBody = document.getElementById('leaderboard-body');
+        const quizDropdown = document.getElementById('quiz-dropdown');
+        let allRecords = []; 
+
+        db.collection("leaderboard").get()
+          .then((querySnapshot) => {
+              allRecords = []; let uniqueQuizzes = new Set();
+              
+              querySnapshot.forEach((doc) => {
+                  const data = doc.data(); allRecords.push(data);
+                  if (data.quizName) uniqueQuizzes.add(data.quizName.toUpperCase().trim());
+              });
+
+              const urlParams = new URLSearchParams(window.location.search);
+              let activeQuizParam = urlParams.get('quiz');
+              if (activeQuizParam) { activeQuizParam = activeQuizParam.toUpperCase().trim(); uniqueQuizzes.add(activeQuizParam); }
+
+              quizDropdown.innerHTML = '';
+              if (uniqueQuizzes.size === 0) {
+                  quizDropdown.innerHTML = '<option value="">No Active Exams Available</option>';
+                  tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px;">No records yet.</td></tr>'; return;
+              }
+
+              uniqueQuizzes.forEach(quiz => {
+                  const opt = document.createElement('option'); opt.value = quiz; opt.innerText = quiz; quizDropdown.appendChild(opt);
+              });
+
+              if (activeQuizParam) quizDropdown.value = activeQuizParam;
+              renderLeaderboard();
+          })
+          .catch((error) => { console.error(error); });
+
+        function renderLeaderboard() {
+            const selectedQuiz = quizDropdown.value; tableBody.innerHTML = '';
+            if(!selectedQuiz) return;
+
+            let filteredDataset = allRecords.filter(record => record.quizName && record.quizName.toUpperCase().trim() === selectedQuiz);
+
+            // --- FIXED COMPUTE ENGINE: CHRONOLOGICAL SORT BREAKS NAN ERRORS ---
+            filteredDataset.sort((a, b) => {
+                if (b.score !== a.score) {
+                    return b.score - a.score;
+                }
+                // Checks for field architecture objects explicitly preventing standard NaN parsing crashes
+                const timeA = a.timestamp && a.timestamp.seconds ? a.timestamp.seconds : 0;
+                const timeB = b.timestamp && b.timestamp.seconds ? b.timestamp.seconds : 0;
+                return timeA - timeB; 
+            });
+
+            if (filteredDataset.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 40px; color:#777;">No scores recorded yet for this exam.</td></tr>'; return;
+            }
+
+            let rank = 1;
+            filteredDataset.forEach(data => {
+                const row = document.createElement('tr');
+                let badge = rank <= 3 ? `<span class="rank-badge rank-${rank}">${rank}</span>` : `<span class="rank-badge rank-other">#${rank}</span>`;
+                const studentName = data.name ? data.name : "Anonymous Student";
+                const maxQuestions = data.totalQuestions ? data.totalQuestions : 30;
+
+                row.innerHTML = `<td>${badge}</td><td><span class="student-name">${studentName}</span></td><td><span class="score-value">${data.score}</span><span style="color:#777; font-size:0.85em;"> / ${maxQuestions}</span></td>`;
+                tableBody.appendChild(row);
+                rank++;
+            });
+        }
+    </script>
+</body>
+</html>
