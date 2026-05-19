@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Eduodia Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-8">
+
+<div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-6">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+        <h2 class="text-3xl font-extrabold text-slate-800">Community Members</h2>
+        <button onclick="exportVCF()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition">Export .vcf</button>
+    </div>
+
+    <div class="flex flex-wrap gap-4 mb-6 bg-slate-100 p-4 rounded-xl">
+        <input type="number" id="filterAge" placeholder="Age" class="border px-4 py-2 rounded-lg w-full md:w-32">
+        <select id="filterGender" class="border px-4 py-2 rounded-lg w-full md:w-40">
+            <option value="">All Genders</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+        <button onclick="renderTable()" class="bg-slate-800 text-white px-6 py-2 rounded-lg font-bold">Filter</button>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-slate-200">
+                <tr>
+                    <th class="p-4">Name</th><th class="p-4">Mobile</th><th class="p-4">Age</th>
+                    <th class="p-4">Gender</th><th class="p-4">Exam</th><th class="p-4">Suggestion</th>
+                    <th class="p-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="memberTable" class="divide-y divide-slate-200"></tbody>
+        </table>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDGr1EE59FUw9BP1LMMxqnPp7c0thbGxn0",
+        authDomain: "contacts-ba8c2.firebaseapp.com",
+        projectId: "contacts-ba8c2",
+        storageBucket: "contacts-ba8c2.firebasestorage.app",
+        messagingSenderId: "850830401947",
+        appId: "1:850830401947:web:94bcbeeedf6a7536bf813e",
+        measurementId: "G-FX6ZW2L2Q0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    let allMembers = [];
+
+    async function loadMembers() {
+        const querySnapshot = await getDocs(collection(db, "members"));
+        allMembers = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderTable();
+    }
+
+    window.renderTable = () => {
+        const age = document.getElementById('filterAge').value;
+        const gender = document.getElementById('filterGender').value;
+        const filtered = allMembers.filter(m => (!age || m.age == age) && (!gender || m.gender === gender));
+
+        document.getElementById('memberTable').innerHTML = filtered.map(m => `
+            <tr>
+                <td class="p-4">${m.name}</td><td class="p-4">${m.mobile}</td>
+                <td class="p-4">${m.age}</td><td class="p-4">${m.gender}</td>
+                <td class="p-4">${m.exam}</td><td class="p-4 italic text-sm text-slate-500">${m.suggestion || '-'}</td>
+                <td class="p-4 flex gap-2">
+                    <button onclick="editMember('${m.id}')" class="text-blue-600 font-semibold">Edit</button>
+                    <button onclick="deleteMember('${m.id}')" class="text-red-600 font-semibold">Delete</button>
+                </td>
+            </tr>
+        `).join('');
+    };
+
+    window.deleteMember = async (id) => {
+        if(confirm("Confirm Delete?")) { await deleteDoc(doc(db, "members", id)); location.reload(); }
+    };
+
+    window.editMember = async (id) => {
+        const newName = prompt("Enter new name:");
+        if(newName) { await updateDoc(doc(db, "members", id), { name: newName }); location.reload(); }
+    };
+
+    window.exportVCF = () => {
+        let vcf = allMembers.map(m => `BEGIN:VCARD\nVERSION:3.0\nFN:${m.name}\nTEL:${m.mobile}\nEND:VCARD`).join('\n');
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([vcf], { type: 'text/vcard' }));
+        a.download = "eduodia_contacts.vcf";
+        a.click();
+    };
+
+    loadMembers();
+</script>
+</body>
+</html>
