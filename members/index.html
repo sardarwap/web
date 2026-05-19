@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduodia | Community Registration</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .container { width: 100%; max-width: 450px; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #2c3e50; margin-bottom: 25px; }
+        
+        /* Save Contact Buttons */
+        .save-btn { background: #3498db; color: white; padding: 12px; border-radius: 10px; text-align: center; text-decoration: none; display: block; font-weight: bold; margin-bottom: 20px; transition: 0.3s; }
+        .save-btn:hover { background: #2980b9; }
+
+        input, select, textarea { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #e1e1e1; border-radius: 10px; box-sizing: border-box; }
+        .mobile-group { display: flex; gap: 10px; height: 50px; margin: 10px 0; }
+        .country-code { width: 60px; background: #f8f9fa; border: 1px solid #e1e1e1; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-weight: bold; color: #666; }
+        .mobile-input { flex: 1; margin: 0; }
+        button { width: 100%; padding: 14px; background: #25D366; color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        
+        #successSection { display: none; text-align: center; animation: slideUp 0.5s ease; }
+        .checkmark { width: 60px; height: 60px; background: #25D366; border-radius: 50%; color: white; font-size: 30px; line-height: 60px; margin: 0 auto 20px; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="formSection">
+        <a href="#" id="topSaveContact" class="save-btn">Save Eduodia Number</a>
+        <h2>Join Eduodia</h2>
+        <form id="regForm">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <div class="mobile-group">
+                <div class="country-code">+91</div>
+                <input type="number" id="mobile" class="mobile-input" placeholder="10-digit number" required oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10);">
+            </div>
+            <select id="gender" required>
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <input type="number" id="age" placeholder="Age" max="99" required>
+            <input type="text" id="exam" placeholder="Exam Preparing For" required>
+            <textarea id="suggestion" rows="3" placeholder="Suggestions (Optional)"></textarea>
+            <button type="submit" id="submitBtn">Submit Details</button>
+        </form>
+    </div>
+
+    <div id="successSection">
+        <div class="checkmark">✓</div>
+        <h3>Details Submitted!</h3>
+        <p>You're now part of our community.</p>
+        <a href="#" id="finalSaveContact" class="save-btn">Save Eduodia Number</a>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDGr1EE59FUw9BP1LMMxqnPp7c0thbGxn0",
+        authDomain: "contacts-ba8c2.firebaseapp.com",
+        projectId: "contacts-ba8c2",
+        storageBucket: "contacts-ba8c2.firebasestorage.app",
+        messagingSenderId: "850830401947",
+        appId: "1:850830401947:web:94bcbeeedf6a7536bf813e",
+        measurementId: "G-FX6ZW2L2Q0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // VCard Setup for both buttons
+    const vcard = `BEGIN:VCARD\nVERSION:3.0\nFN:Eduodia Official\nTEL:+918658851515\nEND:VCARD`;
+    const blob = new Blob([vcard], { type: 'text/vcard' });
+    const url = URL.createObjectURL(blob);
+    
+    document.getElementById('topSaveContact').href = url;
+    document.getElementById('topSaveContact').download = "Eduodia.vcf";
+    document.getElementById('finalSaveContact').href = url;
+    document.getElementById('finalSaveContact').download = "Eduodia.vcf";
+
+    document.getElementById('regForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const mobileNum = document.getElementById('mobile').value;
+        if (mobileNum.length !== 10) { alert("Please enter a valid 10-digit number."); return; }
+
+        document.getElementById('submitBtn').innerText = "Saving...";
+        try {
+            await addDoc(collection(db, "members"), {
+                name: document.getElementById('name').value,
+                mobile: "+91" + mobileNum,
+                age: document.getElementById('age').value,
+                exam: document.getElementById('exam').value,
+                timestamp: new Date()
+            });
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('successSection').style.display = 'block';
+        } catch (err) { alert("Error saving data."); }
+    });
+</script>
+</body>
+</html>
