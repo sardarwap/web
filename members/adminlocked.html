@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Eduodia Admin Dashboard</title>
+    <title>Eduodia | Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-50 min-h-screen p-4 md:p-8">
+<body class="bg-slate-50 p-4 md:p-8">
 
-<div class="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl p-6">
+<div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl p-6">
     <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <h2 class="text-3xl font-extrabold text-slate-800">Community Members</h2>
-        <button onclick="exportVCF()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-semibold shadow-lg transition">Export .vcf</button>
+        <h2 class="text-3xl font-extrabold text-slate-800">Admin Dashboard</h2>
+        <button onclick="exportVCF()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-bold shadow-lg transition">Export .vcf</button>
     </div>
 
     <div class="flex flex-wrap gap-4 mb-6 bg-slate-100 p-4 rounded-xl">
-        <input type="number" id="filterAge" placeholder="Age" class="border px-4 py-2 rounded-lg w-full md:w-32">
+        <input type="number" id="filterAge" placeholder="Filter by Age" class="border px-4 py-2 rounded-lg w-full md:w-32">
         <select id="filterGender" class="border px-4 py-2 rounded-lg w-full md:w-40">
             <option value="">All Genders</option>
             <option value="male">Male</option>
             <option value="female">Female</option>
+            <option value="other">Other</option>
         </select>
-        <button onclick="renderTable()" class="bg-slate-800 text-white px-6 py-2 rounded-lg font-bold">Filter</button>
+        <button onclick="renderTable()" class="bg-slate-800 text-white px-6 py-2 rounded-lg font-bold">Apply Filter</button>
     </div>
 
     <div class="overflow-x-auto">
@@ -28,8 +29,7 @@
             <thead class="bg-slate-200">
                 <tr>
                     <th class="p-4">Name</th><th class="p-4">Mobile</th><th class="p-4">Age</th>
-                    <th class="p-4">Gender</th><th class="p-4">Exam</th><th class="p-4">Suggestion</th>
-                    <th class="p-4">Actions</th>
+                    <th class="p-4">Gender</th><th class="p-4">Exam</th><th class="p-4">Actions</th>
                 </tr>
             </thead>
             <tbody id="memberTable" class="divide-y divide-slate-200"></tbody>
@@ -39,7 +39,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, getDocs, deleteDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDGr1EE59FUw9BP1LMMxqnPp7c0thbGxn0",
@@ -67,26 +67,49 @@
         const filtered = allMembers.filter(m => (!age || m.age == age) && (!gender || m.gender === gender));
 
         document.getElementById('memberTable').innerHTML = filtered.map(m => `
-            <tr>
-                <td class="p-4">${m.name}</td><td class="p-4">${m.mobile}</td>
-                <td class="p-4">${m.age}</td><td class="p-4">${m.gender}</td>
-                <td class="p-4">${m.exam}</td><td class="p-4 italic text-sm text-slate-500">${m.suggestion || '-'}</td>
-                <td class="p-4 flex gap-2">
-                    <button onclick="editMember('${m.id}')" class="text-blue-600 font-semibold">Edit</button>
-                    <button onclick="deleteMember('${m.id}')" class="text-red-600 font-semibold">Delete</button>
+            <tr class="hover:bg-slate-50">
+                <td class="p-4">${m.name}</td>
+                <td class="p-4">${m.mobile}</td>
+                <td class="p-4">${m.age}</td>
+                <td class="p-4 capitalize">${m.gender}</td>
+                <td class="p-4 font-semibold text-indigo-600">${m.exam || 'N/A'}</td>
+                <td class="p-4 flex gap-3">
+                    <button data-id="${m.id}" data-action="edit" class="text-blue-600 font-bold hover:underline">Edit</button>
+                    <button data-id="${m.id}" data-action="delete" class="text-red-600 font-bold hover:underline">Delete</button>
                 </td>
             </tr>
         `).join('');
     };
 
-    window.deleteMember = async (id) => {
-        if(confirm("Confirm Delete?")) { await deleteDoc(doc(db, "members", id)); location.reload(); }
-    };
+    document.getElementById('memberTable').addEventListener('click', async (e) => {
+        const action = e.target.dataset.action;
+        const id = e.target.dataset.id;
+        if (!action || !id) return;
 
-    window.editMember = async (id) => {
-        const newName = prompt("Enter new name:");
-        if(newName) { await updateDoc(doc(db, "members", id), { name: newName }); location.reload(); }
-    };
+        if (action === 'delete') {
+            if(confirm("Are you sure you want to delete this member?")) {
+                await deleteDoc(doc(db, "members", id));
+                location.reload();
+            }
+        } else if (action === 'edit') {
+            const field = prompt("Which field to edit? (Enter: name, age, exam, or gender)");
+            
+            if (field && ['name', 'age', 'exam', 'gender'].includes(field.toLowerCase().trim())) {
+                const lowerField = field.toLowerCase().trim();
+                const promptMsg = lowerField === 'gender' ? "Enter new gender (male, female, or other):" : `Enter new value for ${lowerField}:`;
+                const newValue = prompt(promptMsg);
+                
+                if (newValue !== null) {
+                    const updateData = {};
+                    updateData[lowerField] = newValue.toLowerCase();
+                    await updateDoc(doc(db, "members", id), updateData);
+                    location.reload();
+                }
+            } else if (field) {
+                alert("Invalid field. Use: name, age, exam, or gender.");
+            }
+        }
+    });
 
     window.exportVCF = () => {
         let vcf = allMembers.map(m => `BEGIN:VCARD\nVERSION:3.0\nFN:${m.name}\nTEL:${m.mobile}\nEND:VCARD`).join('\n');
