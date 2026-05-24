@@ -9,7 +9,10 @@
 
 <div class="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl p-6">
     <div class="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
-        <h2 class="text-3xl font-extrabold text-slate-800">Admin Dashboard</h2>
+        <div>
+            <h2 class="text-3xl font-extrabold text-slate-800">Admin Dashboard</h2>
+            <p class="text-slate-500 mt-1 font-medium">Total Contacts: <span id="contactCount" class="font-bold text-indigo-600 text-lg">0</span></p>
+        </div>
         <button onclick="exportVCF()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-bold shadow-lg transition">Export .vcf</button>
     </div>
 
@@ -21,15 +24,19 @@
             <option value="female">Female</option>
             <option value="other">Other</option>
         </select>
-        <button onclick="renderTable()" class="bg-slate-800 text-white px-6 py-2 rounded-lg font-bold">Apply Filter</button>
+        <button onclick="renderTable()" class="bg-slate-800 text-white px-6 py-2 rounded-lg font-bold hover:bg-slate-700 transition">Apply Filter</button>
     </div>
 
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto border border-slate-200 rounded-lg">
         <table class="w-full text-left border-collapse">
             <thead class="bg-slate-200">
                 <tr>
-                    <th class="p-4">Name</th><th class="p-4">Mobile</th><th class="p-4">Age</th>
-                    <th class="p-4">Gender</th><th class="p-4">Exam</th><th class="p-4">Actions</th>
+                    <th class="p-4 border-b">Name</th>
+                    <th class="p-4 border-b">Mobile</th>
+                    <th class="p-4 border-b">Age</th>
+                    <th class="p-4 border-b">Gender</th>
+                    <th class="p-4 border-b">Exam</th>
+                    <th class="p-4 border-b">Actions</th>
                 </tr>
             </thead>
             <tbody id="memberTable" class="divide-y divide-slate-200"></tbody>
@@ -56,29 +63,45 @@
     let allMembers = [];
 
     async function loadMembers() {
-        const querySnapshot = await getDocs(collection(db, "members"));
-        allMembers = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
-        renderTable();
+        try {
+            const querySnapshot = await getDocs(collection(db, "members"));
+            allMembers = querySnapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderTable();
+        } catch (error) {
+            console.error("Error loading members:", error);
+            alert("Failed to load contacts. Please check your database connection.");
+        }
     }
 
     window.renderTable = () => {
         const age = document.getElementById('filterAge').value;
         const gender = document.getElementById('filterGender').value;
+        
         const filtered = allMembers.filter(m => (!age || m.age == age) && (!gender || m.gender === gender));
 
+        // Update the live counter based on filtered results
+        document.getElementById('contactCount').innerText = filtered.length;
+
         document.getElementById('memberTable').innerHTML = filtered.map(m => `
-            <tr class="hover:bg-slate-50">
-                <td class="p-4">${m.name}</td>
-                <td class="p-4">${m.mobile}</td>
-                <td class="p-4">${m.age}</td>
-                <td class="p-4 capitalize">${m.gender}</td>
+            <tr class="hover:bg-slate-50 transition">
+                <td class="p-4">${m.name || 'N/A'}</td>
+                <td class="p-4">${m.mobile || 'N/A'}</td>
+                <td class="p-4">${m.age || 'N/A'}</td>
+                <td class="p-4 capitalize">${m.gender || 'N/A'}</td>
                 <td class="p-4 font-semibold text-indigo-600">${m.exam || 'N/A'}</td>
                 <td class="p-4 flex gap-3">
-                    <button data-id="${m.id}" data-action="edit" class="text-blue-600 font-bold hover:underline">Edit</button>
-                    <button data-id="${m.id}" data-action="delete" class="text-red-600 font-bold hover:underline">Delete</button>
+                    <button data-id="${m.id}" data-action="edit" class="text-blue-600 font-bold hover:text-blue-800 transition">Edit</button>
+                    <button data-id="${m.id}" data-action="delete" class="text-red-600 font-bold hover:text-red-800 transition">Delete</button>
                 </td>
             </tr>
         `).join('');
+        
+        // Show empty state message if no results match the filter
+        if (filtered.length === 0) {
+            document.getElementById('memberTable').innerHTML = `
+                <tr><td colspan="6" class="p-8 text-center text-slate-500">No contacts found matching your criteria.</td></tr>
+            `;
+        }
     };
 
     document.getElementById('memberTable').addEventListener('click', async (e) => {
@@ -112,6 +135,10 @@
     });
 
     window.exportVCF = () => {
+        if (allMembers.length === 0) {
+            alert("No contacts to export.");
+            return;
+        }
         let vcf = allMembers.map(m => `BEGIN:VCARD\nVERSION:3.0\nFN:${m.name}\nTEL:${m.mobile}\nEND:VCARD`).join('\n');
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([vcf], { type: 'text/vcard' }));
