@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eduodia - My Profile</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Merriweather:ital,wght@0,700;1,400&family=Montserrat:wght@400;800&display=swap" rel="stylesheet">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
     <style>
         :root {
             --primary-color: #4A90E2;
@@ -66,7 +70,6 @@
         }
         .user-name-input:focus { outline: none; border-bottom-color: var(--primary-color); }
 
-        /* Sync & Warning Banner Styles */
         .sync-card { padding: 20px; border-radius: 12px; margin-bottom: 20px; }
         .sync-card.success { background-color: var(--success-bg); border: 1px solid #c3e6cb; color: var(--success-text); }
         .sync-card.warning { background-color: var(--danger-bg); border: 1px solid var(--danger-border); color: var(--danger-text); }
@@ -89,11 +92,29 @@
         .btn-rank { background: #f39c12; }
         .btn-cert { background: #8e44ad; }
 
-        /* Certificate Template */
+        /* --- PRE-DESIGNED AESTHETIC CERTIFICATE TEMPLATE (Hidden) --- */
         #cert-template {
-            position: absolute; left: -9999px; top: 0; width: 800px; height: 600px; background: white;
-            padding: 40px; border: 20px solid #4A90E2; text-align: center;
+            position: absolute; left: -9999px; top: 0;
+            width: 1000px; height: 700px; background: #fff;
+            padding: 50px; text-align: center;
+            border: 25px solid #2c3e50;
         }
+        .cert-inner-frame {
+            border: 5px solid #d4af37; height: 100%; width: 100%;
+            background: radial-gradient(circle, #ffffff 0%, #fffbf2 100%);
+            padding: 40px; position: relative; display: flex; flex-direction: column; align-items: center;
+        }
+        .cert-logo-brand { font-family: 'Montserrat', sans-serif; font-size: 32px; font-weight: 800; color: #2c3e50; margin-bottom: 5px; letter-spacing: 2px; }
+        .cert-edu-tag { color: #d4af37; font-size: 14px; font-weight: bold; margin-bottom: 30px; text-transform: uppercase; }
+        .cert-title-main { font-family: 'Merriweather', serif; font-size: 55px; color: #2c3e50; margin-bottom: 10px; }
+        .cert-subtitle { font-family: 'Merriweather', serif; font-style: italic; font-size: 20px; color: #666; margin-bottom: 30px; }
+        .cert-recipient-name { font-family: 'Dancing Script', cursive; font-size: 65px; color: #4A90E2; margin: 15px 0; border-bottom: 2px solid #ddd; padding: 0 50px; display: inline-block; }
+        .cert-description { font-size: 19px; line-height: 1.6; color: #444; max-width: 80%; margin-top: 20px; }
+        .cert-footer-row { width: 100%; display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; padding-bottom: 10px; }
+        .cert-sign-box { text-align: center; width: 200px; }
+        .cert-sign-line { border-top: 2px solid #333; margin-top: 50px; font-weight: bold; padding-top: 5px; }
+        .cert-verified-seal { width: 110px; height: 110px; opacity: 0.9; }
+
         @media (max-width: 550px) {
             .history-item { flex-direction: column; align-items: flex-start; }
             .item-right-actions { width: 100%; border-top: 1px dashed #eee; padding-top: 10px; }
@@ -103,13 +124,42 @@
 <body>
 
     <div class="main-container">
+        
         <div id="cert-template">
-            <div style="border: 5px solid #f39c12; height: 100%; padding: 40px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-                <h1 style="font-size:45px; margin-bottom:20px;">Certificate of Achievement</h1>
-                <p style="font-size:22px; color:#666;">This is proudly presented to</p>
-                <h2 id="cert-display-name" style="margin:20px 0; font-size:50px; color:#4A90E2;">Student Name</h2>
-                <p style="font-size:20px; color:#333;">For successfully completing the evaluation of <br> <strong id="cert-display-quiz">Exam</strong> <br> with a score of <strong id="cert-display-score">0</strong>.</p>
-                <p id="cert-display-date" style="margin-top:40px; font-weight:bold;">Date: --/--/----</p>
+            <div class="cert-inner-frame">
+                <div class="cert-logo-brand">EDUODIA</div>
+                <div class="cert-edu-tag">Learning Beyond Limits</div>
+                
+                <div class="cert-title-main">CERTIFICATE</div>
+                <div class="cert-subtitle">of Excellence & Achievement</div>
+                
+                <p style="font-size: 18px; color: #777;">This certificate is proudly presented to</p>
+                <div class="cert-recipient-name" id="cert-display-name">Student Name</div>
+                
+                <div class="cert-description">
+                    For successfully completing the comprehensive mock evaluation of <br>
+                    <strong id="cert-display-quiz" style="color:#2c3e50; font-size: 1.2em;">EXAM TITLE</strong> <br>
+                    with an outstanding score of <strong id="cert-display-score">0 / 0</strong>.
+                </div>
+
+                <div class="cert-footer-row">
+                    <div class="cert-sign-box">
+                        <p id="cert-display-date" style="font-weight:bold; font-size:16px;">Date: --/--/----</p>
+                        <div class="cert-sign-line">Issue Date</div>
+                    </div>
+                    
+                    <div style="position: relative;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/6125/6125016.png" class="cert-verified-seal" alt="Seal">
+                        <p style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-weight: 800; font-size: 12px;">VERIFIED</p>
+                    </div>
+
+                    <div class="cert-sign-box">
+                        <p style="font-family: 'Dancing Script', cursive; font-size: 24px; color: #2c3e50;">Team Eduodia</p>
+                        <div class="cert-sign-line">Director Sign</div>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 20px; font-size: 12px; color: #999;">Verify this document at www.eduodia.in</p>
             </div>
         </div>
 
@@ -142,6 +192,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
 
     <script>
+        // --- 1. FIREBASE INITIALIZATION ---
         const firebaseConfig = {
             apiKey: "AIzaSyBKUwaFzBIIHr0q_qGE2GT7t5ulxnZRJYY",
             authDomain: "quiz-web-f4cb8.firebaseapp.com",
@@ -151,10 +202,13 @@
             appId: "1:724284966944:web:319a680630af1703a39445",
             measurementId: "G-VSCB35YM1J"
         };
-        firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
+        firebase.initializeApp(firebaseConfig); 
+        const db = firebase.firestore();
         const userPhone = localStorage.getItem('eduodiaUserPhone');
+
         let quizTitleDictionary = {};
 
+        // --- 2. STARTUP SEQUENCE ---
         document.addEventListener("DOMContentLoaded", async () => {
             const savedName = localStorage.getItem('eduodiaUserName'); 
             const savedPic = localStorage.getItem('eduodiaUserPic');
@@ -166,23 +220,28 @@
             loadPersonalHistory();
         });
 
+        // --- 3. FETCH PRETTY TITLES FROM JSON ---
         async function fetchQuizDictionary() {
             try {
                 const response = await fetch('app_quiz.json');
                 if (!response.ok) return;
                 const data = await response.json();
-                function extract(items) {
-                    items.forEach(i => {
-                        if (i.title) {
-                            if (i.id) quizTitleDictionary[i.id.toUpperCase()] = i.title;
-                            const url = i.link || i.file || i.url;
-                            if (url) quizTitleDictionary[url.split('/').pop().replace('.json','').toUpperCase()] = i.title;
+                function extractTitles(items) {
+                    items.forEach(item => {
+                        if (item.title) {
+                            if (item.id) quizTitleDictionary[item.id.toUpperCase()] = item.title;
+                            const url = item.link || item.file || item.url;
+                            if (url) {
+                                const parts = url.split('/');
+                                const rawName = parts[parts.length - 1].replace('.json', '').replace('sd10_', '').toUpperCase();
+                                quizTitleDictionary[rawName] = item.title;
+                            }
                         }
-                        if (i.files) extract(i.files);
+                        if (item.files) extractTitles(item.files);
                     });
                 }
-                extract(data.quiz);
-            } catch(e) {}
+                if (data.quiz) extractTitles(data.quiz);
+            } catch (e) { console.log(e); }
         }
 
         function formatPrettyTitle(rawId) {
@@ -190,18 +249,20 @@
             return rawId.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
         }
 
+        // --- 4. RENDER RED WARNING OR BLUE SYNC BANNER ---
         function renderSyncBanner() {
             const container = document.getElementById('sync-banner-placement');
             if (userPhone) {
                 container.innerHTML = `<div class="sync-card success"><h3>☁️ Cloud Account Linked</h3><p>Logged in via <strong>+91 ${userPhone}</strong>.</p><button class="btn-auth" onclick="handleLogout()">Sign Out</button></div>`;
             } else {
-                container.innerHTML = `<div class="sync-card warning"><h3>⚠️ Data Protection Required</h3><p>Sign in to permanently save your progress, ranks, and certificates.</p><button class="btn-auth" onclick="window.location.href='auth.html'">Sign In / Register</button></div>`;
+                container.innerHTML = `<div class="sync-card warning"><h3>⚠️ Data Protection Required</h3><p>Guest data is temporary. Please <strong>Login</strong> or <strong>Register</strong> to track your progress and protect your certificates.</p><button class="btn-auth" onclick="window.location.href='auth.html'">Sync My Account</button></div>`;
             }
         }
 
         function handleLogout() { localStorage.clear(); alert("Signed out!"); window.location.href = "index.html"; }
         function saveUserName() { localStorage.setItem('eduodiaUserName', document.getElementById('user-name').value); }
 
+        // --- 5. ORIGINAL IMAGE COMPRESSION & SYNC LOGIC ---
         function compressAndSaveImage(event) {
             const file = event.target.files[0]; if (!file) return;
             const reader = new FileReader();
@@ -226,9 +287,11 @@
             reader.readAsDataURL(file);
         }
 
+        // --- 6. RENDER HISTORY LIST WITH BUTTONS ---
         async function loadPersonalHistory() {
             const historyList = document.getElementById('history-list');
             let historyData = JSON.parse(localStorage.getItem('eduodiaQuizHistory')) || [];
+            
             if (userPhone && historyData.length === 0) {
                 try {
                     const snapshot = await db.collection("leaderboard").where("name", "==", localStorage.getItem('eduodiaUserName')).get();
@@ -239,13 +302,16 @@
                     localStorage.setItem('eduodiaQuizHistory', JSON.stringify(historyData));
                 } catch(e) { console.log(e); }
             }
+
             let uniqueHistory = []; let seen = new Set();
             historyData.forEach(item => {
                 if (item.quizName && !seen.has(item.quizName.toUpperCase().trim())) {
                     seen.add(item.quizName.toUpperCase().trim()); uniqueHistory.push(item);
                 }
             });
-            if (uniqueHistory.length === 0) { historyList.innerHTML = '<li style="text-align:center; padding: 20px; color:#777;">No quizzes yet.</li>'; return; }
+
+            if (uniqueHistory.length === 0) { historyList.innerHTML = '<li style="text-align:center; padding: 20px; color:#777;">No quizzes attended yet.</li>'; return; }
+            
             historyList.innerHTML = '';
             uniqueHistory.slice().reverse().forEach(item => {
                 const li = document.createElement('li'); li.className = 'history-item';
@@ -262,16 +328,41 @@
             });
         }
 
+        // --- 7. AESTHETIC CERTIFICATE GENERATOR ---
         function downloadCertificate(exam, score, total, date) {
-            document.getElementById('cert-display-name').innerText = document.getElementById('user-name').value || "Student";
+            const studentName = document.getElementById('user-name').value || "Student";
+            const btn = event.target;
+            const originalText = btn.innerText;
+            
+            btn.innerText = "⌛...";
+            btn.disabled = true;
+
+            // Map data to Template
+            document.getElementById('cert-display-name').innerText = studentName;
             document.getElementById('cert-display-quiz').innerText = exam;
             document.getElementById('cert-display-score').innerText = `${score} / ${total}`;
             document.getElementById('cert-display-date').innerText = "Date: " + date;
-            html2canvas(document.getElementById('cert-template'), { scale: 3 }).then(canvas => {
+
+            const certDiv = document.getElementById('cert-template');
+            
+            // Render High-Res Image
+            html2canvas(certDiv, { 
+                scale: 3, 
+                backgroundColor: "#ffffff",
+                useCORS: true,
+                logging: false 
+            }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `Certificate_${exam.replace(/\s+/g,'_')}.png`;
+                link.download = `Eduodia_Certificate_${exam.replace(/\s+/g, '_')}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
+                
+                btn.innerText = originalText;
+                btn.disabled = false;
+            }).catch(err => {
+                alert("Certificate error. Please screenshot.");
+                btn.innerText = originalText;
+                btn.disabled = false;
             });
         }
     </script>
