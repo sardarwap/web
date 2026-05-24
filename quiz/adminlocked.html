@@ -6,17 +6,12 @@
     <title>Eduodia - Admin Panel</title>
     <style>
         :root {
-            --primary-color: #4A90E2;
-            --bg-color: #f4f7f6;
-            --card-bg: #fff;
-            --text-color: #333;
-            --danger-color: #e74c3c;
-            --success-color: #27ae60;
-            --guest-color: #9b59b6;
+            --primary-color: #4A90E2; --bg-color: #f4f7f6; --card-bg: #fff; --text-color: #333;
+            --danger-color: #e74c3c; --success-color: #27ae60; --guest-color: #9b59b6; --analytics-color: #8e44ad;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 20px 15px; display: flex; justify-content: center; }
-        .admin-container { max-width: 900px; width: 100%; }
+        .admin-container { max-width: 1000px; width: 100%; }
         
         h1 { color: var(--primary-color); margin-bottom: 5px; }
         p.subtitle { color: #666; margin-bottom: 25px; font-size: 0.95em; }
@@ -27,11 +22,12 @@
         .metric-card p { font-size: 1.8em; font-weight: bold; color: var(--primary-color); }
 
         .admin-tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
-        .tab-link { flex: 1; padding: 12px; background: #e2e8f0; border: none; border-radius: 8px; font-size: 0.92em; font-weight: bold; color: #4a5568; cursor: pointer; text-align: center; min-width: 130px; }
+        .tab-link { flex: 1; padding: 12px; background: #e2e8f0; border: none; border-radius: 8px; font-size: 0.92em; font-weight: bold; color: #4a5568; cursor: pointer; text-align: center; min-width: 130px; transition: 0.2s; }
         .tab-link.active { background-color: var(--primary-color); color: white; box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3); }
 
-        .controls-bar { background: var(--card-bg); padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 20px; }
-        .search-input { width: 100%; padding: 12px 16px; font-size: 1em; border: 2px solid #ddd; border-radius: 8px; outline: none; }
+        .controls-bar { background: var(--card-bg); padding: 15px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .search-input { flex: 1; min-width: 200px; padding: 12px 16px; font-size: 1em; border: 2px solid #ddd; border-radius: 8px; outline: none; }
+        .btn-export { padding: 12px 20px; background-color: var(--success-color); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 10px rgba(39, 174, 96, 0.2); }
 
         .table-container { background: var(--card-bg); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); overflow: hidden; padding: 5px 0; }
         .panel-content { display: none; }
@@ -51,45 +47,71 @@
         .status-locked { background-color: #f8d7da; color: var(--danger-color); }
         .status-guest { background-color: #e8daef; color: var(--guest-color); }
 
-        .action-container { display: flex; flex-direction: column; gap: 6px; }
-        .btn-action { padding: 6px 12px; border: none; border-radius: 4px; font-weight: bold; font-size: 0.82em; cursor: pointer; color: white; text-align: center; }
+        .action-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 6px; }
+        .btn-action { padding: 8px 12px; border: none; border-radius: 4px; font-weight: bold; font-size: 0.82em; cursor: pointer; color: white; text-align: center; flex: 1; min-width: 100px;}
         .btn-lock { background-color: var(--danger-color); }
         .btn-unlock { background-color: var(--success-color); }
         .btn-access { background-color: #34495e; }
+        .btn-analytics { background-color: var(--analytics-color); }
 
-        .settings-form { padding: 25px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 0.95em; color: #4a5568; }
-        .form-group input[type="text"], .form-group input[type="tel"] { width: 100%; padding: 12px; font-size: 1em; border: 2px solid #ddd; border-radius: 6px; outline: none; }
-        .form-group input:focus { border-color: var(--primary-color); }
-        .qr-preview-admin { max-width: 140px; height: 140px; object-fit: contain; border: 1px dashed #bbb; margin-top: 10px; display: block; border-radius: 6px; background: #fafafa; padding: 4px; }
-        .btn-save-settings { width: 100%; max-width: 280px; padding: 14px; border: none; border-radius: 6px; font-weight: bold; font-size: 1.05em; background: var(--primary-color); color: white; cursor: pointer; display: block; margin: 10px auto 0 auto; box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2); }
+        /* Settings Tab UI */
+        .settings-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .settings-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .settings-card h3 { margin-bottom: 15px; color: var(--primary-color); border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 6px; font-size: 0.9em; color: #555; }
+        .form-group input[type="text"], .form-group input[type="tel"] { width: 100%; padding: 10px; font-size: 1em; border: 2px solid #ddd; border-radius: 6px; outline: none; }
+        .btn-save-settings { padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; background: var(--primary-color); color: white; cursor: pointer; display: block; margin-top: 10px; }
+        
+        /* List UI for Coupons and Announcements */
+        .coupon-list { margin-top: 15px; }
+        .coupon-item { display: flex; justify-content: space-between; background: #f8f9fa; padding: 10px; border-radius: 6px; margin-bottom: 5px; border: 1px solid #eee; align-items: center; }
+        .coupon-item strong { color: var(--success-color); font-size: 1.1em; letter-spacing: 1px;}
+        .btn-del-coupon { background: var(--danger-color); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8em; font-weight: bold; }
 
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; display: none; justify-content: center; align-items: center; padding: 15px; }
+        .analytics-modal { background: white; max-width: 550px; width: 100%; padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-height: 90vh; display: flex; flex-direction: column; }
+        .analytics-header { border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+        .analytics-stats-row { display: flex; gap: 15px; margin-bottom: 20px; }
+        .stat-box { flex: 1; background: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center; border: 1px solid #eee; }
+        .stat-box h4 { font-size: 0.8em; color: #777; margin-bottom: 5px; }
+        .stat-box span { font-size: 1.6em; font-weight: bold; color: var(--primary-color); }
+        .history-list { flex-grow: 1; overflow-y: auto; padding-right: 5px; border: 1px solid #eee; border-radius: 8px; background: #fafafa; }
+        .history-item { padding: 12px 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .btn-modal-close { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: white; background: #333; cursor: pointer; margin-top: 20px; }
         #admin-lockscreen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--bg-color); z-index: 9999; display: flex; justify-content: center; align-items: center; padding: 20px; }
 
-        /* Mobile Layout Collapsing Overrides */
         @media (max-width: 650px) {
-            .metrics-grid { gap: 10px; }
-            .metric-card p { font-size: 1.3em; }
+            .metrics-grid { gap: 10px; } .metric-card p { font-size: 1.3em; }
             thead { display: none; }
             tr { display: block; background: var(--card-bg); border-radius: 10px; padding: 15px; margin-bottom: 15px; border: 1px solid #eee; }
-            td { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border: none; }
-            td:first-child { border-bottom: 1px dashed #eee; padding-bottom: 12px; margin-bottom: 8px; }
-            .reg-table td:nth-of-type(2):before { content: "Account Status: "; font-weight: bold; color: #777; }
-            .reg-table td:nth-of-type(3):before { content: "Action Control: "; font-weight: bold; color: #777; }
-            .guest-table td:nth-of-type(2):before { content: "User Type: "; font-weight: bold; color: #777; }
-            .guest-table td:nth-of-type(3):before { content: "Performance Result: "; font-weight: bold; color: #777; }
-            .action-container { width: 100%; } .btn-action { width: 100%; padding: 10px; }
-            .settings-form { padding: 15px; } .btn-save-settings { max-width: 100%; }
+            td { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border: none; flex-wrap: wrap; gap: 10px;}
+            td:first-child { border-bottom: 1px dashed #eee; padding-bottom: 12px; margin-bottom: 8px; width: 100%; justify-content: flex-start;}
         }
     </style>
 </head>
 <body>
 
+    <div class="modal-overlay" id="analytics-modal-window">
+        <div class="analytics-modal">
+            <div class="analytics-header">
+                <h2 id="modal-student-name">Loading Profile...</h2>
+                <p id="modal-student-phone" style="color: #666; font-weight:bold;">📞 Fetching contact...</p>
+            </div>
+            <div class="analytics-stats-row">
+                <div class="stat-box"><h4>Total Exams</h4><span id="stat-total-exams">0</span></div>
+                <div class="stat-box"><h4>Average Score</h4><span id="stat-avg-score">0%</span></div>
+            </div>
+            <h3 style="font-size: 1em; color: #555; margin-bottom: 10px;">Exam History Timeline</h3>
+            <div class="history-list" id="analytics-history-list"></div>
+            <button class="btn-modal-close" onclick="closeAnalyticsModal()">Close Report</button>
+        </div>
+    </div>
+
     <div id="admin-lockscreen">
         <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align:center; max-width: 360px; width: 100%;">
             <h2>Admin Verification</h2>
-            <p style="font-size:0.9em; color:#666; margin-bottom: 20px;">Please enter your administrative pass-key token to continue access.</p>
+            <p style="font-size:0.9em; color:#666; margin-bottom: 20px;">Please enter your administrative pass-key.</p>
             <input type="password" id="admin-pin" placeholder="Enter Admin Password" style="width:100%; padding:12px; text-align:center; margin-bottom:15px; border-radius:6px; border:2px solid #ddd;">
             <button onclick="verifyAdminPasscode()" style="width:100%; padding:12px; background:var(--primary-color); border:none; color:white; font-weight:bold; border-radius:6px; cursor:pointer;">Authenticate Portal</button>
         </div>
@@ -99,7 +121,7 @@
         <button onclick="window.location.href='index.html'" style="padding: 8px 15px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 15px; font-weight:bold;">← Main Portal</button>
         
         <h1>⚙️ Management Dashboard</h1>
-        <p class="subtitle">Grant access licenses manually and customize gateway credentials dynamically</p>
+        <p class="subtitle">Monitor students, grant manual access, and track live analytics.</p>
 
         <div class="metrics-grid">
             <div class="metric-card"><h3>Registered Users</h3><p id="metric-total">0</p></div>
@@ -109,23 +131,20 @@
 
         <div class="admin-tabs">
             <button class="tab-link active" id="tab-reg-btn" onclick="switchAdminTab('registered')">👥 Registered Students</button>
-            <button class="tab-link" id="tab-guest-btn" onclick="switchAdminTab('unregistered')">🌐 Unregistered Attempts</button>
-            <button class="tab-link" id="tab-settings-btn" onclick="switchAdminTab('settings')">💳 Payment Settings</button>
+            <button class="tab-link" id="tab-guest-btn" onclick="switchAdminTab('unregistered')">🌐 Unregistered Activity</button>
+            <button class="tab-link" id="tab-settings-btn" onclick="switchAdminTab('settings')">⚙️ Platform Settings</button>
         </div>
 
         <div class="controls-bar" id="search-filter-wrapper">
-            <input type="text" id="search-bar" class="search-input" placeholder="Search records by keywords..." oninput="triggerSearchFilter()">
+            <input type="text" id="search-bar" class="search-input" placeholder="Search records by name or phone..." oninput="triggerSearchFilter()">
+            <button class="btn-export" onclick="exportCurrentTableToCSV()">📥 Export to Excel (CSV)</button>
         </div>
 
         <div id="panel-registered" class="panel-content active">
             <div class="table-container">
                 <table class="reg-table">
-                    <thead>
-                        <tr><th style="width: 45%;">Student Profile</th><th style="width: 20%;">Status</th><th style="width: 35%;">Administrative Options Actions</th></tr>
-                    </thead>
-                    <tbody id="reg-table-body">
-                        <tr><td colspan="3" style="text-align:center; padding:30px;">Loading users...</td></tr>
-                    </tbody>
+                    <thead><tr><th style="width: 40%;">Student Profile</th><th style="width: 15%;">Status</th><th style="width: 45%;">Administrative Actions</th></tr></thead>
+                    <tbody id="reg-table-body"></tbody>
                 </table>
             </div>
         </div>
@@ -133,32 +152,56 @@
         <div id="panel-unregistered" class="panel-content">
             <div class="table-container">
                 <table class="guest-table">
-                    <thead>
-                        <tr><th style="width: 50%;">Guest Student Name</th><th style="width: 25%;">User Type</th><th style="width: 25%;">Exam Result</th></tr>
-                    </thead>
-                    <tbody id="guest-table-body">
-                        <tr><td colspan="3" style="text-align:center; padding:30px;">Analyzing leaderboard data...</td></tr>
-                    </tbody>
+                    <thead><tr><th style="width: 50%;">Guest Name</th><th style="width: 25%;">Type</th><th style="width: 25%;">Exam Result</th></tr></thead>
+                    <tbody id="guest-table-body"></tbody>
                 </table>
             </div>
         </div>
 
         <div id="panel-settings" class="panel-content">
-            <div class="settings-form">
-                <div class="form-group">
-                    <label>Active Merchant UPI Handle Address</label>
-                    <input type="text" id="setup-upi" placeholder="e.g., eduodia@upi, 9876543210@ibl">
+            <div class="settings-grid">
+                
+                <div class="settings-card">
+                    <h3>📢 Global Announcements Banner</h3>
+                    <div style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
+                        <div class="form-group" style="flex:2; margin:0;">
+                            <input type="text" id="announce-input" placeholder="e.g., MEGA TEST is live today!">
+                        </div>
+                        <button class="btn-save-settings" style="margin:0; background:var(--success-color);" onclick="addAnnouncement()">+ Add Message</button>
+                    </div>
+                    <div class="coupon-list" id="active-announcements-list"></div>
                 </div>
-                <div class="form-group">
-                    <label>WhatsApp Support Mobile Handle (Include Country Code, No spaces/No plus sign)</label>
-                    <input type="tel" id="setup-whatsapp" placeholder="e.g., 919876543210">
+
+                <div class="settings-card">
+                    <h3>🎟️ Promo Codes & Discounts</h3>
+                    <div style="display:flex; gap:10px; margin-bottom:15px; flex-wrap:wrap;">
+                        <div class="form-group" style="flex:2; margin:0;">
+                            <label>Coupon Code</label>
+                            <input type="text" id="promo-code-input" placeholder="e.g., FESTIVAL50" style="text-transform:uppercase;">
+                        </div>
+                        <div class="form-group" style="flex:1; margin:0;">
+                            <label>Discount Amount (₹)</label>
+                            <input type="tel" id="promo-amt-input" placeholder="50">
+                        </div>
+                    </div>
+                    <button class="btn-save-settings" style="background:var(--success-color);" onclick="addPromoCode()">+ Create Coupon</button>
+                    
+                    <div class="coupon-list" id="active-coupons-list"></div>
                 </div>
-                <div class="form-group">
-                    <label>Upload Payment QR Code Asset Image</label>
-                    <input type="file" id="setup-qr-file" accept="image/*" onchange="processAdminQRUpload(event)">
-                    <img id="setup-qr-preview" class="qr-preview-admin" src="https://cdn-icons-png.flaticon.com/512/241/241508.png" alt="Preview Frame">
+
+                <div class="settings-card">
+                    <h3>💳 Payment Gateway Details</h3>
+                    <div class="form-group">
+                        <label>Active Merchant UPI ID</label>
+                        <input type="text" id="setup-upi" placeholder="eduodia@upi">
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp Number (With Country Code)</label>
+                        <input type="tel" id="setup-whatsapp" placeholder="919876543210">
+                    </div>
+                    <button class="btn-save-settings" onclick="savePaymentConfigs()">Save Payment Info</button>
                 </div>
-                <button class="btn-save-settings" onclick="commitPaymentConfigurations()">🔒 Save Configurations</button>
+
             </div>
         </div>
 
@@ -180,35 +223,175 @@
         firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
 
         let registeredUsers = []; let unregisteredAttempts = []; let activeTab = "registered";
-        let base64QRDataString = "";
+        let liveCoupons = {}; 
+        let liveAnnouncements = []; // New array for multiple announcements
 
         function verifyAdminPasscode() {
-            const input = document.getElementById('admin-pin').value;
-            if (input === "12345") {
+            if (document.getElementById('admin-pin').value === "12345") {
                 document.getElementById('admin-lockscreen').style.display = 'none';
                 document.getElementById('admin-main-view').style.display = 'block';
                 syncAdministrativeData();
-                downloadPaymentConfigValues();
-            } else { alert("❌ Authentication Failed! Access Denied."); }
+                fetchPlatformSettings();
+            } else { alert("❌ Authentication Failed!"); }
         }
 
         function switchAdminTab(target) {
             activeTab = target;
             document.querySelectorAll('.panel-content').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.tab-link').forEach(t => t.classList.remove('active'));
-            document.getElementById('search-filter-wrapper').style.display = target === 'settings' ? 'none' : 'block';
+            document.getElementById('search-bar').value = '';
+            
+            document.getElementById('search-filter-wrapper').style.display = (target === 'settings') ? 'none' : 'flex';
 
             if(target === 'registered') {
                 document.getElementById('panel-registered').classList.add('active');
                 document.getElementById('tab-reg-btn').classList.add('active');
                 buildRegisteredTable(registeredUsers);
-            } else if(target === 'unregistered') {
+            } else if (target === 'unregistered') {
                 document.getElementById('panel-unregistered').classList.add('active');
                 document.getElementById('tab-guest-btn').classList.add('active');
                 buildGuestTable(unregisteredAttempts);
             } else {
                 document.getElementById('panel-settings').classList.add('active');
                 document.getElementById('tab-settings-btn').classList.add('active');
+            }
+        }
+
+        function exportCurrentTableToCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            let filename = "";
+
+            if (activeTab === "registered") {
+                filename = "Registered_Students.csv";
+                csvContent += "Name,Phone,Password,Status,Unlocked_Items\n"; 
+                registeredUsers.forEach(user => {
+                    const name = (user.name || "N/A").replace(/,/g, " "); 
+                    const unlocked = user.unlocked ? user.unlocked.join(" | ") : "None";
+                    csvContent += `${name},${user.phone || ''},${user.password || ''},${user.status || 'active'},${unlocked}\n`;
+                });
+            } else {
+                filename = "Guest_Activity.csv";
+                csvContent += "Guest_Name,Exam_Name,Score,Total_Questions\n";
+                unregisteredAttempts.forEach(guest => {
+                    const name = (guest.name || "Anonymous").replace(/,/g, " ");
+                    const exam = (guest.quizName || "Unknown").replace(/,/g, " ");
+                    csvContent += `${name},${exam},${guest.score || 0},${guest.totalQuestions || 30}\n`;
+                });
+            }
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", filename);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // --- FETCH ALL SETTINGS ---
+        function fetchPlatformSettings() {
+            db.collection("settings").doc("payment").get().then(doc => {
+                if(doc.exists) {
+                    document.getElementById('setup-upi').value = doc.data().upi || '';
+                    document.getElementById('setup-whatsapp').value = doc.data().whatsapp || '';
+                }
+            });
+            
+            // Multiple Announcements Fetch
+            db.collection("settings").doc("announcement").get().then(doc => {
+                if(doc.exists) {
+                    liveAnnouncements = doc.data().messages || [];
+                    // Backwards compatibility if you had older text saved
+                    if(doc.data().text && liveAnnouncements.length === 0) liveAnnouncements.push(doc.data().text);
+                    renderAnnouncementList();
+                }
+            });
+            
+            db.collection("settings").doc("coupons").get().then(doc => {
+                if(doc.exists) {
+                    liveCoupons = doc.data().codes || {};
+                    renderCouponList();
+                }
+            });
+        }
+
+        // --- MULTIPLE ANNOUNCEMENT ENGINE ---
+        function addAnnouncement() {
+            const text = document.getElementById('announce-input').value.trim();
+            if(!text) return;
+            liveAnnouncements.push(text);
+            updateAnnouncementsDB();
+        }
+
+        function deleteAnnouncement(index) {
+            liveAnnouncements.splice(index, 1);
+            updateAnnouncementsDB();
+        }
+
+        function updateAnnouncementsDB() {
+            db.collection("settings").doc("announcement").set({ messages: liveAnnouncements })
+                .then(() => {
+                    document.getElementById('announce-input').value = '';
+                    renderAnnouncementList();
+                });
+        }
+
+        function renderAnnouncementList() {
+            const list = document.getElementById('active-announcements-list');
+            list.innerHTML = '';
+            if(liveAnnouncements.length === 0) { list.innerHTML = '<p style="color:#888; font-size:0.9em;">No active announcements.</p>'; return; }
+
+            liveAnnouncements.forEach((msg, idx) => {
+                list.innerHTML += `
+                    <div class="coupon-item">
+                        <div><strong style="color:var(--text-color); font-size:1em;">${msg}</strong></div>
+                        <button class="btn-del-coupon" onclick="deleteAnnouncement(${idx})">Delete</button>
+                    </div>`;
+            });
+        }
+
+        function savePaymentConfigs() {
+            const upi = document.getElementById('setup-upi').value.trim();
+            const wa = document.getElementById('setup-whatsapp').value.trim();
+            db.collection("settings").doc("payment").set({ upi: upi, whatsapp: wa }, { merge: true })
+                .then(() => alert("✅ Payment Details Saved!"));
+        }
+
+        function addPromoCode() {
+            const codeInput = document.getElementById('promo-code-input').value.toUpperCase().trim();
+            const amtInput = parseInt(document.getElementById('promo-amt-input').value);
+            
+            if(!codeInput || isNaN(amtInput)) { alert("Enter a valid code and discount amount."); return; }
+            
+            liveCoupons[codeInput] = amtInput;
+            updateCouponsDB();
+        }
+
+        function deletePromoCode(code) {
+            delete liveCoupons[code];
+            updateCouponsDB();
+        }
+
+        function updateCouponsDB() {
+            db.collection("settings").doc("coupons").set({ codes: liveCoupons })
+                .then(() => {
+                    document.getElementById('promo-code-input').value = '';
+                    document.getElementById('promo-amt-input').value = '';
+                    renderCouponList();
+                });
+        }
+
+        function renderCouponList() {
+            const list = document.getElementById('active-coupons-list');
+            list.innerHTML = '';
+            if(Object.keys(liveCoupons).length === 0) { list.innerHTML = '<p style="color:#888; font-size:0.9em;">No active coupons.</p>'; return; }
+
+            for (const [code, discount] of Object.entries(liveCoupons)) {
+                list.innerHTML += `
+                    <div class="coupon-item">
+                        <div><strong>${code}</strong> <span style="color:#555; font-size:0.9em; margin-left:10px;">(₹${discount} Off)</span></div>
+                        <button class="btn-del-coupon" onclick="deletePromoCode('${code}')">Delete</button>
+                    </div>`;
             }
         }
 
@@ -232,131 +415,78 @@
                         if (lbName !== "" && !registeredNamesMap.has(lbName)) unregisteredAttempts.push(lbData);
                     });
                     document.getElementById('metric-unregistered').innerText = unregisteredAttempts.length;
-                    if(activeTab === 'registered') buildRegisteredTable(registeredUsers);
-                    else if(activeTab === 'unregistered') buildGuestTable(unregisteredAttempts);
+                    if(activeTab === 'registered') buildRegisteredTable(registeredUsers); else buildGuestTable(unregisteredAttempts);
                 });
             });
         }
 
-        function downloadPaymentConfigValues() {
-            db.collection("settings").doc("payment").get().then(doc => {
-                if(doc.exists) {
-                    const data = doc.data();
-                    document.getElementById('setup-upi').value = data.upi || '';
-                    document.getElementById('setup-whatsapp').value = data.whatsapp || '';
-                    if(data.qrCode) {
-                        base64QRDataString = data.qrCode;
-                        document.getElementById('setup-qr-preview').src = data.qrCode;
-                    }
-                }
-            });
-        }
-
-        function processAdminQRUpload(event) {
-            const file = event.target.files[0]; if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas'); const MAX_SIZE = 300; 
-                    let w = img.width; let h = img.height;
-                    if (w > h) { if (w > MAX_SIZE) { h *= MAX_SIZE / w; w = MAX_SIZE; } } else { if (h > MAX_SIZE) { w *= MAX_SIZE / h; h = MAX_SIZE; } }
-                    canvas.width = w; canvas.height = h; const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h);
-                    
-                    base64QRDataString = canvas.toDataURL('image/jpeg', 0.75); 
-                    document.getElementById('setup-qr-preview').src = base64QRDataString;
-                }
-                img.src = e.target.result;
-            }
-            reader.readAsDataURL(file);
-        }
-
-        function commitPaymentConfigurations() {
-            const upi = document.getElementById('setup-upi').value.trim();
-            const whatsapp = document.getElementById('setup-whatsapp').value.trim();
-
-            if(!upi || !whatsapp) { alert("Please complete both configuration fields!"); return; }
-
-            db.collection("settings").doc("payment").set({
-                upi: upi, whatsapp: whatsapp, qrCode: base64QRDataString
-            }).then(() => {
-                alert("🎉 Payment configurations updated globally on live database!");
-            }).catch(e => alert("Write permission exception: " + e.message));
-        }
-
         function buildRegisteredTable(dataset) {
             const tbody = document.getElementById('reg-table-body'); tbody.innerHTML = '';
-            if (dataset.length === 0) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px;">No records.</td></tr>'; return; }
-            
+            if (dataset.length === 0) return;
             dataset.forEach((user) => {
                 const tr = document.createElement('tr');
-                const avatar = user.profilePic ? user.profilePic : "https://cdn-icons-png.flaticon.com/512/149/149071.png";
                 const isLocked = user.status === "locked";
-                const activePermissionsList = user.unlocked && user.unlocked.length > 0 ? user.unlocked.join(", ") : "None";
-
+                const activePermissions = user.unlocked && user.unlocked.length > 0 ? user.unlocked.join(", ") : "None";
                 tr.innerHTML = `
-                    <td>
-                        <div class="user-cell">
-                            <img src="${avatar}" class="admin-avatar">
-                            <div class="user-info">
-                                <strong>${user.name}</strong><p>📞 +91 ${user.phone} | 🔑 Pass: ${user.password || 'N/A'}</p>
-                                <p style="color:var(--primary-color); font-size:0.78em; font-weight:bold; margin-top:4px;">🔓 Unlocked IDs: ${activePermissionsList}</p>
-                            </div>
-                        </div>
-                    </td>
+                    <td><div class="user-cell"><img src="${user.profilePic || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="admin-avatar"><div class="user-info"><strong>${user.name}</strong><p>📞 +91 ${user.phone} | 🔑 ${user.password || 'N/A'}</p><p style="color:var(--primary-color); font-size:0.78em; font-weight:bold;">🔓 IDs: ${activePermissions}</p></div></div></td>
                     <td><span class="status-badge ${isLocked ? 'status-locked' : 'status-active'}">${user.status}</span></td>
-                    <td>
-                        <div class="action-container">
-                            <button class="btn-action btn-access" onclick="promptPremiumUnlock('${user.id}', '${user.name}')">🔑 Manage Access</button>
-                            <button class="btn-action ${isLocked ? 'btn-unlock' : 'btn-lock'}" onclick="toggleAccountStatus('${user.id}', '${user.status}')">${isLocked ? 'Unlock' : 'Lock Account'}</button>
-                        </div>
-                    </td>`;
+                    <td><div class="action-container"><button class="btn-action btn-analytics" onclick="openStudentAnalytics('${user.name}', '${user.phone}')">📊 Analytics</button><button class="btn-action btn-access" onclick="promptPremiumUnlock('${user.id}', '${user.name}')">🔑 Access</button><button class="btn-action ${isLocked ? 'btn-unlock' : 'btn-lock'}" onclick="toggleAccountStatus('${user.id}', '${user.status}')">${isLocked ? 'Unlock' : 'Lock'}</button></div></td>`;
                 tbody.appendChild(tr);
             });
         }
 
         function buildGuestTable(dataset) {
             const tbody = document.getElementById('guest-table-body'); tbody.innerHTML = '';
-            if (dataset.length === 0) { tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px;">No guest data logs available.</td></tr>'; return; }
             dataset.forEach((guest) => {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><div class="user-cell"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="admin-avatar" style="border-color:#9b59b6;"><div class="user-info"><strong>${guest.name || "Anonymous Guest"}</strong><p>📝 Attended Exam: <strong>${guest.quizName || 'TEST'}</strong></p></div></div></td>
-                    <td><span class="status-badge status-guest">Guest User</span></td>
-                    <td><span class="score-value" style="color:#e67e22;">${guest.score}</span> / ${guest.totalQuestions || 30}</td>`;
+                tr.innerHTML = `<td><div class="user-cell"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="admin-avatar" style="border-color:#9b59b6;"><div class="user-info"><strong>${guest.name || "Anonymous"}</strong><p>📝 Exam: <strong>${guest.quizName || 'TEST'}</strong></p></div></div></td><td><span class="status-badge status-guest">Guest User</span></td><td><span style="color:#e67e22; font-weight:bold;">${guest.score}</span> / ${guest.totalQuestions || 30}</td>`;
                 tbody.appendChild(tr);
             });
         }
 
+        function openStudentAnalytics(studentName, studentPhone) {
+            document.getElementById('analytics-modal-window').style.display = 'flex';
+            document.getElementById('modal-student-name').innerText = studentName.toUpperCase();
+            document.getElementById('modal-student-phone').innerText = `📞 +91 ${studentPhone}`;
+            const historyContainer = document.getElementById('analytics-history-list');
+            historyContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #888;">Analyzing Cloud Data...</div>';
+
+            db.collection("leaderboard").where("name", "==", studentName).get().then((snapshot) => {
+                if (snapshot.empty) {
+                    historyContainer.innerHTML = '<div style="padding: 20px; text-align: center; color: #e74c3c; font-weight: bold;">No exam records found.</div>';
+                    document.getElementById('stat-total-exams').innerText = "0"; document.getElementById('stat-avg-score').innerText = "0%"; return;
+                }
+                let totalScorePercentage = 0; let quizCount = 0; let historyHTML = "";
+                snapshot.forEach((doc) => {
+                    const data = doc.data(); const score = parseInt(data.score) || 0; const maxScore = parseInt(data.totalQuestions) || 30; 
+                    const percentage = Math.round((score / maxScore) * 100);
+                    let dateString = data.timestamp ? new Date(data.timestamp.toDate ? data.timestamp.toDate() : data.timestamp).toLocaleDateString() : "Recently";
+                    quizCount++; totalScorePercentage += percentage;
+                    historyHTML += `<div class="history-item"><div class="history-item-details"><strong>${data.quizName || "Mock Test"}</strong><small>📅 Taken: ${dateString}</small></div><div class="history-item-score">${score} / ${maxScore} (${percentage}%)</div></div>`;
+                });
+                document.getElementById('stat-total-exams').innerText = quizCount;
+                document.getElementById('stat-avg-score').innerText = Math.round(totalScorePercentage / quizCount) + "%";
+                historyContainer.innerHTML = historyHTML;
+            });
+        }
+        function closeAnalyticsModal() { document.getElementById('analytics-modal-window').style.display = 'none'; }
         function promptPremiumUnlock(docId, studentName) {
-            const itemIdInput = prompt(`Enter unique Item ID to manage parameters for [ ${studentName.toUpperCase()} ]:\n\nProvide the exact ID text field.`);
-            if (!itemIdInput || itemIdInput.trim() === "") return;
-            const sanitizedId = itemIdInput.trim(); const docRef = db.collection("users").doc(docId);
+            const itemIdInput = prompt(`Enter unique Item ID to manage access for [ ${studentName.toUpperCase()} ]:`);
+            if (!itemIdInput) return; const sanitizedId = itemIdInput.trim(); const docRef = db.collection("users").doc(docId);
             docRef.get().then(doc => {
-                let current = doc.data().unlocked || [];
-                if (current.includes(sanitizedId)) {
-                    if (confirm(`Revoke license from [${sanitizedId}]?`)) {
-                        docRef.update({ unlocked: firebase.firestore.FieldValue.arrayRemove(sanitizedId) }).then(() => alert("Access revoked."));
-                    }
+                if ((doc.data().unlocked || []).includes(sanitizedId)) {
+                    if (confirm(`Revoke license for [${sanitizedId}]?`)) docRef.update({ unlocked: firebase.firestore.FieldValue.arrayRemove(sanitizedId) }).then(() => alert("Access revoked."));
                 } else { docRef.update({ unlocked: firebase.firestore.FieldValue.arrayUnion(sanitizedId) }).then(() => alert("Access granted!")); }
             });
         }
-
         function toggleAccountStatus(docId, currentStatus) {
             const targetStatus = currentStatus === "active" ? "locked" : "active";
-            if (!confirm(`Change profile status to [${targetStatus.toUpperCase()}]?`)) return;
-            db.collection("users").doc(docId).update({ status: targetStatus });
+            if (confirm(`Change profile status to [${targetStatus.toUpperCase()}]?`)) db.collection("users").doc(docId).update({ status: targetStatus });
         }
-
         function triggerSearchFilter() {
             const query = document.getElementById('search-bar').value.toLowerCase().trim();
-            if (activeTab === "registered") {
-                if (query === "") { buildRegisteredTable(registeredUsers); return; }
-                buildRegisteredTable(registeredUsers.filter(u => (u.name && u.name.toLowerCase().includes(query)) || (u.phone && u.phone.includes(query))));
-            } else if (activeTab === "unregistered") {
-                if (query === "") { buildGuestTable(unregisteredAttempts); return; }
-                buildGuestTable(unregisteredAttempts.filter(g => (g.name && g.name.toLowerCase().includes(query)) || (g.quizName && g.quizName.toLowerCase().includes(query))));
-            }
+            if (activeTab === "registered") buildRegisteredTable(registeredUsers.filter(u => (u.name && u.name.toLowerCase().includes(query)) || (u.phone && u.phone.includes(query))));
+            else buildGuestTable(unregisteredAttempts.filter(g => (g.name && g.name.toLowerCase().includes(query)) || (g.quizName && g.quizName.toLowerCase().includes(query))));
         }
     </script>
 </body>
