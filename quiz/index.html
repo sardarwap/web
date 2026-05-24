@@ -18,35 +18,37 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 25px 15px; display: flex; justify-content: center; }
-        .dashboard-container { max-width: 900px; width: 100%; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); color: var(--text-color); padding: 25px 0; display: flex; flex-direction: column; align-items: center; }
+        
+        .dashboard-container { max-width: 900px; width: 100%; padding: 0 15px; }
 
-        /* Header UI */
         .header { text-align: center; margin-bottom: 22px; }
         .header h1 { color: var(--primary-color); margin-bottom: 4px; font-size: 2.2em; }
         .header p { color: #666; font-size: 1.05em; margin-bottom: 15px; }
-        .header-actions { display: flex; justify-content: center; gap: 10px; max-width: 440px; margin: 0 auto; }
-
-        .btn-header { flex: 1; padding: 10px 16px; border: none; border-radius: 20px; font-weight: bold; font-size: 0.92em; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; color: white; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        
+        .header-actions { display: flex; justify-content: center; gap: 10px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; }
+        .btn-header { flex: 1; padding: 10px 16px; border: none; border-radius: 20px; font-weight: bold; font-size: 0.92em; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; color: white; transition: all 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); min-width: 120px; }
         .btn-profile { background-color: var(--profile-color); }
         .btn-ranks { background-color: var(--leaderboard-color); }
+        .btn-streak { background-color: #e67e22; }
         .btn-header:hover { opacity: 0.9; }
         .btn-header:active { transform: scale(0.97); }
 
-        /* Banner Carousel Slider */
-        .slider-container { width: 100%; height: 250px; border-radius: 12px; overflow: hidden; position: relative; margin-bottom: 22px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); display: none; background-color: #ddd; }
+        .slider-container { width: 100%; height: 250px; border-radius: 12px; overflow: hidden; position: relative; margin-bottom: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); display: none; background-color: #ddd; }
         .slide { width: 100%; height: 100%; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.8s ease-in-out; background-size: cover; background-position: center; background-repeat: no-repeat; }
         .slide.active { opacity: 1; z-index: 1; }
         .slide-content { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); color: white; padding: 45px 20px 20px 20px; text-align: left; }
         .slide-content h2 { margin-bottom: 4px; font-size: 1.4em; }
 
-        /* Navigation Breadcrumbs Bar */
+        .announcement-banner { width: 100%; background-color: #f39c12; color: white; padding: 12px 15px; font-weight: bold; font-size: 0.95em; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-radius: 10px; margin-bottom: 22px; overflow: hidden; white-space: nowrap; position: relative; }
+        .announcement-text { display: inline-block; padding-left: 100%; animation: marquee 25s linear infinite; }
+        @keyframes marquee { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+
         .nav-bar { display: flex; align-items: center; margin-bottom: 22px; background: var(--card-bg); padding: 14px 18px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
         .back-btn { background: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.9em; display: none; }
         .breadcrumb { font-size: 1.05em; font-weight: bold; color: #555; margin-left: 5px; }
         #back-btn[style*="block"] + .breadcrumb { margin-left: 15px; }
 
-        /* Categories Grid Layout */
         .grid-layout { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 18px; }
         .card { background: var(--card-bg); padding: 25px 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); text-align: center; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 130px; position: relative;}
         .card:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(74,144,226,0.12); border-color: var(--primary-color); background-color: var(--hover-bg); }
@@ -56,63 +58,54 @@
         .premium-badge { background: var(--danger-color); color: white; font-size: 0.68em; padding: 3px 9px; border-radius: 12px; margin-top: 8px; text-transform: uppercase; font-weight: bold; }
         .lock-overlay-icon { position: absolute; top: 10px; right: 10px; font-size: 1.2em; }
 
-        /* Premium Checkout Pop-up Modal Box */
         .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 10000; display: none; justify-content: center; align-items: center; padding: 15px; overflow-y: auto; }
         .checkout-modal { background: white; max-width: 420px; width: 100%; padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); text-align: center; position: relative; margin: auto; }
         .checkout-modal h2 { color: #2c3e50; margin-bottom: 8px; font-size: 1.4em; font-weight: bold; }
+        .modal-price-tag { font-size: 2.2em; font-weight: 800; color: var(--danger-color); margin: 5px 0 10px 0; }
         
-        .modal-price-tag { font-size: 2em; font-weight: 800; color: var(--danger-color); margin: 10px 0; }
-        .upi-box { background: #f0f4f8; padding: 12px; font-weight: bold; font-size: 1.05em; color: var(--primary-color); border-radius: 8px; border: 2px dashed var(--primary-color); margin-bottom: 15px; word-break: break-all; }
-        
-        .qr-display-frame { max-width: 160px; width: 100%; height: 160px; object-fit: contain; margin: 5px auto 15px auto; border: 1px solid #ddd; padding: 5px; border-radius: 8px; background: #fff; display: block; }
+        .promo-container { display: flex; gap: 8px; margin-bottom: 8px; }
+        .promo-container input { flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 8px; outline: none; text-transform: uppercase; font-weight: bold; }
+        .promo-container input:focus { border-color: var(--primary-color); }
+        .promo-container button { padding: 10px 15px; background: #333; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .promo-container button:hover { background: #111; }
+        .promo-msg { font-size: 0.85em; font-weight: bold; margin-bottom: 15px; min-height: 18px; }
+        .promo-success { color: var(--success-color); }
+        .promo-error { color: var(--danger-color); }
+
+        .upi-box { background: #f0f4f8; padding: 10px; font-weight: bold; font-size: 1em; color: var(--primary-color); border-radius: 8px; border: 2px dashed var(--primary-color); margin-bottom: 15px; word-break: break-all; }
+        .qr-display-frame { max-width: 140px; width: 100%; height: 140px; object-fit: contain; margin: 0 auto 15px auto; border: 1px solid #ddd; padding: 5px; border-radius: 8px; background: #fff; display: block; }
         
         .btn-whatsapp-chat { width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: bold; font-size: 1.05em; color: white; background: var(--success-color); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; box-shadow: 0 4px 10px rgba(39, 174, 96, 0.2); }
         .btn-whatsapp-chat:hover { background: #219150; }
         .btn-modal-close { width: 100%; padding: 12px; border: none; border-radius: 8px; font-weight: bold; color: #555; background: #eee; cursor: pointer; transition: background 0.2s; }
-        .btn-modal-close:hover { background: #ddd; }
 
         #loading { text-align: center; font-size: 1.2em; color: var(--primary-color); font-weight: bold; margin-top: 40px; }
 
         @media (max-width: 580px) {
-            body { padding: 15px 10px; }
             .header h1 { font-size: 1.8em; }
             .btn-header { padding: 10px 12px; font-size: 0.85em; border-radius: 8px; }
-            .slider-container { height: 170px; }
             .grid-layout { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .card { min-height: 115px; padding: 15px 10px; }
             .icon { font-size: 2em; } .card h3 { font-size: 0.92em; }
-            .checkout-modal { padding: 20px 15px; }
         }
     </style>
 </head>
 <body>
-
-    <div class="modal-overlay" id="checkout-modal-window">
-        <div class="checkout-modal">
-            <h2 id="modal-item-title">Premium Access Required</h2>
-            <p style="font-size:0.9em; color:#666; margin-bottom:10px;">Unlock this permanently across your account profile.</p>
-            
-            <div class="modal-price-tag" id="modal-price-display">₹00</div>
-            
-            <div class="upi-box" id="modal-upi-display">UPI ID: Loading...</div>
-            <img id="modal-qr-img" class="qr-display-frame" src="https://cdn-icons-png.flaticon.com/512/241/241508.png" alt="Payment QR Code">
-            <a id="modal-whatsapp-link" target="_blank" class="btn-whatsapp-chat">💬 Share Receipt via WhatsApp</a>
-            
-            <button class="btn-modal-close" onclick="closeCheckoutModal()">Cancel</button>
-        </div>
-    </div>
 
     <div class="dashboard-container">
         <div class="header">
             <h1>Eduodia Quiz Portal</h1>
             <p>Select a category to find your mock test</p>
             <div class="header-actions">
-                <a href="profile.html" class="btn-header btn-profile">👤 My Profile</a>
-                <a href="leaderboard.html" class="btn-header btn-ranks">🏆 Leaderboard</a>
+                <a href="profile.html" class="btn-header btn-profile">👤 Profile</a>
+                <a href="leaderboard.html" class="btn-header btn-ranks">🏆 Ranks</a>
+                <div class="btn-header btn-streak">🔥 <span id="streak-count" style="margin: 0 4px;">0</span> Days</div>
             </div>
         </div>
 
         <div class="slider-container" id="slider-container"></div>
+        <div class="announcement-banner" id="announcement-banner"></div>
+
         <div class="nav-bar" id="nav-bar" style="display: none;">
             <button class="back-btn" id="back-btn"></button>
             <div class="breadcrumb" id="breadcrumb">Home</div>
@@ -120,6 +113,25 @@
 
         <div id="loading">Loading Categories...</div>
         <div id="grid-view" class="grid-layout"></div>
+    </div>
+
+    <div class="modal-overlay" id="checkout-modal-window">
+        <div class="checkout-modal">
+            <h2 id="modal-item-title">Premium Access</h2>
+            <p style="font-size:0.9em; color:#666; margin-bottom:5px;">Unlock this permanently across your profile.</p>
+            <div class="modal-price-tag" id="modal-price-display">₹00</div>
+            
+            <div class="promo-container">
+                <input type="text" id="promo-input" placeholder="Have a promo code?">
+                <button onclick="applyPromoCode()">Apply</button>
+            </div>
+            <div id="promo-msg" class="promo-msg"></div>
+            
+            <div class="upi-box" id="modal-upi-display">UPI ID: Loading...</div>
+            <img id="modal-qr-img" class="qr-display-frame" src="https://cdn-icons-png.flaticon.com/512/241/241508.png" alt="Payment QR Code">
+            <a id="modal-whatsapp-link" target="_blank" class="btn-whatsapp-chat">💬 Share Receipt via WhatsApp</a>
+            <button class="btn-modal-close" onclick="closeCheckoutModal()">Cancel</button>
+        </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
@@ -135,26 +147,24 @@
             appId: "1:724284966944:web:319a680630af1703a39445",
             measurementId: "G-VSCB35YM1J"
         };
-        firebase.initializeApp(firebaseConfig); 
-        const db = firebase.firestore();
+        firebase.initializeApp(firebaseConfig); const db = firebase.firestore();
 
         db.enablePersistence().catch((err) => {
             if (err.code == 'failed-precondition') console.log("Cache active elsewhere.");
         });
 
         let fullData = []; let historyStack = []; let slidesArray = []; let currentSlideIndex = 0; let slideInterval;
-        let cloudUnlockedItems = [];
-        let currentVisibleItems = []; // Track active layout context to allow background refreshes
+        let cloudUnlockedItems = []; let currentVisibleItems = []; 
         let cachedPaymentConfig = { upi: "eduodia@upi", whatsapp: "919999999999", qrCode: "" };
+        let activePromoCodes = {}; let activeCheckoutItem = null; let baseCheckoutPrice = 99; 
 
         const gridView = document.getElementById('grid-view'); const loading = document.getElementById('loading');
         const backBtn = document.getElementById('back-btn'); const breadcrumb = document.getElementById('breadcrumb');
         const navBar = document.getElementById('nav-bar'); const sliderContainer = document.getElementById('slider-container');
+        const bannerElement = document.getElementById('announcement-banner');
 
-        // --- INSTANT UI RENDER LOGIC ENGINE ---
         async function initializeDashboardEngine() {
             try {
-                // Step 1: Read local JSON setup instantly (Takes < 30ms)
                 const response = await fetch('app_quiz.json');
                 if (!response.ok) throw new Error(`HTTP Error! Status: ${response.status}`);
                 const jsonData = await response.json();
@@ -162,39 +172,58 @@
                 fullData = jsonData.quiz || [];
                 if (jsonData.slider && jsonData.slider.length > 0) buildSlider(jsonData.slider);
 
-                // Render page UI immediately before making cloud server requests
                 loading.style.display = 'none';
                 navBar.style.display = 'flex';
                 renderGrid(fullData, "Home");
-
-                // Step 2: Fire slow cloud requests SILENTLY in the background
                 loadCloudPermissionsAndSettings();
-
             } catch (error) {
-                loading.innerHTML = `
-                    <div style='color:red; font-weight:bold; margin-bottom:10px;'>Failed to load categories.</div>
-                    <div style='color:#666; font-size:0.85em; background:#fff; padding:12px; border-radius:6px; border:1px solid #ddd; display:inline-block; text-align:left; max-width:90%; line-height:1.4;'>
-                        <strong>Diagnostic Message:</strong> ${error.message}
-                    </div>
-                `;
+                loading.innerHTML = `<div style='color:red; font-weight:bold; margin-bottom:10px;'>Failed to load. ${error.message}</div>`;
             }
         }
 
-        // --- BACKGROUND SILENT SYNC SYNCER ---
-        function loadCloudPermissionsAndSettings() {
+        async function loadCloudPermissionsAndSettings() {
             const userPhone = localStorage.getItem('eduodiaUserPhone');
 
-            // Fetch merchant codes in the background
-            db.collection("settings").doc("payment").get().then(doc => {
-                if (doc.exists) cachedPaymentConfig = doc.data();
+            db.collection("settings").doc("announcement").get().then(doc => {
+                if (doc.exists) {
+                    let msgs = doc.data().messages || [];
+                    if(doc.data().text && msgs.length === 0 && doc.data().active) msgs = [doc.data().text];
+                    if(msgs.length > 0) {
+                        bannerElement.innerHTML = `<span class="announcement-text">${msgs.join(" &nbsp;&nbsp;&nbsp;&nbsp; 🚀 &nbsp;&nbsp;&nbsp;&nbsp; ")}</span>`;
+                        bannerElement.style.display = 'block';
+                    }
+                }
             }).catch(() => null);
 
-            // Fetch user keys in the background. If purchased items are found, cleanly strip locks
+            db.collection("settings").doc("payment").get().then(doc => { if (doc.exists) cachedPaymentConfig = doc.data(); }).catch(() => null);
+            db.collection("settings").doc("coupons").get().then(doc => { if (doc.exists) activePromoCodes = doc.data().codes || {}; }).catch(() => null);
+
             if (userPhone) {
                 db.collection("users").where("phone", "==", userPhone).get().then(snap => {
                     if (!snap.empty) {
-                        cloudUnlockedItems = snap.docs[0].data().unlocked || [];
-                        // Silently refresh current view list to clear active lock screens for owned modules
+                        const userDoc = snap.docs[0];
+                        const userData = userDoc.data();
+                        cloudUnlockedItems = userData.unlocked || [];
+                        
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        const todayTime = today.getTime();
+                        
+                        let currentStreak = userData.streak || 0;
+                        let lastActive = userData.lastActive || 0;
+                        const oneDay = 86400000; 
+                        let needsUpdate = false;
+                        
+                        if (lastActive === todayTime) {
+                            // Already handled
+                        } else if (lastActive === todayTime - oneDay) {
+                            currentStreak += 1; lastActive = todayTime; needsUpdate = true;
+                        } else {
+                            currentStreak = 1; lastActive = todayTime; needsUpdate = true;
+                        }
+                        
+                        document.getElementById('streak-count').innerText = currentStreak;
+                        if (needsUpdate) db.collection("users").doc(userDoc.id).update({ streak: currentStreak, lastActive: lastActive });
                         renderGrid(currentVisibleItems, breadcrumb.innerText);
                     }
                 }).catch(() => null);
@@ -212,21 +241,20 @@
         function rotateSlides() { slidesArray[currentSlideIndex].classList.remove('active'); currentSlideIndex = (currentSlideIndex + 1) % slidesArray.length; slidesArray[currentSlideIndex].classList.add('active'); }
 
         function renderGrid(items, currentTitle) {
-            currentVisibleItems = items; // Cache current memory scope positions
+            currentVisibleItems = items; 
             gridView.innerHTML = ''; breadcrumb.innerText = currentTitle;
             backBtn.style.display = historyStack.length > 0 ? 'block' : 'none';
             backBtn.innerText = "← Back";
             sliderContainer.style.display = (currentTitle === "Home" && slidesArray.length > 0) ? 'block' : 'none';
+            if (currentTitle === "Home" && bannerElement.innerHTML !== "") bannerElement.style.display = 'block'; else bannerElement.style.display = 'none';
 
-            if (!items || items.length === 0) {
-                gridView.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding:30px; color:#777;">This section is currently empty.</div>`;
-                return;
-            }
+            // REMOVED WhatsApp community card loop here to keep UI clean!
+
+            if (!items || items.length === 0) return;
 
             items.forEach(item => {
                 const card = document.createElement('div'); card.className = 'card';
                 const isFolder = item.folder === true || item.files;
-                
                 const isPremiumItem = item.premium === true;
                 const itemId = item.id ? item.id.toString().trim() : "";
                 const isItemLocked = isPremiumItem && itemId !== "" && !cloudUnlockedItems.includes(itemId);
@@ -239,53 +267,83 @@
                     let priceTextDisplay = item.price ? '₹' + item.price : 'Premium';
                     premiumLabelHTML = `<div class="premium-badge" style="${isItemLocked ? 'background:#e74c3c' : 'background:#27ae60'}">${isItemLocked ? priceTextDisplay : 'Unlocked'}</div>`;
                 }
-
                 card.innerHTML = `${lockBadgeHTML}<div class="icon">${icon}</div><h3>${item.title || 'Untitled Quiz'}</h3>${premiumLabelHTML}`;
-
+                
+                // FIXED: Checks multiple keys (link, file, url) for accurate routing
                 card.onclick = () => {
                     if (isItemLocked) {
                         openCheckoutModal(item);
-                    } else if (isFolder) {
-                        historyStack.push({ items: items, title: currentTitle });
-                        renderGrid(item.files || [], item.title || "Folder");
-                    } else {
-                        startTest(item.link || '');
+                    } else if (isFolder) { 
+                        historyStack.push({ items: items, title: currentTitle }); 
+                        renderGrid(item.files || [], item.title || "Folder"); 
+                    } else { 
+                        const targetUrl = item.link || item.file || item.url || '';
+                        startTest(targetUrl); 
                     }
                 };
                 gridView.appendChild(card);
             });
         }
 
+        // --- FIXED QUIZ LAUNCH LOGIC ---
+        function startTest(quizUrl) {
+            if (quizUrl) {
+                // If it already includes the html path, just go to it directly
+                if (quizUrl.includes('mock-test.html')) {
+                    window.location.href = quizUrl;
+                } else {
+                    // Otherwise, securely encode it into the URL parameters
+                    window.location.href = `mock-test.html?quizData=${encodeURIComponent(quizUrl)}`;
+                }
+            } else {
+                alert("Oops! The quiz file path is missing in your app_quiz.json for this item.");
+            }
+        }
+
+        // --- CHECKOUT & PROMO LOGIC ---
         function openCheckoutModal(item) {
             const userPhone = localStorage.getItem('eduodiaUserPhone');
-            const userName = localStorage.getItem('eduodiaUserName') || "Student";
-            if(!userPhone) {
-                alert("🚫 Profile Authentication Required! Sign up or Sign in inside My Profile first to unlock paid products.");
-                window.location.href = "auth.html"; return;
-            }
-
-            const itemId = item.id ? item.id.toString().trim() : "PREMIUM_ITEM";
-            const finalPriceString = item.price ? '₹' + item.price : "Premium Price";
-
+            if(!userPhone) { alert("🚫 Profile Authentication Required!"); window.location.href = "auth.html"; return; }
+            activeCheckoutItem = item; baseCheckoutPrice = item.price ? parseInt(item.price) : 99;
             document.getElementById('modal-item-title').innerText = item.title || "Premium Content";
-            document.getElementById('modal-price-display').innerText = finalPriceString;
             document.getElementById('modal-upi-display').innerText = "UPI ID: " + cachedPaymentConfig.upi;
-            
-            if(cachedPaymentConfig.qrCode) {
-                document.getElementById('modal-qr-img').src = cachedPaymentConfig.qrCode;
-            } else {
-                document.getElementById('modal-qr-img').src = "https://cdn-icons-png.flaticon.com/512/241/241508.png";
-            }
-
-            const chatNote = `Hello Eduodia Team, I want to unlock premium access for:\n\n📌 Exam ID: ${itemId}\n📚 Title: ${item.title || 'Paid Course'}\n💰 Price: ${finalPriceString}\n👤 Student Name: ${userName}\n📞 Phone Number: ${userPhone}\n\nI have attached my UPI payment receipt screenshot below. Please verify and approve.`;
-            document.getElementById('modal-whatsapp-link').href = `https://wa.me/${cachedPaymentConfig.whatsapp}?text=${encodeURIComponent(chatNote)}`;
-
+            document.getElementById('modal-qr-img').src = cachedPaymentConfig.qrCode || "https://cdn-icons-png.flaticon.com/512/241/241508.png";
+            document.getElementById('promo-input').value = ""; document.getElementById('promo-msg').innerText = ""; document.getElementById('promo-msg').className = "promo-msg";
+            updateCheckoutUI(baseCheckoutPrice, "None");
             document.getElementById('checkout-modal-window').style.display = 'flex';
+        }
+
+        function applyPromoCode() {
+            const inputCode = document.getElementById('promo-input').value.toUpperCase().trim();
+            const msgBox = document.getElementById('promo-msg');
+            if (!inputCode) return;
+            if (activePromoCodes && activePromoCodes[inputCode]) {
+                const discountAmount = parseInt(activePromoCodes[inputCode]);
+                let finalPrice = baseCheckoutPrice - discountAmount;
+                if (finalPrice < 0) finalPrice = 0;
+                updateCheckoutUI(finalPrice, inputCode, discountAmount);
+                msgBox.innerText = `✅ Promo Applied! ₹${discountAmount} off.`;
+                msgBox.className = "promo-msg promo-success";
+            } else {
+                updateCheckoutUI(baseCheckoutPrice, "None");
+                msgBox.innerText = `❌ Invalid or Expired Code.`;
+                msgBox.className = "promo-msg promo-error";
+            }
+        }
+
+        function updateCheckoutUI(currentPrice, appliedCode, discountAmt = 0) {
+            document.getElementById('modal-price-display').innerText = `₹${currentPrice}`;
+            const userName = localStorage.getItem('eduodiaUserName') || "Student";
+            const userPhone = localStorage.getItem('eduodiaUserPhone') || "Unknown";
+            const itemId = activeCheckoutItem.id ? activeCheckoutItem.id.toString().trim() : "PREMIUM_ITEM";
+            let chatNote = `Hello Eduodia Team, I want to unlock premium access for:\n\n📌 Exam ID: ${itemId}\n📚 Title: ${activeCheckoutItem.title || 'Paid Course'}\n👤 Student: ${userName}\n📞 Phone: ${userPhone}\n\n`;
+            if (appliedCode !== "None") chatNote += `🎫 Promo Applied: ${appliedCode} (₹${discountAmt} Off)\n💰 Final Price Paid: ₹${currentPrice}\n\nI have attached my UPI payment receipt screenshot below. Please verify and approve.`;
+            else chatNote += `💰 Price Paid: ₹${currentPrice}\n\nI have attached my UPI payment receipt screenshot below. Please verify and approve.`;
+            document.getElementById('modal-whatsapp-link').href = `https://wa.me/${cachedPaymentConfig.whatsapp}?text=${encodeURIComponent(chatNote)}`;
         }
         
         function closeCheckoutModal() { document.getElementById('checkout-modal-window').style.display = 'none'; }
         backBtn.onclick = function() { if (historyStack.length > 0) { const previousState = historyStack.pop(); renderGrid(previousState.items, previousState.title); } };
-        function startTest(quizUrl) { if(quizUrl) { window.location.href = `mock-test.html?quizData=${encodeURIComponent(quizUrl)}`; } else { alert("Quiz path link location target unconfigured."); } }
 
         initializeDashboardEngine();
     </script>

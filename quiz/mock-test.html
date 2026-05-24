@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eduodia - Mock Test</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <style>
         :root {
             --primary-color: #4A90E2;
@@ -88,6 +91,37 @@
         .ans-text { font-size: 0.95em; color: #444; margin-bottom: 6px; background: #fff; padding: 10px; border-radius: 5px; border: 1px solid #eee; line-height: 1.4;}
         .explanation-text { margin-top: 12px; background: #eaf2fb; border-color: #b9d4f0; color: #2c3e50; }
 
+        /* --- NEW: Premium Scorecard UI Design --- */
+        .shareable-scorecard {
+            background: linear-gradient(135deg, #ffffff 0%, #f4f7f6 100%);
+            border-radius: 16px; padding: 30px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12); border: 1px solid #e0e0e0;
+            margin: 20px auto; position: relative; overflow: hidden; max-width: 400px;
+        }
+        .scorecard-header {
+            background: var(--primary-color); color: white; margin: -30px -30px 25px -30px;
+            padding: 20px; font-weight: 900; font-size: 1.5em; letter-spacing: 1px;
+        }
+        .scorecard-exam-name { font-size: 1.1em; color: #555; font-weight: bold; margin-bottom: 20px; text-transform: uppercase; }
+        .score-ring {
+            width: 130px; height: 130px; border-radius: 50%; border: 8px solid var(--answered-color);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            margin: 0 auto 20px auto; background: white; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.2);
+        }
+        .score-ring .marks { font-size: 2.8em; font-weight: 900; color: #2c3e50; line-height: 1; }
+        .score-ring .total { font-size: 1.1em; color: #888; font-weight: bold; margin-top: 5px; }
+        .student-details h3 { font-size: 1.4em; color: #333; margin-bottom: 5px; text-transform: capitalize; }
+        .student-details p { color: #777; font-size: 0.9em; font-weight: bold; }
+        .scorecard-footer {
+            margin-top: 25px; padding-top: 15px; border-top: 2px dashed #ddd;
+            font-size: 0.85em; color: #888; font-weight: bold;
+        }
+        .btn-download-img {
+            background: var(--answered-color); color: white; border: none; padding: 14px 20px;
+            border-radius: 8px; font-size: 1.05em; font-weight: bold; cursor: pointer;
+            width: 100%; max-width: 400px; box-shadow: 0 4px 10px rgba(39,174,96,0.3); margin-bottom: 25px;
+        }
+
         @media (max-width: 600px) {
             body { padding: 10px 8px; }
             #start-screen { padding: 30px 15px; }
@@ -98,6 +132,7 @@
             .option-item { padding: 12px 14px; }
             .test-footer { padding: 14px 16px; }
             #results { padding: 25px 15px; h2 { font-size: 1.5em; } }
+            .shareable-scorecard { padding: 25px 15px; margin: 15px auto; }
         }
     </style>
 </head>
@@ -143,9 +178,30 @@
 
     <div id="results">
         <h2 style="color: var(--text-color);">Test Evaluation Complete!</h2>
-        <p id="score-text" style="margin: 10px 0; font-size: 1.1em;"></p>
+        <p id="score-text" style="margin: 10px 0; font-size: 1.1em; display: none;"></p>
         <div id="performance-msg" class="performance-msg"></div>
         
+        <div id="capture-scorecard" class="shareable-scorecard">
+            <div class="scorecard-header">🎓 EDUODIA</div>
+            <div class="scorecard-exam-name" id="card-exam-title">Mock Test Complete</div>
+            
+            <div class="score-ring">
+                <div class="marks" id="card-score">0</div>
+                <div class="total" id="card-total">/ 0</div>
+            </div>
+            
+            <div class="student-details">
+                <h3 id="card-student-name">Student Profile</h3>
+                <p id="card-date">Date: Loading...</p>
+            </div>
+            
+            <div class="scorecard-footer">
+                🚀 Prepare better at www.eduodia.in
+            </div>
+        </div>
+
+        <button id="btn-download-img" class="btn-download-img">📸 Download Scorecard to Share</button>
+
         <div class="action-block">
             <button id="instant-rank-btn" style="background: #f39c12; color:white; padding: 14px;">🏆 My Rank</button>
             <button onclick="window.location.href='profile.html'" style="background: #333; color:white; padding: 12px;">👤 View Profile History</button>
@@ -296,7 +352,17 @@
             else { performanceMsg.innerText = "📚 Keep reviewing mistakes."; performanceMsg.style.cssText = "background:#fadbd8; color:#c0392b; border:1px solid #e74c3c;"; }
 
             testView.style.display = 'none'; resultsView.style.display = 'block';
-            scoreText.innerHTML = `You scored <strong>${score}</strong> out of <strong>${questions.length}</strong>`;
+            
+            // --- NEW: POPULATE SCORECARD DATA ---
+            try {
+                document.getElementById('card-score').innerText = score;
+                document.getElementById('card-total').innerText = "/ " + questions.length;
+                document.getElementById('card-exam-title').innerText = activeQuizName;
+                document.getElementById('card-student-name').innerText = globalUserName;
+                document.getElementById('card-date').innerText = "Date: " + new Date().toLocaleDateString();
+            } catch (e) {
+                console.log("Scorecard mapping error", e);
+            }
 
             document.getElementById('instant-rank-btn').onclick = function() {
                 window.location.href = `leaderboard.html?quiz=${encodeURIComponent(activeQuizName)}`;
@@ -329,6 +395,38 @@
 
         function startTimer() { timerInterval = setInterval(() => { if(timeLeft <= 0) { clearInterval(timerInterval); submitTest(); } else { let mins = Math.floor(timeLeft / 60); let secs = timeLeft % 60; timeDisplay.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`; timeLeft--; } }, 1000); }
         function goHome() { window.location.href = "index.html"; }
+        
+        // --- NEW: HTML2CANVAS SCREENSHOT LOGIC ---
+        document.getElementById('btn-download-img').addEventListener('click', function() {
+            const captureArea = document.getElementById('capture-scorecard');
+            const btn = this;
+            const originalText = btn.innerText;
+            
+            btn.innerText = "⏳ Generating Image...";
+            btn.disabled = true;
+            btn.style.opacity = "0.7";
+
+            html2canvas(captureArea, { 
+                scale: 3, 
+                backgroundColor: "#ffffff",
+                useCORS: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `Eduodia_${activeQuizName.replace(/\s+/g, '_')}_Score.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            }).catch(err => {
+                alert("Could not generate image. Please screenshot manually.");
+                btn.innerText = originalText;
+                btn.disabled = false;
+                btn.style.opacity = "1";
+            });
+        });
+
         fetchTestData();
     </script>
 </body>

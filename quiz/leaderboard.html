@@ -17,21 +17,29 @@
         h1 { text-align: center; color: var(--primary-color); margin-bottom: 5px; font-size: 2em; }
         p.subtitle { text-align: center; color: #666; margin-top: 0; margin-bottom: 25px; font-size: 0.95em; }
         
-        .quiz-select-container { text-align: center; margin-bottom: 25px; }
-        .quiz-select { padding: 12px 16px; font-size: 1.05em; font-weight: bold; color: var(--primary-color); border: 2px solid var(--primary-color); border-radius: 8px; width: 100%; max-width: 420px; background-color: #fff; cursor: pointer; outline: none; }
+        .quiz-select-container { text-align: center; margin-bottom: 15px; }
+        .quiz-select { padding: 12px 16px; font-size: 1.05em; font-weight: bold; color: #333; border: 2px solid var(--primary-color); border-radius: 8px; width: 100%; max-width: 420px; background-color: #fff; cursor: pointer; outline: none; }
+        
+        .active-exam-display { text-align: center; margin-bottom: 20px; font-size: 1.3em; color: #2c3e50; display: none; }
+        .active-exam-display strong { color: var(--primary-color); font-weight: 900; letter-spacing: 0.5px; text-transform: capitalize; }
         
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { padding: 14px; text-align: left; border-bottom: 1px solid #eee; }
         th { background-color: var(--primary-color); color: white; font-weight: 600; text-transform: uppercase; font-size: 0.85em; letter-spacing: 0.5px; }
         tr:hover { background-color: #fcfcfc; }
         
-        .rank-badge { display: inline-block; width: 28px; height: 28px; line-height: 28px; text-align: center; border-radius: 50%; font-weight: bold; }
-        .rank-1 { background-color: #f1c40f; color: #fff; font-size: 1.05em; }
-        .rank-2 { background-color: #95a5a6; color: #fff; }
-        .rank-3 { background-color: #cd7f32; color: #fff; }
-        .rank-other { color: #7f8c8d; font-size: 0.95em; }
+        /* --- Medal Styles (Icons only) --- */
+        .medal-badge { font-size: 1.8em; }
+
+        /* --- Circular Colorful Badges for Rank 4+ --- */
+        .rank-circle { 
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 35px; height: 35px; border-radius: 50%; 
+            font-weight: 800; font-size: 0.95em;
+            background-color: var(--primary-color); color: white;
+        }
         
-        .student-name { font-size: 1.05em; font-weight: 600; color: #2c3e50; }
+        .student-name { font-size: 1.05em; font-weight: 600; color: #2c3e50; text-transform: capitalize; }
         .score-value { font-weight: bold; font-size: 1.1em; color: #27ae60; }
 
         @media (max-width: 500px) {
@@ -54,13 +62,17 @@
                 <option value="">Loading exams...</option>
             </select>
         </div>
+
+        <div id="active-exam-title" class="active-exam-display">
+            Showing Ranks for: <strong id="exam-name-highlight">...</strong>
+        </div>
         
         <table>
             <thead>
                 <tr>
-                    <th style="width: 15%;">Rank</th>
-                    <th style="width: 55%;">Student Name</th>
-                    <th style="width: 30%;">Score Secured</th>
+                    <th style="width: 20%;">Rank</th>
+                    <th style="width: 50%;">Student Name</th>
+                    <th style="width: 30%;">Score</th>
                 </tr>
             </thead>
             <tbody id="leaderboard-body">
@@ -86,52 +98,91 @@
 
         const tableBody = document.getElementById('leaderboard-body');
         const quizDropdown = document.getElementById('quiz-dropdown');
+        
         let allRecords = []; 
+        let quizTitleDictionary = {}; 
 
-        db.collection("leaderboard").get()
-          .then((querySnapshot) => {
-              allRecords = []; let uniqueQuizzes = new Set();
-              
-              querySnapshot.forEach((doc) => {
-                  const data = doc.data(); allRecords.push(data);
-                  if (data.quizName) uniqueQuizzes.add(data.quizName.toUpperCase().trim());
-              });
+        document.addEventListener("DOMContentLoaded", async () => {
+            await fetchQuizDictionary();
+            loadLeaderboardData();
+        });
 
-              const urlParams = new URLSearchParams(window.location.search);
-              let activeQuizParam = urlParams.get('quiz');
-              if (activeQuizParam) { activeQuizParam = activeQuizParam.toUpperCase().trim(); uniqueQuizzes.add(activeQuizParam); }
+        async function fetchQuizDictionary() {
+            try {
+                const response = await fetch('app_quiz.json');
+                if (!response.ok) return;
+                const data = await response.json();
+                
+                function extractTitles(items) {
+                    items.forEach(item => {
+                        if (item.title) {
+                            if (item.id) quizTitleDictionary[item.id.toUpperCase()] = item.title;
+                            const url = item.link || item.file || item.url;
+                            if (url) {
+                                const parts = url.split('/');
+                                const rawName = parts[parts.length - 1].replace('.json', '').replace('sd10_', '').toUpperCase();
+                                quizTitleDictionary[rawName] = item.title;
+                            }
+                        }
+                        if (item.files) extractTitles(item.files);
+                    });
+                }
+                if (data.quiz) extractTitles(data.quiz);
+            } catch (e) { console.log("Failed to load title dictionary", e); }
+        }
 
-              quizDropdown.innerHTML = '';
-              if (uniqueQuizzes.size === 0) {
-                  quizDropdown.innerHTML = '<option value="">No Active Exams Available</option>';
-                  tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px;">No records yet.</td></tr>'; return;
-              }
+        function formatPrettyTitle(rawId) {
+            if (!rawId) return "Unknown Exam";
+            return rawId.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+        }
 
-              uniqueQuizzes.forEach(quiz => {
-                  const opt = document.createElement('option'); opt.value = quiz; opt.innerText = quiz; quizDropdown.appendChild(opt);
-              });
+        function loadLeaderboardData() {
+            db.collection("leaderboard").get()
+              .then((querySnapshot) => {
+                  allRecords = []; let uniqueQuizzes = new Set();
+                  querySnapshot.forEach((doc) => {
+                      const data = doc.data(); allRecords.push(data);
+                      if (data.quizName) uniqueQuizzes.add(data.quizName.toUpperCase().trim());
+                  });
 
-              if (activeQuizParam) quizDropdown.value = activeQuizParam;
-              renderLeaderboard();
-          })
-          .catch((error) => { console.error(error); });
+                  const urlParams = new URLSearchParams(window.location.search);
+                  let activeQuizParam = urlParams.get('quiz');
+                  if (activeQuizParam) { activeQuizParam = activeQuizParam.toUpperCase().trim(); uniqueQuizzes.add(activeQuizParam); }
+
+                  quizDropdown.innerHTML = '';
+                  if (uniqueQuizzes.size === 0) {
+                      quizDropdown.innerHTML = '<option value="">No Active Exams Available</option>';
+                      tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:30px;">No records yet.</td></tr>'; return;
+                  }
+
+                  uniqueQuizzes.forEach(quizRawId => {
+                      const opt = document.createElement('option'); 
+                      opt.value = quizRawId; 
+                      opt.innerText = quizTitleDictionary[quizRawId] || formatPrettyTitle(quizRawId); 
+                      quizDropdown.appendChild(opt);
+                  });
+
+                  if (activeQuizParam) quizDropdown.value = activeQuizParam;
+                  renderLeaderboard();
+              })
+              .catch((error) => { console.error(error); });
+        }
 
         function renderLeaderboard() {
-            const selectedQuiz = quizDropdown.value; tableBody.innerHTML = '';
-            if(!selectedQuiz) return;
+            const selectedQuiz = quizDropdown.value; 
+            const titleDisplay = document.getElementById('active-exam-title');
+            const highlightText = document.getElementById('exam-name-highlight');
+            const loggedInUser = localStorage.getItem('eduodiaUserName') ? localStorage.getItem('eduodiaUserName').toUpperCase().trim() : null;
+            
+            tableBody.innerHTML = '';
+            
+            if(!selectedQuiz) { titleDisplay.style.display = 'none'; return; }
+
+            highlightText.innerText = quizDropdown.options[quizDropdown.selectedIndex].text;
+            titleDisplay.style.display = 'block';
 
             let filteredDataset = allRecords.filter(record => record.quizName && record.quizName.toUpperCase().trim() === selectedQuiz);
-
-            // --- FIXED COMPUTE ENGINE: CHRONOLOGICAL SORT BREAKS NAN ERRORS ---
-            filteredDataset.sort((a, b) => {
-                if (b.score !== a.score) {
-                    return b.score - a.score;
-                }
-                // Checks for field architecture objects explicitly preventing standard NaN parsing crashes
-                const timeA = a.timestamp && a.timestamp.seconds ? a.timestamp.seconds : 0;
-                const timeB = b.timestamp && b.timestamp.seconds ? b.timestamp.seconds : 0;
-                return timeA - timeB; 
-            });
+            filteredDataset.sort((a, b) => b.score - a.score || (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
 
             if (filteredDataset.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding: 40px; color:#777;">No scores recorded yet for this exam.</td></tr>'; return;
@@ -140,7 +191,20 @@
             let rank = 1;
             filteredDataset.forEach(data => {
                 const row = document.createElement('tr');
-                let badge = rank <= 3 ? `<span class="rank-badge rank-${rank}">${rank}</span>` : `<span class="rank-badge rank-other">#${rank}</span>`;
+                
+                const isCurrentUser = loggedInUser && data.name.toUpperCase().trim() === loggedInUser;
+                if (isCurrentUser) {
+                    row.style.backgroundColor = "#eaf2fb";
+                    row.style.border = "1px solid var(--primary-color)";
+                }
+
+                // --- Medals Only (1, 2, 3) vs Circular Numbers (4+) ---
+                let badge = "";
+                if (rank === 1) badge = `<span class="medal-badge">🥇</span>`;
+                else if (rank === 2) badge = `<span class="medal-badge">🥈</span>`;
+                else if (rank === 3) badge = `<span class="medal-badge">🥉</span>`;
+                else badge = `<span class="rank-circle">${rank}</span>`;
+
                 const studentName = data.name ? data.name : "Anonymous Student";
                 const maxQuestions = data.totalQuestions ? data.totalQuestions : 30;
 
