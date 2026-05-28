@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - MediQuick</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+   <header>
+        <a href="#" class="logo">💊 MediQuick Admin</a>
+        <div class="nav-links">
+            <a href="index.html">View Store</a>
+            <button id="logoutBtn" style="background: #fee2e2; border: 1px solid #fca5a5; color: #ef4444; padding: 8px 15px; border-radius: 6px; font-weight: 600; cursor: pointer; margin-left: 15px;">Logout</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab('ordersTab', this)">Orders</button>
+            <button class="tab-btn" onclick="switchTab('productsTab', this)">Products</button>
+            <button class="tab-btn" onclick="switchTab('categoriesTab', this)">Categories</button>
+            <button class="tab-btn" onclick="switchTab('bannersTab', this)">Banners</button>
+        </div>
+
+        <div id="ordersTab" class="tab-content active">
+            <div class="section-header">
+                <h2>Customer Orders</h2>
+                <button class="btn" style="width: auto; padding: 8px 15px;" onclick="loadOrders()">🔄 Refresh</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Customer Info</th>
+                            <th>Items Ordered</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrderList">
+                        <tr><td colspan="6" style="text-align: center;">Loading orders...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="productsTab" class="tab-content">
+            <h2>Add New Medicine</h2>
+            <div class="form-card">
+                <form id="addProductForm">
+                    <div class="form-group">
+                        <label>Medicine Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select id="productCategory" required><option value="">Loading...</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="productPrice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Image</label>
+                        <input type="file" id="productImage" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn" id="submitBtn">Add Product</button>
+                </form>
+            </div>
+            <h2>Product Inventory</h2>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Actions</th></tr></thead>
+                    <tbody id="adminProductList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="categoriesTab" class="tab-content">
+            <h2>Add New Category</h2>
+            <div class="form-card">
+                <form id="addCategoryForm">
+                    <div class="form-group">
+                        <label>Category Name</label>
+                        <input type="text" id="categoryName" required>
+                    </div>
+                    <button type="submit" class="btn" id="submitCategoryBtn">Add Category</button>
+                </form>
+            </div>
+            <h2>Existing Categories</h2>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Category Name</th><th>Actions</th></tr></thead>
+                    <tbody id="adminCategoryList"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="bannersTab" class="tab-content">
+            <h2>Add Homepage Banner</h2>
+            <div class="form-card">
+                <form id="addBannerForm">
+                    <div class="form-group">
+                        <label>Target URL (Link destination)</label>
+                        <input type="url" id="bannerUrl" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Banner Image</label>
+                        <input type="file" id="bannerImage" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn" id="submitBannerBtn">Upload Banner</button>
+                </form>
+            </div>
+            <h2>Active Banners</h2>
+            <div class="table-container">
+                <table>
+                    <thead><tr><th>Preview</th><th>Link URL</th><th>Actions</th></tr></thead>
+                    <tbody id="adminBannerList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="editProductModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Medicine</h3>
+            <form id="editProductForm">
+                <input type="hidden" id="editProductId">
+                <div class="form-group"><label>Name</label><input type="text" id="editProductName" required></div>
+                <div class="form-group"><label>Category</label><select id="editProductCategory" required></select></div>
+                <div class="form-group"><label>Price (₹)</label><input type="number" id="editProductPrice" required></div>
+                <button type="submit" class="btn">Save Changes</button>
+                <button type="button" class="btn close-btn" onclick="closeModal('editProductModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="editCategoryModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Category</h3>
+            <form id="editCategoryForm">
+                <input type="hidden" id="editCategoryId">
+                <div class="form-group"><label>Category Name</label><input type="text" id="editCategoryName" required></div>
+                <button type="submit" class="btn">Save Changes</button>
+                <button type="button" class="btn close-btn" onclick="closeModal('editCategoryModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="editBannerModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Banner Link</h3>
+            <form id="editBannerForm">
+                <input type="hidden" id="editBannerId">
+                <div class="form-group"><label>Target URL</label><input type="url" id="editBannerUrl" required></div>
+                <button type="submit" class="btn">Save Changes</button>
+                <button type="button" class="btn close-btn" onclick="closeModal('editBannerModal')">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+    </script>
+    
+    <script type="module" src="js/admin.js"></script>
+</body>
+</html>

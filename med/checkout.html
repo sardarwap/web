@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Checkout - MediQuick</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+   <header>
+        <a href="index.html" class="logo">💊 MediQuick</a>
+        <div class="nav-links">
+            <a href="index.html" style="font-weight: 600;">← Back to Shop</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section-header">
+            <h2>Secure Checkout</h2>
+        </div>
+        
+        <div class="checkout-wrapper">
+            
+            <div class="form-card">
+                <h3 style="margin-bottom: 20px; color: var(--text-main);">Delivery Information</h3>
+                <form id="checkoutForm">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="customerName" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Mobile Number (WhatsApp) *</label>
+                        <input type="tel" id="customerPhone" placeholder="e.g. 9876543210" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Complete Delivery Address *</label>
+                        <textarea id="customerAddress" rows="3" placeholder="House/Flat No, Street, Landmark, City" required style="width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 8px; font-family: 'Inter', sans-serif; resize: vertical;"></textarea>
+                    </div>
+
+                    <div class="form-group" style="background: #f8fafc; padding: 20px; border-radius: 8px; border: 1px dashed var(--primary); margin-top: 20px;">
+                        <label style="color: var(--primary-dark); font-weight: 600;">Upload Prescription (Optional)</label>
+                        <input type="file" id="prescriptionImage" accept="image/*" style="margin-top: 10px;">
+                        <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 8px;">
+                            If you skip this, you can send the photo directly in the WhatsApp chat after placing your order.
+                        </p>
+                    </div>
+
+                    <button type="submit" class="btn" id="placeOrderBtn" style="margin-top: 20px; font-size: 1.1rem; padding: 15px;">
+                        Place Order via WhatsApp
+                    </button>
+                </form>
+            </div>
+
+            <div class="order-summary-card">
+                <h3 style="margin-bottom: 20px; color: var(--text-main); border-bottom: 2px solid var(--border); padding-bottom: 10px;">Order Summary</h3>
+                
+                <div id="orderItemsList">
+                    <p class="empty-cart-msg">Loading cart...</p>
+                </div>
+                
+                <div class="summary-total">
+                    <span>Total Amount</span>
+                    <span id="orderTotalAmount" style="color: var(--primary);">₹0.00</span>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 15px; background: #f3f4f6; border-radius: 8px; text-align: center;">
+                    <span style="font-size: 1.5rem;">💵</span>
+                    <p style="font-weight: 600; margin-top: 5px; color: var(--text-main);">Cash on Delivery</p>
+                    <p style="font-size: 0.8rem; color: var(--text-light);">Pay when you receive your order</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module" src="js/checkout.js"></script>
+</body>
+</html>
