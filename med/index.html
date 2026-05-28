@@ -4,43 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediQuick Pharmacy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header>
-        <a href="index.html" class="logo">💊 MediQuick</a>
+        <a href="index.html" class="logo"><i class="fa-solid fa-pills"></i> MediQuick</a>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search medicines (e.g. Paracetamol)...">
         <div class="nav-links">
-            <!-- Admin link removed for privacy -->
-            <!-- Cart link updated to point to checkout.html -->
-            <a href="checkout.html" id="cartLink" style="color: var(--primary); font-weight: 700;">🛒 Cart (0)</a>
+            <a href="checkout.html" id="cartLink" style="color: var(--primary); font-weight: 700;"><i class="fa-solid fa-cart-shopping"></i> Cart (0)</a>
         </div>
     </header>
 
     <div class="container">
         
-        <div class="banners-container" id="bannersContainer">
-            </div>
+        <h2 id="searchResultsHeader">Search Results</h2>
+        <div class="product-grid" id="searchResultsGrid" style="display: none; margin-bottom: 40px;"></div>
 
-        <div class="section-header">
-            <h2>✨ Recently Added</h2>
+        <div class="banners-container" id="bannersContainer"></div>
+
+        <div class="features-section" id="perksSection">
+            <div class="feature-card">
+                <i class="fa-solid fa-motorcycle feature-icon"></i>
+                <h3>Fast Home Delivery</h3>
+                <p>Get your medicines delivered directly to your doorstep safely and quickly.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-shield-halved feature-icon"></i>
+                <h3>100% Genuine</h3>
+                <p>All products are sourced directly from authorized manufacturers.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-headset feature-icon"></i>
+                <h3>Expert Support</h3>
+                <p>Chat with our certified pharmacists on WhatsApp for any queries.</p>
+            </div>
         </div>
+
+        <div class="section-header"><h2>✨ Recently Added</h2></div>
         <div class="product-grid" id="recentProductsGrid" style="margin-bottom: 50px;">
             <p style="grid-column: 1 / -1; color: var(--text-light);">Loading recent items...</p>
         </div>
 
-        <div id="categoryWiseContainer">
-            </div>
+        <div id="categoryWiseContainer"></div>
 
-    </div>
-</div>
+        <div class="section-header" style="margin-top: 40px;"><h2>⭐ What Our Customers Say</h2></div>
+        <div class="reviews-section" id="reviewsSection">
+            <div class="review-card">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                <p class="review-text">"Very fast delivery and the WhatsApp ordering makes it so easy to send my father's prescription!"</p>
+                <p class="reviewer-name">- Rahul M.</p>
+            </div>
+            <div class="review-card">
+                <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                <p class="review-text">"The website is super easy to use. Better discounts than my local corner shop."</p>
+                <p class="reviewer-name">- Priya S.</p>
+            </div>
+        </div>
+
+    </div> <footer class="main-footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h3><i class="fa-solid fa-pills"></i> MediQuick</h3>
+                <p>Your trusted local neighborhood pharmacy, now online. Health and wellness delivered right to your door.</p>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p><i class="fa-brands fa-whatsapp"></i> +91 98765 43210</p>
+                <p><i class="fa-solid fa-envelope"></i> support@mediquick.com</p>
+                <p><i class="fa-solid fa-clock"></i> Mon-Sat: 9:00 AM - 9:00 PM</p>
+            </div>
+            <div class="footer-col">
+                <h3>Visit Our Store</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Shop No. 12, Main Market Road, City Center, 751001</p>
+                <a href="#" style="color: #38bdf8; text-decoration: underline; margin-top: 10px;"><i class="fa-solid fa-map-location-dot"></i> Get Directions</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 MediQuick Pharmacy. All rights reserved.</p>
+        </div>
+    </footer>
 
     <a href="checkout.html" class="floating-checkout-btn" id="floatingCheckoutBtn">
         🛍️ Buy Now • <span id="floatingTotal">₹0</span>
     </a>
 
-    <script type="module" src="js/app.js"></script>
-</body>
-</html>
     <script type="module" src="js/app.js"></script>
 </body>
 </html>

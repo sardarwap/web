@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-   <header>
+    <header>
         <a href="#" class="logo">💊 MediQuick Admin</a>
         <div class="nav-links">
             <a href="index.html">View Store</a>
@@ -59,10 +59,19 @@
                         <label>Category</label>
                         <select id="productCategory" required><option value="">Loading...</option></select>
                     </div>
-                    <div class="form-group">
-                        <label>Price (₹)</label>
-                        <input type="number" id="productPrice" required>
+                    
+                    <!-- UPDATED: Price and MRP side-by-side -->
+                    <div class="form-group" style="display: flex; gap: 15px;">
+                        <div style="flex: 1;">
+                            <label>Selling Price (₹)</label>
+                            <input type="number" id="productPrice" required>
+                        </div>
+                        <div style="flex: 1;">
+                            <label>Original MRP (₹)</label>
+                            <input type="number" id="productMrp" placeholder="Leave blank if no discount">
+                        </div>
                     </div>
+
                     <div class="form-group">
                         <label>Product Image</label>
                         <input type="file" id="productImage" accept="image/*" required>
@@ -124,6 +133,7 @@
         </div>
     </div>
 
+    <!-- Edit Product Modal -->
     <div id="editProductModal" class="modal">
         <div class="modal-content">
             <h3>Edit Medicine</h3>
@@ -131,7 +141,13 @@
                 <input type="hidden" id="editProductId">
                 <div class="form-group"><label>Name</label><input type="text" id="editProductName" required></div>
                 <div class="form-group"><label>Category</label><select id="editProductCategory" required></select></div>
-                <div class="form-group"><label>Price (₹)</label><input type="number" id="editProductPrice" required></div>
+                
+                <!-- UPDATED: Edit Price and MRP side-by-side -->
+                <div class="form-group" style="display: flex; gap: 15px;">
+                    <div style="flex: 1;"><label>Selling Price (₹)</label><input type="number" id="editProductPrice" required></div>
+                    <div style="flex: 1;"><label>Original MRP (₹)</label><input type="number" id="editProductMrp"></div>
+                </div>
+
                 <button type="submit" class="btn">Save Changes</button>
                 <button type="button" class="btn close-btn" onclick="closeModal('editProductModal')">Cancel</button>
             </form>
