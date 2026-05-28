@@ -80,7 +80,23 @@ async function loadProducts() {
         snapshot.forEach((document) => {
             const prod = document.data();
             const safeName = prod.name.replace(/'/g, "\\'"); 
-            list.innerHTML += `<tr><td><img src="${prod.imageUrl}"></td><td>${prod.name}</td><td>${prod.category}</td><td>₹${prod.price}</td><td><button class="action-btn edit-btn" onclick="openEditProduct('${document.id}', '${safeName}', '${prod.category}', ${prod.price})">Edit</button><button class="action-btn delete-btn" onclick="deleteDocument('products', '${document.id}')">Delete</button></td></tr>`;
+            
+            // UPDATED: Handle MRP display in the table
+            const mrp = prod.mrp || prod.price; // Fallback if MRP doesn't exist yet
+            
+            list.innerHTML += `<tr>
+                <td><img src="${prod.imageUrl}"></td>
+                <td>${prod.name}</td>
+                <td>${prod.category}</td>
+                <td>
+                    <span style="color:var(--primary); font-weight:bold;">₹${prod.price}</span><br>
+                    <small style="text-decoration:line-through; color: #94a3b8;">₹${mrp}</small>
+                </td>
+                <td>
+                    <button class="action-btn edit-btn" onclick="openEditProduct('${document.id}', '${safeName}', '${prod.category}', ${prod.price}, ${mrp})">Edit</button>
+                    <button class="action-btn delete-btn" onclick="deleteDocument('products', '${document.id}')">Delete</button>
+                </td>
+            </tr>`;
         });
     } catch (error) { console.error(error); }
 }
@@ -109,13 +125,16 @@ window.deleteDocument = async function(collectionName, docId) {
     }
 };
 
-window.openEditProduct = function(id, name, category, price) {
+// UPDATED: Function now accepts and sets MRP
+window.openEditProduct = function(id, name, category, price, mrp) {
     document.getElementById('editProductId').value = id;
     document.getElementById('editProductName').value = name;
     document.getElementById('editProductCategory').value = category;
     document.getElementById('editProductPrice').value = price;
+    document.getElementById('editProductMrp').value = mrp || price; // Set MRP field
     document.getElementById('editProductModal').style.display = 'flex';
 };
+
 window.openEditCategory = function(id, name) {
     document.getElementById('editCategoryId').value = id;
     document.getElementById('editCategoryName').value = name;
@@ -157,6 +176,12 @@ document.getElementById('addBannerForm').addEventListener('submit', async (e) =>
 document.getElementById('addProductForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
+    
+    // UPDATED: Grab Selling Price and MRP
+    const price = parseFloat(document.getElementById('productPrice').value);
+    const mrpInput = document.getElementById('productMrp').value;
+    const mrp = mrpInput ? parseFloat(mrpInput) : price; // Fallback to price if MRP is left blank
+
     try {
         btn.innerText = "Uploading..."; btn.disabled = true;
         const formData = new FormData(); formData.append("image", document.getElementById('productImage').files[0]);
@@ -165,7 +190,8 @@ document.getElementById('addProductForm').addEventListener('submit', async (e) =
         await addDoc(collection(db, "products"), {
             name: document.getElementById('productName').value,
             category: document.getElementById('productCategory').value,
-            price: parseFloat(document.getElementById('productPrice').value),
+            price: price,
+            mrp: mrp, // Save MRP to Firebase
             imageUrl: result.data.url
         });
         document.getElementById('addProductForm').reset(); loadProducts();
@@ -174,10 +200,12 @@ document.getElementById('addProductForm').addEventListener('submit', async (e) =
 
 document.getElementById('editProductForm').addEventListener('submit', async (e) => {
     e.preventDefault();
+    // UPDATED: Update MRP field in Firebase
     await updateDoc(doc(db, "products", document.getElementById('editProductId').value), {
         name: document.getElementById('editProductName').value,
         category: document.getElementById('editProductCategory').value,
-        price: parseFloat(document.getElementById('editProductPrice').value)
+        price: parseFloat(document.getElementById('editProductPrice').value),
+        mrp: parseFloat(document.getElementById('editProductMrp').value) // Save edited MRP
     });
     document.getElementById('editProductModal').style.display = 'none'; loadProducts();
 });

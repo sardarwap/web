@@ -47,19 +47,29 @@ function addToCart(product) {
 }
 
 // ==========================================
-// 2. PRODUCT CARD GENERATOR (Reverted to Clean Look)
+// 2. PRODUCT CARD GENERATOR (With MRP)
 // ==========================================
 function createProductCard(product) {
     const card = document.createElement('div');
     card.className = 'product-card';
+    
+    // Check if MRP exists in the database. If not, auto-calculate a 20% higher fake MRP for now.
+    const actualPrice = product.price;
+    const mrpPrice = product.mrp ? product.mrp : Math.round(actualPrice * 1.2);
+
+    // Using your exact original HTML structure, just adding the price-container
     card.innerHTML = `
         <img src="${product.imageUrl}" alt="${product.name}" loading="lazy">
         <div class="product-info">
             <span class="product-category">${product.category || 'Medicine'}</span>
-            <h3 class="product-name">${product.name}</h3>
-            <p class="product-price">₹${product.price}</p>
+            <h3 class="product-name" style="margin-bottom: 8px;">${product.name}</h3>
             
-            <button class="btn add-to-cart-btn">Add to Cart</button>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <span style="font-size: 1.15rem; font-weight: 800; color: var(--primary-dark);">₹${actualPrice}</span>
+                <span style="text-decoration: line-through; color: #94a3b8; font-size: 0.85rem;">₹${mrpPrice}</span>
+            </div>
+            
+            <button class="btn add-to-cart-btn" style="width: 100%;">Add to Cart</button>
         </div>
     `;
     
@@ -71,7 +81,7 @@ function createProductCard(product) {
 }
 
 // ==========================================
-// 3. LOAD DATA & RENDER NORMAL LAYOUT
+// 3. LOAD DATA & RENDER (Horizontal Scroll)
 // ==========================================
 async function loadStoreData() {
     try {
@@ -88,7 +98,10 @@ function renderNormalLayout() {
     const recentGrid = document.getElementById('recentProductsGrid');
     recentGrid.innerHTML = '';
     
-    const newestProducts = [...globalProducts].reverse().slice(0, 4); 
+    // Apply horizontal scroll to "Recently Added"
+    recentGrid.className = 'category-scroll'; 
+    
+    const newestProducts = [...globalProducts].reverse().slice(0, 6); 
     if(newestProducts.length > 0) {
         newestProducts.forEach(prod => recentGrid.appendChild(createProductCard(prod)));
     } else {
@@ -108,10 +121,18 @@ function renderNormalLayout() {
     for (const [categoryName, products] of Object.entries(groupedData)) {
         const section = document.createElement('div');
         section.className = 'category-section';
-        section.innerHTML = `<h2 class="category-title">📂 ${categoryName}</h2>`;
+        
+        // Category Title
+        section.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h2 class="category-title" style="margin-bottom: 0;">📂 ${categoryName}</h2>
+            </div>
+        `;
         
         const grid = document.createElement('div');
-        grid.className = 'product-grid';
+        // Apply horizontal scrolling class to the category tracks
+        grid.className = 'category-scroll';
+        
         products.forEach(prod => grid.appendChild(createProductCard(prod)));
         
         section.appendChild(grid);
@@ -136,12 +157,18 @@ if (searchInput) {
         const recentGrid = document.getElementById('recentProductsGrid');
         const categoryContainer = document.getElementById('categoryWiseContainer');
 
-        if (query.length > 0) {
+       if (query.length > 0) {
             // Hide normal layout
             if(banners) banners.style.display = 'none';
             if(recentSection) recentSection.style.display = 'none';
             if(recentGrid) recentGrid.style.display = 'none';
             if(categoryContainer) categoryContainer.style.display = 'none';
+            
+            // NEW: Hide the extra UI when searching
+            document.getElementById('perksSection').style.display = 'none';
+            document.getElementById('reviewsSection').style.display = 'none';
+            document.querySelector('.main-footer').style.display = 'none';
+            // ... (rest of search logic)
 
             // Show search results
             searchHeader.style.display = 'block';
@@ -172,7 +199,7 @@ if (searchInput) {
 }
 
 // ==========================================
-// 5. LOAD BANNERS
+// 5. LOAD & AUTO-SLIDE BANNERS
 // ==========================================
 async function loadBanners() {
     const bannerContainer = document.getElementById('bannersContainer');
@@ -186,11 +213,33 @@ async function loadBanners() {
         }
         
         bannerContainer.innerHTML = '';
+        let slideCount = 0;
+
         snapshot.forEach((doc) => {
             const banner = doc.data();
             bannerContainer.innerHTML += `<a href="${banner.targetUrl}" class="banner-slide" target="_blank"><img src="${banner.imageUrl}" alt="Promo"></a>`;
+            slideCount++;
         });
+
+        // Trigger Auto-Slider if there is more than 1 banner
+        if (slideCount > 1) {
+            startAutoSlider(bannerContainer);
+        }
+
     } catch (error) { console.error("Error loading banners:", error); }
+}
+
+function startAutoSlider(container) {
+    setInterval(() => {
+        // Check if we reached the end of the scrollable area
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+            // Smoothly scroll back to the beginning
+            container.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            // Scroll to the right by the width of one banner
+            container.scrollBy({ left: container.clientWidth, behavior: 'smooth' });
+        }
+    }, 4000); // Changes slide every 4 seconds
 }
 
 // ==========================================
