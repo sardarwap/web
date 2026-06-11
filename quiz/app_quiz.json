@@ -117,6 +117,11 @@
                 "title": "ଓଡିଶାର ପ୍ରଥମ ପୁରୁଷ",
                 "link": "questions/GK/odisha_1st_male.json",
                 "folder": false
+              },
+           {
+                "title": "ଓଡିଶାର ଇତିହାସ",
+                "link": "questions/GK/history.json",
+                "folder": false
               }
             ]
           
